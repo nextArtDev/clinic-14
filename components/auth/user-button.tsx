@@ -9,12 +9,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { useCurrentUser } from '@/hooks/use-current-user'
+
 import { LogoutButton } from '@/components/auth/logout-button'
 import { User } from 'lucide-react'
+import { currentUser } from '@/lib/auth'
 
-export const UserButton = () => {
-  const user = useCurrentUser()
+export const UserButton = async () => {
+  const user = await currentUser()
 
   return (
     <DropdownMenu dir="rtl">

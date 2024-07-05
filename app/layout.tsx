@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import AuthProvider from '@/providers/AuthProvider'
+import { numericFont, primaryFont } from '@/lib/fonts'
+import { ThemeProvider } from '@/providers/theme-provider'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,8 +19,24 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="fa-IR" dir="rtl" suppressHydrationWarning>
+      <AuthProvider>
+        <body
+          className={` ${primaryFont.className} ${numericFont.className} adad min-h-screen`}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {/* <ModalProvider /> */}
+            {children}
+
+            <Toaster richColors position="bottom-left" />
+          </ThemeProvider>
+        </body>
+      </AuthProvider>
     </html>
   )
 }

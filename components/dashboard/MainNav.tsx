@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/utils'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -37,44 +37,44 @@ export function MainNav({
   const routes = [
     {
       //just redirecting to dashboard, it can be home or everything
-      href: `/dashboard/${params.storeId}`,
+      href: `/dashboard`,
       label: 'وضعیت',
-      active: pathname === `/dashboard/${params.storeId}`,
+      active: pathname === `/dashboard`,
     },
     {
-      href: `/dashboard/${params.storeId}/billboards`,
-      label: 'بیلبوردها',
-      active: pathname === `/dashboard/${params.storeId}/billboards`,
+      href: `/dashboard/doctors`,
+      label: 'دکترها',
+      active: pathname === `/dashboard/doctors`,
     },
     {
-      href: `/dashboard/${params.storeId}/categories`,
-      label: 'دسته‌بندی‌ها',
-      active: pathname === `/dashboard/${params.storeId}/categories`,
+      href: `/dashboard/specialization`,
+      label: 'تخصص‌ها',
+      active: pathname === `/dashboard/specialization`,
     },
     {
-      href: `/dashboard/${params.storeId}/products`,
-      label: 'محصولات',
-      active: pathname === `/dashboard/${params.storeId}/products`,
+      href: `/dashboard/illness`,
+      label: 'بیماری',
+      active: pathname === `/dashboard/illness`,
     },
     {
-      href: `/dashboard/${params.storeId}/ingredients`,
-      label: 'مخلفات',
-      active: pathname === `/dashboard/${params.storeId}/ingredients`,
+      href: `/dashboard/comments`,
+      label: 'کامنت‌ها',
+      active: pathname === `/dashboard/comments`,
     },
     // {
-    //   href: `/dashboard/${params.storeId}/colors`,
+    //   href: `/dashboard/colors`,
     //   label: 'رنگ‌ها',
-    //   active: pathname === `/dashboard/${params.storeId}/colors`,
+    //   active: pathname === `/dashboard/colors`,
+    // },
+    // {
+    //   href: `/dashboard/orders`,
+    //   label: 'سفارشات',
+    //   active: pathname === `/dashboard/orders`,
     // },
     {
-      href: `/dashboard/${params.storeId}/orders`,
-      label: 'سفارشات',
-      active: pathname === `/dashboard/${params.storeId}/orders`,
-    },
-    {
-      href: `/dashboard/${params.storeId}/settings`,
+      href: `/dashboard/settings`,
       label: 'تنظیمات',
-      active: pathname === `/dashboard/${params.storeId}/settings`,
+      active: pathname === `/dashboard/settings`,
     },
   ]
 

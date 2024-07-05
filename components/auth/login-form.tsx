@@ -23,7 +23,7 @@ import { FormSuccess } from './form-success'
 import { LoginSchema } from '@/lib/schemas/auth'
 import { login } from '@/lib/actions/auth/login'
 import { Eye } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/utils'
 
 export const LoginForm = () => {
   const router = useRouter()

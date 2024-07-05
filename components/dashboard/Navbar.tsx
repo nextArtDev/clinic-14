@@ -7,7 +7,7 @@ import StoreSwitcher from './StoreSwitcher'
 import { auth } from '@/auth'
 import { UserButton } from '../auth/user-button'
 import { ScrollArea, ScrollBar } from '../ui/scroll-area'
-import { ModeToggle } from '../theme-toggle'
+// import { ModeToggle } from '../theme-toggle'
 
 // import StoreSwitcher from '@/components/store-switcher'
 // import { MainNav } from '@/components/main-nav'
@@ -22,24 +22,24 @@ const Navbar = async () => {
     redirect('/')
   }
   // //fetching all stores which this user owns
-  const stores = await prisma.store.findMany({
-    where: {
-      userId,
-    },
-  })
+  // const stores = await prisma.store.findMany({
+  //   where: {
+  //     userId,
+  //   },
+  // })
 
   return (
     <div className="border-b">
       <ScrollArea dir="rtl">
         <div className="flex h-16 items-center px-4 ">
-          <StoreSwitcher items={stores} />
+          {/* <StoreSwitcher items={stores} /> */}
           <MainNav className="px-8" />
           <ScrollBar orientation="horizontal" />
           {/* ml-auto push everything to the right */}
           <div className="mr-auto flex items-center text-right gap-4 space-x-4">
             <UserButton />
             {/* <div className="hidden sm:block">{session.user.name}</div> */}
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             {/* <UserButton afterSignOutUrl="/" /> */}
           </div>
         </div>
