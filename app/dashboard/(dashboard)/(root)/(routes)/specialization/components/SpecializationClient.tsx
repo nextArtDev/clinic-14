@@ -27,7 +27,7 @@ export const SpecializationClient: React.FC<SpecializationClientProps> = ({
           title={`تخصص (${data.length})`}
           description="اطلاعات تخصصها را مدیریت کنید."
         />
-        <Button onClick={() => router.push(`/dashboard/specialization/0`)}>
+        <Button onClick={() => router.push(`/dashboard/specialization/new`)}>
           <Plus className="ml-2 h-4 w-4" /> اضافه کردن
         </Button>
       </div>

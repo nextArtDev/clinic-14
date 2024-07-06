@@ -1,12 +1,12 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Doctor, Illness, Image, Prisma, Specialization } from '@prisma/client'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import { FC, useState } from 'react'
+import { FC, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { number, z } from 'zod'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Trash } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 // import axios from 'axios'
-import { toast } from '@/components/ui/use-toast'
+// import { toast } from '@/components/ui/use-toast'
 import {
   Select,
   SelectContent,
@@ -29,32 +29,18 @@ import {
 } from '@/components/ui/select'
 import ImageUpload from '@/app/dashboard/(dashboard)/(root)/(routes)/doctors/components/ImageUpload'
 import { AlertModal } from '@/app/dashboard/(dashboard)/(root)/(routes)/doctors/[doctorId]/components/AlertModal'
+import { createSpecializationSchema } from '@/lib/schemas/dashboard'
+import { cn } from '@/lib/utils/utils'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import ImageSlider from '@/components/ImageSlider'
+import { useFormState } from 'react-dom'
+import { toast } from 'sonner'
+import {
+  createSpecialization,
+  editSpecialization,
+} from '@/lib/actions/dashboard/specialization'
 
-const formSchema = z.object({
-  name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
-  description: z.string(),
-  // open_time: z.string().optional(),
-  // close_time: z.string().optional(),
-  //   main_image: z
-  //     .string()
-  //     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-  //     .url()
-  //     .optional(),
-  images: z.object({ url: z.string() }).array(),
-  // .array()  satisfies Prisma.ImagesUncheckedCreateNestedManyWithoutDoctorInput,
-  // booking: z.object({ booking_time: z.date() }).array().optional(),
-  //Because we're working with Decimal, we should add "coerce"
-  // illnessId: z.coerce
-  //   .number()
-  //   .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-  //   .optional(),
-  doctorId: z.coerce
-    .number()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-    .optional(),
-}) satisfies z.Schema<Prisma.SpecializationUncheckedCreateInput>
-
-type SpecializationFormValues = z.infer<typeof formSchema>
+type SpecializationFormValues = z.infer<typeof createSpecializationSchema>
 
 interface SpecializationFormProps {
   initialData:
@@ -63,19 +49,21 @@ interface SpecializationFormProps {
       })
     | null
   // illness: Illness[]
-  doctor: Doctor[]
+  // doctor: Doctor[]
 }
 
 const SpecializationForm: FC<SpecializationFormProps> = ({
   initialData,
   // illness,
-  doctor,
+  // doctor,
 }) => {
   const params = useParams()
   const router = useRouter()
+  const path = usePathname()
+  const [files, setFiles] = useState<File[]>([])
 
   const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
   // console.log(specialization)
 
   const title = initialData ? 'ویرایش ' : 'ایجاد تخصص جدید'
@@ -91,7 +79,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
         name: initialData.name!,
         description: initialData?.description!,
         // illnessId: initialData?.illness_id,
-        doctorId: parseFloat(String(initialData?.doctorId)),
+        // doctorId: parseFloat(String(initialData?.doctorId)),
       }
     : {
         name: '',
@@ -102,11 +90,88 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
       }
 
   const form = useForm<SpecializationFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createSpecializationSchema),
     defaultValues,
   })
 
+  //   const [deleteState, deleteAction] = useFormState(
+  //   deleteCategory.bind(
+  //     null,
+  //     path,
+  //     params.storeId as string,
+  //     categoryId as string
+  //   ),
+  //   {
+  //     errors: {},
+  //   }
+  // )
+
   const onSubmit = async (data: SpecializationFormValues) => {
+    const formData = new FormData()
+
+    formData.append('name', data.name)
+    formData.append('description', data.description || '')
+    if (data.images && data.images.length > 0) {
+      for (let i = 0; i < data.images.length; i++) {
+        formData.append('images', data.images[i])
+      }
+    }
+    try {
+      if (initialData) {
+        // console.log({ data, initialData })
+        startTransition(() => {
+          editSpecialization(formData, initialData.id as string, path)
+            .then((res) => {
+              if (res?.errors?.name) {
+                form.setError('name', {
+                  type: 'custom',
+                  message: res?.errors.name?.join(' و '),
+                })
+              } else if (res?.errors?.images) {
+                form.setError('images', {
+                  type: 'custom',
+                  message: res?.errors.images?.join(' و '),
+                })
+              } else if (res?.errors?._form) {
+                toast.error(res?.errors._form?.join(' و '))
+              }
+            })
+            // TODO: fixing Through Error when its ok
+            // .catch(() => toast.error('مشکلی پیش آمده.'))
+            .catch(() => console.log('مشکلی پیش آمده.'))
+        })
+      } else {
+        startTransition(() => {
+          createSpecialization(formData, path)
+            .then((res) => {
+              if (res?.errors?.name) {
+                form.setError('name', {
+                  type: 'custom',
+                  message: res?.errors.name?.join(' و '),
+                })
+              } else if (res?.errors?.images) {
+                form.setError('images', {
+                  type: 'custom',
+                  message: res?.errors.images?.join(' و '),
+                })
+              } else if (res?.errors?._form) {
+                toast.error(res?.errors._form?.join(' و '))
+                form.setError('root', {
+                  type: 'custom',
+                  message: res?.errors?._form?.join(' و '),
+                })
+              }
+              // if (res?.success) {
+              //    toast.success(toastMessage)
+              // }
+            })
+            .catch(() => toast.error('مشکلی پیش آمده.'))
+        })
+      }
+    } catch {
+      toast.error('مشکلی پیش آمده، لطفا دوباره امتحان کنید!')
+    }
+
     // try {
     //   setLoading(true)
     //   if (initialData) {
@@ -127,6 +192,14 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
     //   setLoading(false)
     // }
   }
+
+  const validUrls =
+    initialData && initialData.images
+      ? (initialData.images.map((img) => img.url).filter(Boolean) as string[])
+      : (files
+          .map((file) => URL.createObjectURL(file))
+          .filter(Boolean) as string[])
+
   return (
     <>
       <AlertModal
@@ -134,12 +207,12 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
         onClose={() => setOpen(false)}
         // onConfirm={onDelete}
         onConfirm={() => {}}
-        loading={loading}
+        loading={isPending}
       />
       <div className="flex items-center justify-between">
         {initialData && (
           <Button
-            disabled={loading}
+            disabled={isPending}
             variant="destructive"
             size="sm"
             onClick={() => setOpen(true)}
@@ -154,30 +227,72 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
-          <FormField
-            control={form.control}
-            name="images"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>عکس‌</FormLabel>
-                <FormControl>
-                  <ImageUpload
-                    value={field.value.map((image) => image.url)}
-                    disabled={loading}
-                    onChange={(url) =>
-                      field.onChange([...field.value, { url }])
-                    }
-                    onRemove={(url) =>
-                      field.onChange([
-                        ...field.value.filter((current) => current.url !== url),
-                      ])
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+          <div className="col-span-2 lg:col-span-4 max-w-md ">
+            {files.length > 0 ? (
+              <div className="h-96 md:h-[450px] overflow-hidden rounded-md">
+                <AspectRatio ratio={1 / 1} className="relative h-full">
+                  <ImageSlider urls={validUrls} />
+                </AspectRatio>
+              </div>
+            ) : (
+              <FormField
+                control={form.control}
+                name="images"
+                render={({ field: { onChange }, ...field }) => (
+                  <FormItem>
+                    <FormLabel className="mx-auto cursor-pointer bg-transparent rounded-xl flex flex-col justify-center gap-4 items-center border-2 border-black/20 dark:border-white/20 border-dashed w-full h-24 shadow  ">
+                      {/* <FileUp size={42} className=" " /> */}
+                      <span
+                        className={cn(buttonVariants({ variant: 'ghost' }))}
+                      >
+                        انتخاب عکس
+                      </span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        multiple={true}
+                        disabled={form.formState.isSubmitting}
+                        {...field}
+                        onChange={async (event) => {
+                          // Triggered when user uploaded a new file
+                          // FileList is immutable, so we need to create a new one
+                          const dataTransfer = new DataTransfer()
+
+                          // Add old images
+                          if (files) {
+                            Array.from(files).forEach((image) =>
+                              dataTransfer.items.add(image)
+                            )
+                          }
+
+                          // Add newly uploaded images
+                          Array.from(event.target.files!).forEach((image) =>
+                            dataTransfer.items.add(image)
+                          )
+
+                          // Validate and update uploaded file
+                          const newFiles = dataTransfer.files
+
+                          setFiles(Array.from(newFiles))
+
+                          onChange(newFiles)
+                        }}
+                      />
+                    </FormControl>
+
+                    {/* <FormMessage className="dark:text-rose-400" /> */}
+                    <FormMessage>
+                      {/* @ts-ignore */}
+                      {form.getFieldState('images')?.error?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
             )}
-          />
+          </div>
           <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
@@ -187,7 +302,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                   <FormLabel>نام تخصص </FormLabel>
                   <FormControl>
                     <Input
-                      disabled={loading}
+                      disabled={isPending}
                       placeholder="نام تخصص"
                       {...field}
                     />
@@ -204,7 +319,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                   <FormLabel>توضیحات تخصص</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={loading}
+                      disabled={isPending}
                       placeholder="توضیحات تخصص"
                       {...field}
                     />
@@ -221,7 +336,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                 <FormItem>
                   <FormLabel>تخصص</FormLabel>
                   <Select
-                    disabled={loading}
+                    disabled={isPending}
                     onValueChange={field.onChange}
                     value={`${field.value}`}
                     defaultValue={`${field.value}`}
@@ -246,14 +361,14 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                 </FormItem>
               )}
             /> */}
-            <FormField
+            {/* <FormField
               control={form.control}
               name="doctorId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel> دکتر معالج </FormLabel>
                   <Select
-                    disabled={loading}
+                    disabled={isPending}
                     onValueChange={field.onChange}
                     value={`${field.value}`}
                     defaultValue={`${field.value}`}
@@ -277,9 +392,9 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
-          <Button disabled={loading} className="ml-auto" type="submit">
+          <Button disabled={isPending} className="ml-auto" type="submit">
             {action}
           </Button>
         </form>

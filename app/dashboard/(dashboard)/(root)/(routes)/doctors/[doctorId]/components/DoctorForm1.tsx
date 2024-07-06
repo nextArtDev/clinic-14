@@ -29,42 +29,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import ImageUpload from '../../components/ImageUpload'
+import { createDoctorSchema } from '@/lib/schemas/dashboard'
 
-const formSchema = z.object({
-  name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
-  phone: z
-    .string()
-    .regex(new RegExp('^09\\d{9}$'), {
-      message: 'شماره موبایل معتبر نیست.',
-    })
-    .regex(new RegExp('^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'), {
-      message: 'شماره موبایل معتبر نیست.',
-    })
-    .optional(),
-  website: z
-    .string()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-    .optional(),
-  description: z.string().optional(),
-  // open_time: z.string().optional(),
-  // close_time: z.string().optional(),
-  //   main_image: z
-  //     .string()
-  //     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-  //     .url()
-  //     .optional(),
-  images: z.object({ url: z.string() }).array(),
-  // .array()  satisfies Prisma.ImagesUncheckedCreateNestedManyWithoutDoctorInput,
-  // booking: z.object({ booking_time: z.date() }).array().optional(),
-  //Because we're working with Decimal, we should add "coerce"
-  price: z.coerce.number().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
-  specialization_id: z.coerce
-    .number()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-    .optional(),
-}) satisfies z.Schema<Prisma.DoctorUncheckedCreateInput>
 
-type DoctorFormValues = z.infer<typeof formSchema>
+type DoctorFormValues = z.infer<typeof createDoctorSchema>
 
 interface DoctorForm1Props {
   initialData:

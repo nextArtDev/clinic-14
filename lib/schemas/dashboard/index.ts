@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { z } from 'zod'
 
-const createDoctorSchema = z.object({
+export const createDoctorSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
   phone: z
     .string()
@@ -35,7 +35,7 @@ const createDoctorSchema = z.object({
     .optional(),
 }) satisfies z.Schema<Prisma.DoctorUncheckedCreateInput>
 
-const createIllnessSchema = z.object({
+export const createIllnessSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
   description: z.string(),
   // open_time: z.string().optional(),
@@ -59,7 +59,7 @@ const createIllnessSchema = z.object({
     .optional(),
 }) satisfies z.Schema<Prisma.IllnessUncheckedCreateInput>
 
-const createSpecializationSchema = z.object({
+export const createSpecializationSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
   description: z.string(),
   // open_time: z.string().optional(),
@@ -77,8 +77,8 @@ const createSpecializationSchema = z.object({
   //   .number()
   //   .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
   //   .optional(),
-  doctorId: z
-    .string()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-    .optional(),
+  // doctorId: z
+  //   .string()
+  //   .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
+  //   .optional(),
 }) satisfies z.Schema<Prisma.SpecializationUncheckedCreateInput>

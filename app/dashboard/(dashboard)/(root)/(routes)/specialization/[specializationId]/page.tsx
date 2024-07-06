@@ -4,19 +4,19 @@ import { prisma } from '@/lib/prisma'
 import IllnessForm from './components/SpecializationForm'
 import SpecializationForm from './components/SpecializationForm'
 
-const DoctorPage = async ({
+const SpecializationPage = async ({
   params,
 }: {
   params: { specializationId: string }
 }) => {
   const specialization = await prisma.specialization.findUnique({
     where: {
-      id: +params.specializationId,
+      id: params.specializationId,
     },
     //Because array of images is separate model we have to include it, because we want row of url's not array of id's
     include: {
       images: true,
-      doctors: true,
+      // doctors: true,
       illness: true,
     },
   })
@@ -26,11 +26,11 @@ const DoctorPage = async ({
   //   //   doctors: { some: { id: +params.doctorId } },
   //   // },
   // })
-  const doctor = await prisma.doctor.findMany({
-    // where: {
-    //   doctors: { some: { id: +params.doctorId } },
-    // },
-  })
+  // const doctor = await prisma.doctor.findMany({
+  //   // where: {
+  //   //   doctors: { some: { id: +params.doctorId } },
+  //   // },
+  // })
 
   return (
     <div className="flex-col">
@@ -38,7 +38,7 @@ const DoctorPage = async ({
         <SpecializationForm
           initialData={specialization}
           // illnesses={illnesses}
-          doctor={doctor}
+          // doctor={doctor}
         />
         {/* <DoctorForm initialData={doctor} specialization={specialization} /> */}
       </div>
@@ -46,4 +46,4 @@ const DoctorPage = async ({
   )
 }
 
-export default DoctorPage
+export default SpecializationPage

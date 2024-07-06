@@ -29,32 +29,9 @@ import {
 } from '@/components/ui/select'
 import ImageUpload from '@/app/dashboard/(dashboard)/(root)/(routes)/doctors/components/ImageUpload'
 import { AlertModal } from '@/app/dashboard/(dashboard)/(root)/(routes)/doctors/[doctorId]/components/AlertModal'
+import { createIllnessSchema } from '@/lib/schemas/dashboard'
 
-const formSchema = z.object({
-  name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
-  description: z.string(),
-  // open_time: z.string().optional(),
-  // close_time: z.string().optional(),
-  //   main_image: z
-  //     .string()
-  //     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-  //     .url()
-  //     .optional(),
-  images: z.object({ url: z.string() }).array(),
-  // .array()  satisfies Prisma.ImagesUncheckedCreateNestedManyWithoutDoctorInput,
-  // booking: z.object({ booking_time: z.date() }).array().optional(),
-  //Because we're working with Decimal, we should add "coerce"
-  specializationId: z.coerce
-    .number()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-    .optional(),
-  doctorId: z.coerce
-    .number()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-    .optional(),
-}) satisfies z.Schema<Prisma.IllnessUncheckedCreateInput>
-
-type IllnessFormValues = z.infer<typeof formSchema>
+type IllnessFormValues = z.infer<typeof createIllnessSchema>
 
 interface IllnessFormProps {
   initialData:
@@ -104,7 +81,7 @@ const IllnessForm: FC<IllnessFormProps> = ({
       }
 
   const form = useForm<IllnessFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createIllnessSchema),
     defaultValues,
   })
 
