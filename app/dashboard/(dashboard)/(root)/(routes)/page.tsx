@@ -1,5 +1,4 @@
 import { Heading } from '@/components/dashboard/Heading'
-import { Overview } from '@/components/dashboard/Overview'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 // import { getGraphRevenue } from '@/lib/queries/dashboard/get-graph-revenue'

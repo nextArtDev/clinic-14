@@ -22,7 +22,7 @@ const ProductsPage = async () => {
 
   const formattedSpecialization: SpecializationColumn[] = specialization.map(
     (item) => ({
-      id: +item.id,
+      id: item.id,
       name: item.name,
       description: item?.description,
       // specialization: item.specialization.id,

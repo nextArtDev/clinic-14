@@ -29,23 +29,23 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const params = useParams()
 
   const onConfirm = async () => {
-    try {
-      setLoading(true)
-      // await axios.delete(`/api/doctors/${data.id}`)
-      toast({
-        title: 'دکتر حذف شد.',
-        variant: 'default',
-      })
-      router.refresh()
-    } catch (error) {
-      toast({
-        title: 'مشکلی پیش آمده.',
-        variant: 'destructive',
-      })
-    } finally {
-      setLoading(false)
-      setOpen(false)
-    }
+    // try {
+    //   setLoading(true)
+    //   // await axios.delete(`/api/doctors/${data.id}`)
+    //   toast({
+    //     title: 'دکتر حذف شد.',
+    //     variant: 'default',
+    //   })
+    //   router.refresh()
+    // } catch (error) {
+    //   toast({
+    //     title: 'مشکلی پیش آمده.',
+    //     variant: 'destructive',
+    //   })
+    // } finally {
+    //   setLoading(false)
+    //   setOpen(false)
+    // }
   }
 
   const onCopy = (id: string) => {

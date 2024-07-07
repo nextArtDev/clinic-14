@@ -1,11 +1,12 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Doctor, Illness, Image, Prisma, Specialization } from '@prisma/client'
-import { useParams, usePathname } from 'next/navigation'
-import { useRouter } from 'next/navigation'
-import { FC, useEffect, useState, useTransition } from 'react'
+import { Doctor, Image, Specialization } from '@prisma/client'
+import { usePathname } from 'next/navigation'
+
+import { FC, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
-import { number, z } from 'zod'
+import { z } from 'zod'
+import { AlertModal } from './AlertModal'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Trash } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
@@ -18,172 +19,169 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+// import axios from 'axios'
 
-import { AlertModal } from '@/app/dashboard/(dashboard)/(root)/(routes)/doctors/[doctorId]/components/AlertModal'
-import { createSpecializationSchema } from '@/lib/schemas/dashboard'
-import { cn } from '@/lib/utils/utils'
-import { AspectRatio } from '@/components/ui/aspect-ratio'
-import ImageSlider from '@/components/ImageSlider'
-import { useFormState } from 'react-dom'
-import { toast } from 'sonner'
 import {
-  createSpecialization,
-  editSpecialization,
-} from '@/lib/actions/dashboard/specialization'
-import NextImage from 'next/image'
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { createDoctorSchema } from '@/lib/schemas/dashboard'
+import { toast } from 'sonner'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import ImageSlider from '@/components/dashboard/ImageSlider'
+import { cn } from '@/lib/utils/utils'
 
-type SpecializationFormValues = z.infer<typeof createSpecializationSchema>
+type DoctorFormValues = z.infer<typeof createDoctorSchema>
 
-interface SpecializationFormProps {
+interface DoctorFormProps {
   initialData:
-    | (Specialization & {
+    | (Doctor & {
         images: Image[]
       })
     | null
-  // illness: Illness[]
-  // doctor: Doctor[]
+  specialization: Specialization[]
 }
 
-const SpecializationForm: FC<SpecializationFormProps> = ({
-  initialData,
-  // illness,
-  // doctor,
-}) => {
-  const path = usePathname()
+const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
   const [files, setFiles] = useState<File[]>([])
+  const path = usePathname()
 
   const [open, setOpen] = useState(false)
-  const [isPending, startTransition] = useTransition()
-  useEffect(() => {
-    console.log(files)
-  }, [files])
 
-  const title = initialData ? 'ویرایش ' : 'ایجاد تخصص جدید'
+  const [isPending, startTransition] = useTransition()
+  console.log(specialization)
+
+  const title = initialData ? 'ویرایش ' : 'ایجاد دکتر جدید'
   const description = initialData
-    ? 'ویرایش اطلاعات تخصص'
-    : 'اضافه کردن تخصص جدید'
-  const toastMessage = initialData ? 'اطلاعات تخصص آپدیت شد.' : 'تخصص ایجاد شد.'
+    ? 'ویرایش اطلاعات دکتر'
+    : 'اضافه کردن دکتر جدید'
+  const toastMessage = initialData ? 'اطلاعات دکتر آپدیت شد.' : 'دکتر ایجاد شد.'
   const action = initialData ? 'ذخیره تغییرات' : 'ایجاد'
 
   const defaultValues = initialData
     ? {
         ...initialData,
-        name: initialData.name!,
-        description: initialData?.description!,
-        // illnessId: initialData?.illness_id,
-        // doctorId: parseFloat(String(initialData?.doctorId)),
+        //In prisma mysql price is Decimal but here it has to be a float
+        price: parseFloat(String(initialData?.price)),
+        phone: initialData.phone || '',
+        website: initialData.website || '',
+        open_time: initialData.open_time || '',
+        close_time: initialData.close_time || '',
+        main_image: initialData.main_image || '',
+        description: initialData.description || '',
+        specializationId: initialData.specialization_id || '',
       }
     : {
         name: '',
+        phone: '',
+        website: '',
         description: '',
+        // main_image: undefined,
         // images: [],
-        // illnessId: 0,
-        doctorId: 0,
+        // booking: [],
+        open_time: '',
+        close_time: '',
+        price: 0,
+        specializationId: '',
       }
 
-  const form = useForm<SpecializationFormValues>({
-    resolver: zodResolver(createSpecializationSchema),
+  const form = useForm<DoctorFormValues>({
+    resolver: zodResolver(createDoctorSchema),
     defaultValues,
   })
 
-  //   const [deleteState, deleteAction] = useFormState(
-  //   deleteCategory.bind(
-  //     null,
-  //     path,
-  //     params.storeId as string,
-  //     categoryId as string
-  //   ),
-  //   {
-  //     errors: {},
-  //   }
-  // )
-
-  const onSubmit = async (data: SpecializationFormValues) => {
+  const onSubmit = async (data: DoctorFormValues) => {
     console.log(data)
     const formData = new FormData()
 
     formData.append('name', data.name)
+    formData.append('phone', data.phone || '')
+    formData.append('website', data.website || '')
+    formData.append('description', data.description || '')
+    formData.append('open_time', data.open_time || '')
+    formData.append('close_time', data.close_time || '')
+    formData.append('price', String(data.price))
+    formData.append('specializationId', data.specializationId || '')
     formData.append('description', data.description || '')
     if (data.images && data.images.length > 0) {
       for (let i = 0; i < data.images.length; i++) {
         formData.append('images', data.images[i])
       }
     }
-    try {
-      if (initialData) {
-        // console.log({ data, initialData })
-        startTransition(() => {
-          editSpecialization(formData, initialData.id as string, path)
-            .then((res) => {
-              if (res?.errors?.name) {
-                form.setError('name', {
-                  type: 'custom',
-                  message: res?.errors.name?.join(' و '),
-                })
-              } else if (res?.errors?.images) {
-                form.setError('images', {
-                  type: 'custom',
-                  message: res?.errors.images?.join(' و '),
-                })
-              } else if (res?.errors?._form) {
-                toast.error(res?.errors._form?.join(' و '))
-              }
-            })
-            // TODO: fixing Through Error when its ok
-            // .catch(() => toast.error('مشکلی پیش آمده.'))
-            .catch(() => console.log('مشکلی پیش آمده.'))
-        })
-      } else {
-        startTransition(() => {
-          createSpecialization(formData, path)
-            .then((res) => {
-              if (res?.errors?.name) {
-                form.setError('name', {
-                  type: 'custom',
-                  message: res?.errors.name?.join(' و '),
-                })
-              } else if (res?.errors?.images) {
-                form.setError('images', {
-                  type: 'custom',
-                  message: res?.errors.images?.join(' و '),
-                })
-              } else if (res?.errors?._form) {
-                toast.error(res?.errors._form?.join(' و '))
-                form.setError('root', {
-                  type: 'custom',
-                  message: res?.errors?._form?.join(' و '),
-                })
-              }
-              // if (res?.success) {
-              //    toast.success(toastMessage)
-              // }
-            })
-            .catch(() => toast.error('مشکلی پیش آمده.'))
-        })
-      }
-    } catch {
-      toast.error('مشکلی پیش آمده، لطفا دوباره امتحان کنید!')
-    }
 
-    // try {
-    //   setLoading(true)
-    //   if (initialData) {
-    //     await axios.patch(
-    //       `/api/specializations/${params.specializationId}`,
-    //       data
-    //     )
-    //   } else {
-    //     console.log(data)
-    //     await axios.post(`/api/specializations`, data)
-    //   }
-    //   router.refresh()
-    //   router.push(`/dashboard/specialization`)
-    //   toast({ title: toastMessage, variant: 'default' })
-    // } catch (error: any) {
-    //   toast({ title: 'مشکلی پیش آمده.', variant: 'destructive' })
-    // } finally {
-    //   setLoading(false)
-    // }
+    //  try {
+    //    if (initialData) {
+    //      // console.log({ data, initialData })
+    //      startTransition(() => {
+    //        editDoctor(
+    //          formData,
+    //          initialData.id as string,
+    //          path
+    //        )
+    //          .then((res) => {
+    //            if (res?.errors?.name) {
+    //              form.setError('name', {
+    //                type: 'custom',
+    //                message: res?.errors.name?.join(' و '),
+    //              })
+    //            } else if (res.errors?.billboardId) {
+    //              form.setError('billboardId', {
+    //                type: 'custom',
+    //                message: res?.errors.billboardId?.join(' و '),
+    //              })
+    //            } else if (res?.errors?.images) {
+    //              form.setError('images', {
+    //                type: 'custom',
+    //                message: res?.errors.images?.join(' و '),
+    //              })
+    //            } else if (res?.errors?._form) {
+    //              toast.error(res?.errors._form?.join(' و '))
+    //            }
+    //            // if (res?.success) {
+    //            //    toast.success(toastMessage)
+    //            // }
+    //          })
+    //          // TODO: fixing Through Error when its ok
+    //          // .catch(() => toast.error('مشکلی پیش آمده.'))
+    //          .catch(() => console.log('مشکلی پیش آمده.'))
+    //      })
+    //    } else {
+    //      startTransition(() => {
+    //        createDoctor(formData,  path)
+    //          .then((res) => {
+    //            if (res?.errors?.name) {
+    //              form.setError('name', {
+    //                type: 'custom',
+    //                message: res?.errors.name?.join(' و '),
+    //              })
+    //            } else if (res?.errors?.images) {
+    //              form.setError('billboardId', {
+    //                type: 'custom',
+    //                message: res?.errors.billboardId?.join(' و '),
+    //              })
+    //            } else if (res?.errors?.images) {
+    //              form.setError('images', {
+    //                type: 'custom',
+    //                message: res?.errors.images?.join(' و '),
+    //              })
+    //            } else if (res?.errors?._form) {
+    //              toast.error(res?.errors._form?.join(' و '))
+    //              form.setError('root', {
+    //                type: 'custom',
+    //                message: res?.errors?._form?.join(' و '),
+    //              })
+    //            }
+
+    //          })
+    //          .catch(() => toast.error('مشکلی پیش آمده.'))
+    //      })
+    //    }
+    //  } catch {
+    //    toast.error('مشکلی پیش آمده، لطفا دوباره امتحان کنید!')
+    //  }
   }
 
   const validUrls =
@@ -292,11 +290,45 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>نام تخصص </FormLabel>
+                  <FormLabel>نام و نام خانوادگی دکتر </FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
-                      placeholder="نام تخصص"
+                      placeholder="نام و نام خانوادگی "
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>نام</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isPending}
+                      placeholder="شماره تماس"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="website"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>آدرس وبسایت</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isPending}
+                      placeholder="آدرس وبسایت"
                       {...field}
                     />
                   </FormControl>
@@ -309,11 +341,11 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>توضیحات تخصص</FormLabel>
+                  <FormLabel>توضیحات</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
-                      placeholder="توضیحات تخصص"
+                      placeholder="توضیحات"
                       {...field}
                     />
                   </FormControl>
@@ -321,10 +353,22 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                 </FormItem>
               )}
             />
-
-            {/* <FormField
+            <FormField
               control={form.control}
-              name="illnessId"
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>قیمت ویزیت</FormLabel>
+                  <FormControl>
+                    <Input type="number" disabled={isPending} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="specializationId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>تخصص</FormLabel>
@@ -353,39 +397,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
-            {/* <FormField
-              control={form.control}
-              name="doctorId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel> دکتر معالج </FormLabel>
-                  <Select
-                    disabled={isPending}
-                    onValueChange={field.onChange}
-                    value={`${field.value}`}
-                    defaultValue={`${field.value}`}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="انتخاب دکتر معالج"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {doctor.map((special) => (
-                        <SelectItem key={special.id} value={`${special.id}`}>
-                          {special.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+            />
           </div>
           <Button disabled={isPending} className="ml-auto" type="submit">
             {action}
@@ -396,4 +408,4 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
   )
 }
 
-export default SpecializationForm
+export default DoctorForm

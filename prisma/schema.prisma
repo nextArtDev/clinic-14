@@ -67,23 +67,23 @@ model Image {
 }
 
 model Doctor {
-  id                String          @id @default(cuid())
-  name              String
-  phone             String?
-  website           String?
-  main_image        String?
-  description       String?
-  open_time         String?
-  close_time        String?
+  id               String          @id @default(cuid())
+  name             String
+  phone            String?
+  website          String?
+  main_image       String?
+  description      String?
+  open_time        String?
+  close_time       String?
   // slug              String?         @unique
-  price             Int
-  illnesses         Illness[]
-  images            Image[]
-  specialization_id String?
-  specialization    Specialization? @relation(fields: [specialization_id], references: [id])
-  created_at        DateTime        @default(now())
-  updated_at        DateTime        @updatedAt
-  reviews           Review[]
+  price            Int
+  illnesses        Illness[]
+  images           Image[]
+  specializationId String?
+  specialization   Specialization? @relation(fields: [specializationId], references: [id])
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
+  reviews          Review[]
 
   Post    Post[]
   FaqPost FaqPost[]

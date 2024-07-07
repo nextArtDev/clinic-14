@@ -17,8 +17,8 @@ export const createDoctorSchema = z.object({
     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
     .optional(),
   description: z.string().optional(),
-  // open_time: z.string().optional(),
-  // close_time: z.string().optional(),
+  open_time: z.string().optional(),
+  close_time: z.string().optional(),
   //   main_image: z
   //     .string()
   //     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
@@ -38,8 +38,8 @@ export const createDoctorSchema = z.object({
 export const createIllnessSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
   description: z.string(),
-  // open_time: z.string().optional(),
-  // close_time: z.string().optional(),
+  open_time: z.string().optional(),
+  close_time: z.string().optional(),
   //   main_image: z
   //     .string()
   //     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })

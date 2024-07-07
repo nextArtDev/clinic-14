@@ -5,7 +5,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { CellAction } from './CellAction'
 
 export type DoctorColumn = {
-  id: number
+  id: string
   name: string | null
   phone: string | null
   price: number

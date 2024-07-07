@@ -21,17 +21,6 @@ const SpecializationPage = async ({
     },
   })
 
-  // const illnesses = await prisma.illness.findMany({
-  //   // where: {
-  //   //   doctors: { some: { id: +params.doctorId } },
-  //   // },
-  // })
-  // const doctor = await prisma.doctor.findMany({
-  //   // where: {
-  //   //   doctors: { some: { id: +params.doctorId } },
-  //   // },
-  // })
-
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
@@ -40,7 +29,6 @@ const SpecializationPage = async ({
           // illnesses={illnesses}
           // doctor={doctor}
         />
-        {/* <DoctorForm initialData={doctor} specialization={specialization} /> */}
       </div>
     </div>
   )

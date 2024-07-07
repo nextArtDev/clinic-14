@@ -32,7 +32,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     // specialization: item.specialization.id,
     // images: item.images.url.map((ur) => ur),
     //Because its Decimal in prisma model, we have to convert it to number by "toNumber"
-    price: formatter.format(item.price),
+    price: +formatter.format(item.price),
     // booking: item.bookings.booking_time,
     // reviews: {item.reviews.name ,item.reviews.text , item.reviews.rating },
     createdAt: format(item.created_at, 'dd MMMM yyyy'),

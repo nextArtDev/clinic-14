@@ -5,7 +5,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { CellAction } from './CellAction'
 
 export type SpecializationColumn = {
-  id: number
+  id: string
   name: string | null
   description: string | null
 }

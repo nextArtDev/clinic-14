@@ -4,10 +4,6 @@ import { redirect } from 'next/navigation'
 import { auth } from '@/auth'
 import Navbar from '@/components/dashboard/Navbar'
 
-import { ModalProvider } from '@/providers/modal-provider'
-
-// import Navbar from '@/components/navbar'
-
 export default async function DashboardLayout({
   children,
   params,

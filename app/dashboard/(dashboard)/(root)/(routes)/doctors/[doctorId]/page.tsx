@@ -2,7 +2,6 @@ import React from 'react'
 
 import { prisma } from '@/lib/prisma'
 import DoctorForm from './components/DoctorForm'
-import DoctorForm1 from './components/DoctorForm1'
 
 const DoctorPage = async ({ params }: { params: { doctorId: string } }) => {
   const doctor = await prisma.doctor.findUnique({
@@ -18,15 +17,15 @@ const DoctorPage = async ({ params }: { params: { doctorId: string } }) => {
   })
 
   const specialization = await prisma.specialization.findMany({
-    // where: {
-    //   doctors: { some: { id: +params.doctorId } },
-    // },
+    where: {
+      doctors: { some: { id: params.doctorId } },
+    },
   })
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <DoctorForm1 initialData={doctor} specialization={specialization} />
+        <DoctorForm initialData={doctor} specialization={specialization} />
         {/* <DoctorForm initialData={doctor} specialization={specialization} /> */}
       </div>
     </div>
