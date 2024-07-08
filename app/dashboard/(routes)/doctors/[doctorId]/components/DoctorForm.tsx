@@ -33,6 +33,8 @@ import { toast } from 'sonner'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import ImageSlider from '@/components/dashboard/ImageSlider'
 import { cn } from '@/lib/utils'
+import { MultiSelect } from '@/components/multi-select'
+// import { MultiSelect } from '@/components/dashboard/MultiSelect'
 
 type DoctorFormValues = z.infer<typeof createDoctorSchema>
 
@@ -40,13 +42,14 @@ interface DoctorFormProps {
   initialData:
     | (Doctor & {
         images: Image[]
-      })
+      } & { specialization: Specialization[] })
     | null
   specialization: Specialization[]
 }
 
 const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
   const [files, setFiles] = useState<File[]>([])
+  const [selectedSpecial, setSelectedSpecial] = useState<string[]>([])
   const path = usePathname()
 
   const [open, setOpen] = useState(false)
@@ -72,7 +75,8 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
         close_time: initialData.close_time || '',
         main_image: initialData.main_image || '',
         description: initialData.description || '',
-        specializationId: initialData.specializationId || '',
+        specializationId:
+          initialData.specialization.map((w: { id: string }) => w.id) || [],
       }
     : {
         name: '',
@@ -85,7 +89,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
         open_time: '',
         close_time: '',
         price: 0,
-        specializationId: '',
+        specializationId: [],
       }
 
   const form = useForm<DoctorFormValues>({
@@ -104,8 +108,12 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
     formData.append('open_time', data.open_time || '')
     formData.append('close_time', data.close_time || '')
     formData.append('price', String(data.price))
-    formData.append('specializationId', data.specializationId || '')
     formData.append('description', data.description || '')
+    if (data.specializationId && data.specializationId.length > 0) {
+      for (let i = 0; i < data.specializationId.length; i++) {
+        formData.append('specializationId', data.specializationId[i])
+      }
+    }
     if (data.images && data.images.length > 0) {
       for (let i = 0; i < data.images.length; i++) {
         formData.append('images', data.images[i])
@@ -372,29 +380,35 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>تخصص</FormLabel>
-                  <Select
-                    disabled={isPending}
-                    onValueChange={field.onChange}
-                    value={`${field.value}`}
-                    defaultValue={`${field.value}`}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="انتخاب تخصص"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {specialization.map((special) => (
-                        <SelectItem key={special.id} value={`${special.id}`}>
-                          {special.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
+                  {/* <MultiSelect
+                    selected={field.value!}
+                    options={specialization.map((specialization) => {
+                      return {
+                        value: specialization.id,
+                        label: specialization.name,
+                      }
+                    })}
+                    // onChange={console.log(form.getValues('specializationId'))}
+
+                    {...field}
+                    // className="sm:w-[510px]"
+                  /> */}
+                  <MultiSelect
+                    options={specialization.map((special) => ({
+                      value: special.id,
+                      label: special.name,
+                    }))}
+                    onValueChange={(data) => field.onChange(data)}
+                    defaultValue={[]}
+                    placeholder="انتخاب تخصص"
+                    variant="inverted"
+                    animation={2}
+                    maxCount={3}
+                  />
+
+                  <FormMessage>
+                    {form.getFieldState('specializationId')?.error?.message}
+                  </FormMessage>
                 </FormItem>
               )}
             />

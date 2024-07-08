@@ -17,9 +17,9 @@ const DoctorPage = async ({ params }: { params: { doctorId: string } }) => {
   })
 
   const specialization = await prisma.specialization.findMany({
-    where: {
-      doctors: { some: { id: params.doctorId } },
-    },
+    // where: {
+    //   doctors: { some: { id: params.doctorId } },
+    // },
   })
 
   return (

@@ -30,8 +30,7 @@ export const createDoctorSchema = z.object({
   //Because we're working with Decimal, we should add "coerce"
   price: z.coerce.number().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
   specializationId: z
-    .string()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
+    .array(z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }))
     .optional(),
 }) satisfies z.Schema<Prisma.DoctorUncheckedCreateInput>
 
