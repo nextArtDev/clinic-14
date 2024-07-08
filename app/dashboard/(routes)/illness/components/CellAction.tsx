@@ -14,26 +14,25 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { DoctorColumn } from './columns'
+import { IllnessColumn } from './columns'
 import { toast } from '@/components/ui/use-toast'
-import { AlertModal } from '../[doctorId]/components/AlertModal'
+import { AlertModal } from '../../../../../components/dashboard/AlertModal'
 
 interface CellActionProps {
-  data: DoctorColumn
+  data: IllnessColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const router = useRouter()
-  const params = useParams()
 
   const onConfirm = async () => {
     // try {
     //   setLoading(true)
-    //   // await axios.delete(`/api/doctors/${data.id}`)
+    //   await axios.delete(`/api/illnesses/${data.id}`)
     //   toast({
-    //     title: 'دکتر حذف شد.',
+    //     title: 'بیماری حذف شد.',
     //     variant: 'default',
     //   })
     //   router.refresh()
@@ -74,7 +73,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <Copy className="ml-2 h-4 w-4" /> کپی ID
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/doctors/${data.id}`)}
+            onClick={() => router.push(`/dashboard/illness/${data.id}`)}
           >
             <Edit className="ml-2 h-4 w-4" /> آپدیت
           </DropdownMenuItem>

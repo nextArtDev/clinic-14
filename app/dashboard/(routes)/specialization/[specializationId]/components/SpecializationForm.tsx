@@ -20,7 +20,7 @@ import {
 import { Input } from '@/components/ui/input'
 
 import { createSpecializationSchema } from '@/lib/schemas/dashboard'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 import { useFormState } from 'react-dom'

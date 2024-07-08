@@ -2,7 +2,7 @@
 
 // import axios from 'axios'
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -14,15 +14,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { IllnessColumn } from './columns'
 import { toast } from '@/components/ui/use-toast'
-import { AlertModal } from '../../doctors/[doctorId]/components/AlertModal'
+import { AlertModal } from '../../../../../components/dashboard/AlertModal'
+import { SpecializationColumn } from './columns'
+import { useFormState } from 'react-dom'
+import { deleteSpecialization } from '@/lib/actions/dashboard/specialization'
 
 interface CellActionProps {
-  data: IllnessColumn
+  data: SpecializationColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  const path = usePathname()
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -30,9 +33,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onConfirm = async () => {
     // try {
     //   setLoading(true)
-    //   await axios.delete(`/api/illnesses/${data.id}`)
+    //   await axios.delete(`/api/specializations/${data.id}`)
     //   toast({
-    //     title: 'بیماری حذف شد.',
+    //     title: 'تخصص حذف شد.',
     //     variant: 'default',
     //   })
     //   router.refresh()
@@ -46,6 +49,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     //   setOpen(false)
     // }
   }
+  const [deleteState, deleteAction] = useFormState(
+    deleteSpecialization.bind(null, path, data?.id as string),
+    {
+      errors: {},
+    }
+  )
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id)
@@ -57,8 +66,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={onConfirm}
-        loading={loading}
+        onConfirm={deleteAction}
+        isPending={loading}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -69,11 +78,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>عملیات</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => onCopy(`${data.id}`)}>
+          {/* <DropdownMenuItem onClick={() => onCopy(`${data.id}`)}>
             <Copy className="ml-2 h-4 w-4" /> کپی ID
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/illness/${data.id}`)}
+            onClick={() => router.push(`/dashboard/specialization/${data.id}`)}
           >
             <Edit className="ml-2 h-4 w-4" /> آپدیت
           </DropdownMenuItem>

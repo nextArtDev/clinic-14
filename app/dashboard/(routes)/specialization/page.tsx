@@ -1,6 +1,6 @@
 import { format } from 'date-fns-jalali'
 
-import { formatter } from '@/lib/utils/utils'
+import { formatter } from '@/lib/utils'
 
 import { prisma } from '@/lib/prisma'
 import { SpecializationColumn } from './components/columns'

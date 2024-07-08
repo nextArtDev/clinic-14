@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from 'react'
 
-import { Button } from '@/components/ui/button'
-
 import { useFormStatus } from 'react-dom'
 
 import { toast } from 'sonner'
-import { Modal } from '@/components/dashboard/modal'
+
 import { SubmitButton } from '@/components/SubmitButton'
+import { Modal } from './modal'
 
 interface DeleteStoreFormState {
   errors: {

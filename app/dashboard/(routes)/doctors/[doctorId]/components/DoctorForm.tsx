@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { FC, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { AlertModal } from './AlertModal'
+import { AlertModal } from '../../../../../../components/dashboard/AlertModal'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Trash } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
@@ -32,7 +32,7 @@ import { createDoctorSchema } from '@/lib/schemas/dashboard'
 import { toast } from 'sonner'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import ImageSlider from '@/components/dashboard/ImageSlider'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 
 type DoctorFormValues = z.infer<typeof createDoctorSchema>
 
@@ -72,7 +72,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
         close_time: initialData.close_time || '',
         main_image: initialData.main_image || '',
         description: initialData.description || '',
-        specializationId: initialData.specialization_id || '',
+        specializationId: initialData.specializationId || '',
       }
     : {
         name: '',
@@ -198,7 +198,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
         onClose={() => setOpen(false)}
         // onConfirm={onDelete}
         onConfirm={() => {}}
-        loading={isPending}
+        isPending={isPending}
       />
       <div className="flex items-center justify-between">
         {initialData && (

@@ -1,7 +1,7 @@
 'use client'
 import { buttonVariants } from '@/components/ui/button'
 // import { toast } from '@/components/ui/use-toast'
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

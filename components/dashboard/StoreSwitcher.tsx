@@ -8,7 +8,7 @@ import * as React from 'react'
 //   LuStore,
 // } from 'react-icons/lu'
 
-import { cn } from '@/lib/utils/utils'
+import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   Command,

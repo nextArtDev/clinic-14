@@ -19,10 +19,10 @@ export default async function DashboardLayout({
   }
 
   return (
-    <section>
+    <body>
       <Navbar />
 
       {children}
-    </section>
+    </body>
   )
 }
