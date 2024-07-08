@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client'
-import { z } from 'zod'
+import * as z from 'zod'
 
 export const createDoctorSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
@@ -61,7 +61,7 @@ export const createIllnessSchema = z.object({
 
 export const createSpecializationSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
-  description: z.string(),
+  description: z.string().optional(),
   // open_time: z.string().optional(),
   // close_time: z.string().optional(),
   //   main_image: z
@@ -81,4 +81,4 @@ export const createSpecializationSchema = z.object({
   //   .string()
   //   .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
   //   .optional(),
-}) satisfies z.Schema<Prisma.SpecializationUncheckedCreateInput>
+})

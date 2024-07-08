@@ -28,7 +28,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import ImageUpload from '@/app/dashboard/(dashboard)/(root)/(routes)/doctors/components/ImageUpload'
-import { AlertModal } from '@/app/dashboard/(dashboard)/(root)/(routes)/doctors/[doctorId]/components/AlertModal'
+import { AlertModal } from '@/app/dashboard/(root)/(routes)/doctors/[doctorId]/components/AlertModal'
 import { createIllnessSchema } from '@/lib/schemas/dashboard'
 
 type IllnessFormValues = z.infer<typeof createIllnessSchema>

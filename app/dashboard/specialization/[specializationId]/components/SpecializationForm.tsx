@@ -5,9 +5,9 @@ import { useParams, usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { FC, useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
-import { number, z } from 'zod'
+import * as z from 'zod'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Trash } from 'lucide-react'
+import { Loader, Trash } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import {
   Form,
@@ -19,18 +19,19 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import { AlertModal } from '@/app/dashboard/(dashboard)/(root)/(routes)/doctors/[doctorId]/components/AlertModal'
 import { createSpecializationSchema } from '@/lib/schemas/dashboard'
 import { cn } from '@/lib/utils/utils'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
-import ImageSlider from '@/components/ImageSlider'
+
 import { useFormState } from 'react-dom'
 import { toast } from 'sonner'
 import {
   createSpecialization,
   editSpecialization,
 } from '@/lib/actions/dashboard/specialization'
-import NextImage from 'next/image'
+
+import { AlertModal } from '@/components/dashboard/modals/alert-modal'
+import ImageSlider from '@/components/dashboard/ImageSlider'
 
 type SpecializationFormValues = z.infer<typeof createSpecializationSchema>
 
@@ -49,14 +50,11 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
   // illness,
   // doctor,
 }) => {
-  const path = usePathname()
   const [files, setFiles] = useState<File[]>([])
+  const path = usePathname()
 
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
-  useEffect(() => {
-    console.log(files)
-  }, [files])
 
   const title = initialData ? 'ویرایش ' : 'ایجاد تخصص جدید'
   const description = initialData
@@ -69,7 +67,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
     ? {
         ...initialData,
         name: initialData.name!,
-        description: initialData?.description!,
+        description: initialData.description || '',
         // illnessId: initialData?.illness_id,
         // doctorId: parseFloat(String(initialData?.doctorId)),
       }
@@ -78,7 +76,6 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
         description: '',
         // images: [],
         // illnessId: 0,
-        doctorId: 0,
       }
 
   const form = useForm<SpecializationFormValues>({
@@ -164,26 +161,6 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
     } catch {
       toast.error('مشکلی پیش آمده، لطفا دوباره امتحان کنید!')
     }
-
-    // try {
-    //   setLoading(true)
-    //   if (initialData) {
-    //     await axios.patch(
-    //       `/api/specializations/${params.specializationId}`,
-    //       data
-    //     )
-    //   } else {
-    //     console.log(data)
-    //     await axios.post(`/api/specializations`, data)
-    //   }
-    //   router.refresh()
-    //   router.push(`/dashboard/specialization`)
-    //   toast({ title: toastMessage, variant: 'default' })
-    // } catch (error: any) {
-    //   toast({ title: 'مشکلی پیش آمده.', variant: 'destructive' })
-    // } finally {
-    //   setLoading(false)
-    // }
   }
 
   const validUrls =
@@ -200,7 +177,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
         onClose={() => setOpen(false)}
         // onConfirm={onDelete}
         onConfirm={() => {}}
-        loading={isPending}
+        isPending={isPending}
       />
       <div className="flex items-center justify-between">
         {initialData && (
@@ -276,9 +253,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                       />
                     </FormControl>
 
-                    {/* <FormMessage className="dark:text-rose-400" /> */}
                     <FormMessage>
-                      {/* @ts-ignore */}
                       {form.getFieldState('images')?.error?.message}
                     </FormMessage>
                   </FormItem>
@@ -321,74 +296,13 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
                 </FormItem>
               )}
             />
-
-            {/* <FormField
-              control={form.control}
-              name="illnessId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>تخصص</FormLabel>
-                  <Select
-                    disabled={isPending}
-                    onValueChange={field.onChange}
-                    value={`${field.value}`}
-                    defaultValue={`${field.value}`}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="انتخاب تخصص"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {specialization.map((special) => (
-                        <SelectItem key={special.id} value={`${special.id}`}>
-                          {special.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-            {/* <FormField
-              control={form.control}
-              name="doctorId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel> دکتر معالج </FormLabel>
-                  <Select
-                    disabled={isPending}
-                    onValueChange={field.onChange}
-                    value={`${field.value}`}
-                    defaultValue={`${field.value}`}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="انتخاب دکتر معالج"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {doctor.map((special) => (
-                        <SelectItem key={special.id} value={`${special.id}`}>
-                          {special.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
           </div>
-          <Button disabled={isPending} className="ml-auto" type="submit">
-            {action}
+          <Button disabled={isPending} className="w-fit ml-auto">
+            {isPending ? (
+              <Loader className="animate-spin w-full h-full " />
+            ) : (
+              action
+            )}
           </Button>
         </form>
       </Form>
