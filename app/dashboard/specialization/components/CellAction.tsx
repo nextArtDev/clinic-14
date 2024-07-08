@@ -2,7 +2,7 @@
 
 // import axios from 'axios'
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -17,12 +17,15 @@ import {
 import { toast } from '@/components/ui/use-toast'
 import { AlertModal } from '../../doctors/[doctorId]/components/AlertModal'
 import { SpecializationColumn } from './columns'
+import { useFormState } from 'react-dom'
+import { deleteSpecialization } from '@/lib/actions/dashboard/specialization'
 
 interface CellActionProps {
   data: SpecializationColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  const path = usePathname()
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -46,6 +49,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     //   setOpen(false)
     // }
   }
+  const [deleteState, deleteAction] = useFormState(
+    deleteSpecialization.bind(null, path, data?.id as string),
+    {
+      errors: {},
+    }
+  )
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id)
@@ -57,8 +66,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={onConfirm}
-        loading={loading}
+        onConfirm={deleteAction}
+        isPending={loading}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

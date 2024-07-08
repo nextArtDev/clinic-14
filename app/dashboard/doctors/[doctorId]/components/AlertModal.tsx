@@ -3,22 +3,43 @@
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Modal } from './Modal'
 
+import { useFormStatus } from 'react-dom'
+
+import { toast } from 'sonner'
+import { Modal } from '@/components/dashboard/modal'
+import { SubmitButton } from '@/components/SubmitButton'
+
+interface DeleteStoreFormState {
+  errors: {
+    name?: string[]
+    // description?: string[]
+    _form?: string[]
+  }
+}
 interface AlertModalProps {
   isOpen: boolean
+  isPending?: boolean
   onClose: () => void
-  onConfirm: () => void
-  loading: boolean
+  onConfirm: (payload: FormData) => void
+  formState?: DeleteStoreFormState
 }
 
 export const AlertModal: React.FC<AlertModalProps> = ({
   isOpen,
   onClose,
   onConfirm,
-  loading,
+  formState,
+  isPending,
 }) => {
   const [isMounted, setIsMounted] = useState(false)
+  const { pending } = useFormStatus()
+
+  useEffect(() => {
+    if (formState?.errors?._form) {
+      toast.error(formState.errors._form?.join(' و '))
+    }
+  }, [formState])
 
   useEffect(() => {
     setIsMounted(true)
@@ -36,12 +57,12 @@ export const AlertModal: React.FC<AlertModalProps> = ({
       onClose={onClose}
     >
       <div className="pt-6 gap-2 flex items-center justify-start w-full">
-        <Button disabled={loading} variant="destructive" onClick={onConfirm}>
-          ادامه
-        </Button>
-        <Button disabled={loading} variant="outline" onClick={onClose}>
+        <form action={onConfirm}>
+          <SubmitButton variant="destructive">ادامه</SubmitButton>
+        </form>
+        {/* <Button disabled={isPending} variant="outline" onClick={onClose}>
           انصراف
-        </Button>
+        </Button> */}
       </div>
     </Modal>
   )

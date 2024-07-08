@@ -33,7 +33,7 @@ export async function createSpecialization(
       errors: result.error.flatten().fieldErrors,
     }
   }
-  // console.log(result?.data.images.length)
+  // console.log(result?.data.description)
 
   const session = await auth()
   if (!session || !session.user || session.user.role !== 'ADMIN') {
@@ -75,6 +75,7 @@ export async function createSpecialization(
     specialization = await prisma.specialization.create({
       data: {
         name: result.data.name,
+        description: result?.data.description,
         images: {
           connect: imageIds.map((id) => ({
             id: id,
@@ -101,7 +102,7 @@ export async function createSpecialization(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/specializations`)
+  redirect(`/dashboard/specialization`)
 }
 interface EditCategoryFormState {
   errors: {
@@ -253,7 +254,7 @@ export async function editSpecialization(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/specializations`)
+  redirect(`/dashboard/specialization`)
 }
 
 //////////////////////
@@ -268,7 +269,7 @@ interface DeleteSpecializationFormState {
   }
 }
 
-export async function deleteCategory(
+export async function deleteSpecialization(
   path: string,
   specializationId: string,
   formState: DeleteSpecializationFormState,
@@ -338,5 +339,5 @@ export async function deleteCategory(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/specializations`)
+  redirect(`/dashboard/specialization`)
 }

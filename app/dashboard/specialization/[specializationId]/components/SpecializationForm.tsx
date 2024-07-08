@@ -27,6 +27,7 @@ import { useFormState } from 'react-dom'
 import { toast } from 'sonner'
 import {
   createSpecialization,
+  deleteSpecialization,
   editSpecialization,
 } from '@/lib/actions/dashboard/specialization'
 
@@ -68,14 +69,11 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
         ...initialData,
         name: initialData.name!,
         description: initialData.description || '',
-        // illnessId: initialData?.illness_id,
-        // doctorId: parseFloat(String(initialData?.doctorId)),
       }
     : {
         name: '',
         description: '',
         // images: [],
-        // illnessId: 0,
       }
 
   const form = useForm<SpecializationFormValues>({
@@ -83,20 +81,15 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
     defaultValues,
   })
 
-  //   const [deleteState, deleteAction] = useFormState(
-  //   deleteCategory.bind(
-  //     null,
-  //     path,
-  //     params.storeId as string,
-  //     categoryId as string
-  //   ),
-  //   {
-  //     errors: {},
-  //   }
-  // )
+  const [deleteState, deleteAction] = useFormState(
+    deleteSpecialization.bind(null, path, initialData?.id as string),
+    {
+      errors: {},
+    }
+  )
 
   const onSubmit = async (data: SpecializationFormValues) => {
-    console.log(data)
+    // console.log(data)
     const formData = new FormData()
 
     formData.append('name', data.name)
@@ -175,8 +168,7 @@ const SpecializationForm: FC<SpecializationFormProps> = ({
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        // onConfirm={onDelete}
-        onConfirm={() => {}}
+        onConfirm={deleteAction}
         isPending={isPending}
       />
       <div className="flex items-center justify-between">
