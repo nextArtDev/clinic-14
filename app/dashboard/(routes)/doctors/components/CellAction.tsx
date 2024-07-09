@@ -2,7 +2,7 @@
 
 // import axios from 'axios'
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -17,36 +17,26 @@ import {
 import { DoctorColumn } from './columns'
 import { toast } from '@/components/ui/use-toast'
 import { AlertModal } from '../../../../../components/dashboard/AlertModal'
+import { useFormState } from 'react-dom'
+import { deleteDoctor } from '@/lib/actions/dashboard/doctor'
 
 interface CellActionProps {
   data: DoctorColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  const path = usePathname()
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const router = useRouter()
   const params = useParams()
 
-  const onConfirm = async () => {
-    // try {
-    //   setLoading(true)
-    //   // await axios.delete(`/api/doctors/${data.id}`)
-    //   toast({
-    //     title: 'دکتر حذف شد.',
-    //     variant: 'default',
-    //   })
-    //   router.refresh()
-    // } catch (error) {
-    //   toast({
-    //     title: 'مشکلی پیش آمده.',
-    //     variant: 'destructive',
-    //   })
-    // } finally {
-    //   setLoading(false)
-    //   setOpen(false)
-    // }
-  }
+  const [deleteState, deleteAction] = useFormState(
+    deleteDoctor.bind(null, path, data?.id as string),
+    {
+      errors: {},
+    }
+  )
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id)
@@ -58,8 +48,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={onConfirm}
-        loading={loading}
+        onConfirm={deleteAction}
+        isPending={loading}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

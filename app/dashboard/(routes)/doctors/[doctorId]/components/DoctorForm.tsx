@@ -1,9 +1,9 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Doctor, Image, Specialization } from '@prisma/client'
+import { DateTag, Doctor, Image, Specialization } from '@prisma/client'
 import { usePathname } from 'next/navigation'
 
-import { FC, useState, useTransition } from 'react'
+import { FC, KeyboardEvent, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { AlertModal } from '../../../../../../components/dashboard/AlertModal'
@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator'
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -34,6 +35,14 @@ import { AspectRatio } from '@/components/ui/aspect-ratio'
 import ImageSlider from '@/components/dashboard/ImageSlider'
 import { cn } from '@/lib/utils'
 import { MultiSelect } from '@/components/multi-select'
+import NextImage from 'next/image'
+import { Badge } from '@/components/ui/badge'
+import {
+  createDoctor,
+  deleteDoctor,
+  editDoctor,
+} from '@/lib/actions/dashboard/doctor'
+import { useFormState } from 'react-dom'
 // import { MultiSelect } from '@/components/dashboard/MultiSelect'
 
 type DoctorFormValues = z.infer<typeof createDoctorSchema>
@@ -42,7 +51,7 @@ interface DoctorFormProps {
   initialData:
     | (Doctor & {
         images: Image[]
-      } & { specialization: Specialization[] })
+      } & { specialization: Specialization[] } & { open_time: DateTag[] })
     | null
   specialization: Specialization[]
 }
@@ -55,7 +64,6 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
   const [open, setOpen] = useState(false)
 
   const [isPending, startTransition] = useTransition()
-  console.log(specialization)
 
   const title = initialData ? 'ویرایش ' : 'ایجاد دکتر جدید'
   const description = initialData
@@ -71,8 +79,8 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
         price: parseFloat(String(initialData?.price)),
         phone: initialData.phone || '',
         website: initialData.website || '',
-        open_time: initialData.open_time || '',
-        close_time: initialData.close_time || '',
+        open_time:
+          initialData.open_time.map((w: { time: string }) => w.time) || [],
         main_image: initialData.main_image || '',
         description: initialData.description || '',
         specializationId:
@@ -86,8 +94,8 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
         // main_image: undefined,
         // images: [],
         // booking: [],
-        open_time: '',
-        close_time: '',
+        open_time: [],
+        // close_time: [],
         price: 0,
         specializationId: [],
       }
@@ -105,13 +113,16 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
     formData.append('phone', data.phone || '')
     formData.append('website', data.website || '')
     formData.append('description', data.description || '')
-    formData.append('open_time', data.open_time || '')
-    formData.append('close_time', data.close_time || '')
+
     formData.append('price', String(data.price))
-    formData.append('description', data.description || '')
     if (data.specializationId && data.specializationId.length > 0) {
       for (let i = 0; i < data.specializationId.length; i++) {
         formData.append('specializationId', data.specializationId[i])
+      }
+    }
+    if (data.open_time && data.open_time.length > 0) {
+      for (let i = 0; i < data.open_time.length; i++) {
+        formData.append('open_time', data.open_time[i])
       }
     }
     if (data.images && data.images.length > 0) {
@@ -120,76 +131,107 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
       }
     }
 
-    //  try {
-    //    if (initialData) {
-    //      // console.log({ data, initialData })
-    //      startTransition(() => {
-    //        editDoctor(
-    //          formData,
-    //          initialData.id as string,
-    //          path
-    //        )
-    //          .then((res) => {
-    //            if (res?.errors?.name) {
-    //              form.setError('name', {
-    //                type: 'custom',
-    //                message: res?.errors.name?.join(' و '),
-    //              })
-    //            } else if (res.errors?.billboardId) {
-    //              form.setError('billboardId', {
-    //                type: 'custom',
-    //                message: res?.errors.billboardId?.join(' و '),
-    //              })
-    //            } else if (res?.errors?.images) {
-    //              form.setError('images', {
-    //                type: 'custom',
-    //                message: res?.errors.images?.join(' و '),
-    //              })
-    //            } else if (res?.errors?._form) {
-    //              toast.error(res?.errors._form?.join(' و '))
-    //            }
-    //            // if (res?.success) {
-    //            //    toast.success(toastMessage)
-    //            // }
-    //          })
-    //          // TODO: fixing Through Error when its ok
-    //          // .catch(() => toast.error('مشکلی پیش آمده.'))
-    //          .catch(() => console.log('مشکلی پیش آمده.'))
-    //      })
-    //    } else {
-    //      startTransition(() => {
-    //        createDoctor(formData,  path)
-    //          .then((res) => {
-    //            if (res?.errors?.name) {
-    //              form.setError('name', {
-    //                type: 'custom',
-    //                message: res?.errors.name?.join(' و '),
-    //              })
-    //            } else if (res?.errors?.images) {
-    //              form.setError('billboardId', {
-    //                type: 'custom',
-    //                message: res?.errors.billboardId?.join(' و '),
-    //              })
-    //            } else if (res?.errors?.images) {
-    //              form.setError('images', {
-    //                type: 'custom',
-    //                message: res?.errors.images?.join(' و '),
-    //              })
-    //            } else if (res?.errors?._form) {
-    //              toast.error(res?.errors._form?.join(' و '))
-    //              form.setError('root', {
-    //                type: 'custom',
-    //                message: res?.errors?._form?.join(' و '),
-    //              })
-    //            }
-
-    //          })
-    //          .catch(() => toast.error('مشکلی پیش آمده.'))
-    //      })
-    //    }
-    //  } catch {
-    //    toast.error('مشکلی پیش آمده، لطفا دوباره امتحان کنید!')
-    //  }
+    try {
+      if (initialData) {
+        // console.log({ data, initialData })
+        startTransition(() => {
+          editDoctor(formData, initialData.id as string, path)
+            .then((res) => {
+              if (res?.errors?.name) {
+                form.setError('name', {
+                  type: 'custom',
+                  message: res?.errors.name?.join(' و '),
+                })
+              } else if (res.errors?.description) {
+                form.setError('description', {
+                  type: 'custom',
+                  message: res?.errors.description?.join(' و '),
+                })
+              } else if (res.errors?.open_time) {
+                form.setError('open_time', {
+                  type: 'custom',
+                  message: res?.errors.open_time?.join(' و '),
+                })
+              } else if (res.errors?.phone) {
+                form.setError('phone', {
+                  type: 'custom',
+                  message: res?.errors.phone?.join(' و '),
+                })
+              } else if (res.errors?.website) {
+                form.setError('website', {
+                  type: 'custom',
+                  message: res?.errors.website?.join(' و '),
+                })
+              } else if (res.errors?.specializationId) {
+                form.setError('specializationId', {
+                  type: 'custom',
+                  message: res?.errors.specializationId?.join(' و '),
+                })
+              } else if (res?.errors?.images) {
+                form.setError('images', {
+                  type: 'custom',
+                  message: res?.errors.images?.join(' و '),
+                })
+              } else if (res?.errors?._form) {
+                toast.error(res?.errors._form?.join(' و '))
+              }
+              // if (res?.success) {
+              //    toast.success(toastMessage)
+              // }
+            })
+            // TODO: fixing Through Error when its ok
+            // .catch(() => toast.error('مشکلی پیش آمده.'))
+            .catch(() => console.log('مشکلی پیش آمده.'))
+        })
+      } else {
+        startTransition(() => {
+          createDoctor(formData, path)
+            .then((res) => {
+              if (res?.errors?.name) {
+                form.setError('name', {
+                  type: 'custom',
+                  message: res?.errors.name?.join(' و '),
+                })
+              } else if (res.errors?.description) {
+                form.setError('description', {
+                  type: 'custom',
+                  message: res?.errors.description?.join(' و '),
+                })
+              } else if (res.errors?.open_time) {
+                form.setError('open_time', {
+                  type: 'custom',
+                  message: res?.errors.open_time?.join(' و '),
+                })
+              } else if (res.errors?.phone) {
+                form.setError('phone', {
+                  type: 'custom',
+                  message: res?.errors.phone?.join(' و '),
+                })
+              } else if (res.errors?.website) {
+                form.setError('website', {
+                  type: 'custom',
+                  message: res?.errors.website?.join(' و '),
+                })
+              } else if (res.errors?.specializationId) {
+                form.setError('specializationId', {
+                  type: 'custom',
+                  message: res?.errors.specializationId?.join(' و '),
+                })
+              } else if (res?.errors?.images) {
+                form.setError('images', {
+                  type: 'custom',
+                  message: res?.errors.images?.join(' و '),
+                })
+              } else if (res?.errors?._form) {
+                toast.error(res?.errors._form?.join(' و '))
+              }
+            })
+            .catch(() => toast.error('مشکلی پیش آمده.'))
+        })
+      }
+    } catch {
+      toast.error('مشکلی پیش آمده، لطفا دوباره امتحان کنید!')
+    }
   }
 
   const validUrls =
@@ -199,13 +241,45 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
           .map((file) => URL.createObjectURL(file))
           .filter(Boolean) as string[])
 
+  const handleInputKeyDown = (
+    e: KeyboardEvent<HTMLInputElement>,
+    field: any
+  ) => {
+    if (e.key === 'Enter' && field.name === 'open_time') {
+      e.preventDefault()
+
+      const tagInput = e.target as HTMLInputElement
+
+      if (tagInput.value !== '') {
+        if (!field.value?.includes(tagInput.value as never)) {
+          form.setValue('open_time', [...field.value, tagInput.value])
+          tagInput.value = ''
+          form.clearErrors('open_time')
+        }
+      } else {
+        form.trigger()
+      }
+    }
+  }
+
+  const handleTagRemove = (tag: string, field: any) => {
+    const newTags = field.value?.filter((t: string) => t !== tag)
+
+    form.setValue('open_time', newTags)
+  }
+  const [deleteState, deleteAction] = useFormState(
+    deleteDoctor.bind(null, path, initialData?.id as string),
+    {
+      errors: {},
+    }
+  )
   return (
     <>
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
         // onConfirm={onDelete}
-        onConfirm={() => {}}
+        onConfirm={deleteAction}
         isPending={isPending}
       />
       <div className="flex items-center justify-between">
@@ -413,6 +487,53 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
               )}
             />
           </div>
+          <FormField
+            control={form.control}
+            name="open_time"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-col">
+                <FormLabel>
+                  روز و ساعت حضور <span className="text-rose-500">*</span>
+                </FormLabel>
+                <FormControl className="mt-3.5">
+                  <>
+                    <Input
+                      className="min-h-[56px] border text-slate-700 dark:text-inherit "
+                      // {...field}
+                      onKeyDown={(e) => handleInputKeyDown(e, field)}
+                      placeholder="اضافه کردن روز و ساعت..."
+                    />
+                    {field.value.length > 0 && (
+                      <div className="flex-start mt-2.5 gap-2.5">
+                        {field.value?.map((tag: any) => (
+                          <Badge
+                            key={tag}
+                            className=" flex items-center justify-center gap-2 rounded-md border-none bg-slate-400 px-4 py-2 capitalize hover:bg-slate-600 "
+                            onClick={() => handleTagRemove(tag, field)}
+                          >
+                            {tag}
+
+                            <NextImage
+                              src={'/icons/close.svg'}
+                              alt="Close icon"
+                              width={12}
+                              height={12}
+                              className="cursor-pointer object-contain invert-0 "
+                            />
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                </FormControl>
+                <FormDescription className="mt-2.5">
+                  بعد از وارد کردن هر زمان مثلا به صورت «سه‌شنبه 12 تا 14» اینتر
+                  بزنید.
+                </FormDescription>
+                <FormMessage className="text-red-500" />
+              </FormItem>
+            )}
+          />
           <Button disabled={isPending} className="ml-auto" type="submit">
             {action}
           </Button>

@@ -1,31 +1,46 @@
 'use server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
-import { createSpecializationSchema } from '@/lib/schemas/dashboard'
-import { Specialization } from '@prisma/client'
+import {
+  createDoctorSchema,
+  createSpecializationSchema,
+} from '@/lib/schemas/dashboard'
+import { DateTag, Doctor, Specialization } from '@prisma/client'
 import { deleteFileFromS3, uploadFileToS3 } from '../s3Upload'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-interface CreateSpecializationFormState {
+interface CreateDoctorFormState {
   // success?: string
   errors: {
     name?: string[]
     description?: string[]
+    phone?: string[]
+    price?: string[]
+    website?: string[]
+
+    open_time?: string[]
+    specializationId?: string[]
+
     images?: string[]
     _form?: string[]
   }
 }
 
-export async function createSpecialization(
+export async function createDoctor(
   formData: FormData,
 
   path: string
-): Promise<CreateSpecializationFormState> {
-  const result = createSpecializationSchema.safeParse({
+): Promise<CreateDoctorFormState> {
+  const result = createDoctorSchema.safeParse({
     name: formData.get('name'),
+    phone: formData.get('phone'),
+    price: formData.get('price'),
+    website: formData.get('website'),
     description: formData.get('description'),
     images: formData.getAll('images'),
+    open_time: formData.getAll('open_time'),
+    specializationId: formData.getAll('specializationId'),
   })
   if (!result.success) {
     console.log(result.error.flatten().fieldErrors)
@@ -46,9 +61,9 @@ export async function createSpecialization(
 
   // console.log(result)
 
-  let specialization: Specialization
+  let doctor: Doctor
   try {
-    const isExisting = await prisma.specialization.findFirst({
+    const isExisting = await prisma.doctor.findFirst({
       where: {
         name: result.data.name,
       },
@@ -72,17 +87,50 @@ export async function createSpecialization(
         imageIds.push(res.imageId)
       }
     }
-    specialization = await prisma.specialization.create({
+
+    doctor = await prisma.doctor.create({
       data: {
         name: result.data.name,
+        phone: result.data.phone,
+        price: +result.data.price,
+        website: result.data.website,
         description: result?.data.description,
         images: {
           connect: imageIds.map((id) => ({
             id: id,
           })),
         },
+        specialization: {
+          connect: result.data?.specializationId?.map((id: string) => ({
+            id: id,
+          })),
+        },
       },
     })
+    if (result.data.open_time) {
+      const timeData = []
+      for (const time of result.data.open_time) {
+        const newTimeData = await prisma.dateTag.create({
+          data: {
+            time,
+            doctorId: doctor.id,
+          },
+        })
+        timeData.push(newTimeData.id)
+      }
+      await prisma.doctor.update({
+        where: {
+          id: doctor.id,
+        },
+        data: {
+          open_time: {
+            connect: timeData.map((id: string) => ({
+              id,
+            })),
+          },
+        },
+      })
+    }
     // console.log(res?.imageUrl)
     // console.log(category)
   } catch (err: unknown) {
@@ -102,26 +150,37 @@ export async function createSpecialization(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/specialization`)
+  redirect(`/dashboard/doctors`)
 }
-interface EditCategoryFormState {
+interface EditDoctorFormState {
   errors: {
     name?: string[]
     description?: string[]
+    phone?: string[]
+    price?: string[]
+    website?: string[]
+
+    open_time?: string[]
+    specializationId?: string[]
 
     images?: string[]
     _form?: string[]
   }
 }
-export async function editSpecialization(
+export async function editDoctor(
   formData: FormData,
-  specializationId: string,
+  doctorId: string,
   path: string
-): Promise<EditCategoryFormState> {
-  const result = createSpecializationSchema.safeParse({
+): Promise<EditDoctorFormState> {
+  const result = createDoctorSchema.safeParse({
     name: formData.get('name'),
+    phone: formData.get('phone'),
+    price: formData.get('price'),
+    website: formData.get('website'),
     description: formData.get('description'),
     images: formData.getAll('images'),
+    open_time: formData.getAll('open_time'),
+    specializationId: formData.getAll('specializationId'),
   })
 
   // console.log(result)
@@ -143,15 +202,17 @@ export async function editSpecialization(
   }
 
   try {
-    let specialization: Specialization
+    let doctor: Doctor
     const isExisting:
-      | (Specialization & {
+      | (Doctor & {
           images: { id: string; key: string }[] | null
-        })
-      | null = await prisma.specialization.findFirst({
-      where: { id: specializationId },
+        } & { specialization: Specialization[] } & { open_time: DateTag[] })
+      | null = await prisma.doctor.findFirst({
+      where: { id: doctorId },
       include: {
         images: { select: { id: true, key: true } },
+        specialization: true,
+        open_time: true,
       },
     })
     if (!isExisting) {
@@ -161,24 +222,39 @@ export async function editSpecialization(
         },
       }
     }
-    const isNameExisting = await prisma.specialization.findFirst({
+    const isNameExisting = await prisma.doctor.findFirst({
       where: {
         name: result.data.name,
 
-        NOT: { id: specializationId },
+        NOT: { id: doctorId },
       },
     })
 
     if (isNameExisting) {
       return {
         errors: {
-          _form: ['تخصص با این نام موجود است!'],
+          _form: ['دکتر با این نام موجود است!'],
         },
       }
     }
 
-    // console.log(isExisting)
-    // console.log(billboard)
+    await prisma.doctor.update({
+      where: {
+        id: doctorId,
+      },
+      data: {
+        specialization: {
+          disconnect: isExisting.specialization?.map((specialization) => ({
+            id: specialization.id,
+          })),
+        },
+        open_time: {
+          disconnect: isExisting.open_time?.map((open) => ({
+            id: open.id,
+          })),
+        },
+      },
+    })
     if (
       typeof result.data.images[0] === 'object' &&
       result.data.images[0] instanceof File
@@ -193,9 +269,9 @@ export async function editSpecialization(
         }
       }
       // console.log(res)
-      await prisma.specialization.update({
+      await prisma.doctor.update({
         where: {
-          id: specializationId,
+          id: doctorId,
         },
         data: {
           images: {
@@ -203,35 +279,97 @@ export async function editSpecialization(
               id: image.id,
             })),
           },
-          // billboard: {
-          //   disconnect: { id: isExisting.billboard.id },
-          // },
         },
       })
-      specialization = await prisma.specialization.update({
+      doctor = await prisma.doctor.update({
         where: {
-          id: specializationId,
+          id: doctorId,
         },
         data: {
           name: result.data.name,
           description: result.data.description,
-          //   billboardId: result.data.billboardId,
+
+          phone: result.data.phone,
+          price: +result.data.price,
+          website: result.data.website,
+
           images: {
-            // connect: { id: res?.imageId },
             connect: imageIds.map((id) => ({
+              id: id,
+            })),
+          },
+          specialization: {
+            connect: result.data.specializationId?.map((id) => ({
               id: id,
             })),
           },
         },
       })
+      if (result.data.open_time) {
+        const timeData = []
+        for (const time of result.data.open_time) {
+          const newTimeData = await prisma.dateTag.create({
+            data: {
+              time,
+              doctorId: doctor.id,
+            },
+          })
+          timeData.push(newTimeData.id)
+        }
+        await prisma.doctor.update({
+          where: {
+            id: doctor.id,
+          },
+          data: {
+            open_time: {
+              connect: timeData.map((id: string) => ({
+                id,
+              })),
+            },
+          },
+        })
+      }
     } else {
-      await prisma.specialization.update({
+      doctor = await prisma.doctor.update({
         where: {
-          id: specializationId,
+          id: doctorId,
         },
         data: {
           name: result.data.name,
           description: result.data.description,
+          phone: result.data.phone,
+          price: +result.data.price,
+          website: result.data.website,
+
+          specialization: {
+            connect: result.data.specializationId?.map((id) => ({
+              id: id,
+            })),
+          },
+        },
+      })
+    }
+    if (result.data.open_time) {
+      const timeData = []
+      for (const time of result.data.open_time) {
+        const newTimeData = await prisma.dateTag.create({
+          data: {
+            time,
+            doctorId: doctor.id,
+          },
+        })
+        timeData.push(newTimeData.id)
+      }
+      await prisma.doctor.update({
+        where: {
+          id: doctor.id,
+        },
+        data: {
+          open_time: {
+            connect: timeData.map((id: string) => ({
+              id,
+            })),
+          },
         },
       })
     }
@@ -254,12 +392,12 @@ export async function editSpecialization(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/specialization`)
+  redirect(`/dashboard/doctors`)
 }
 
 //////////////////////
 
-interface DeleteSpecializationFormState {
+interface DeleteDoctorFormState {
   errors: {
     name?: string[]
     description?: string[]
@@ -269,12 +407,12 @@ interface DeleteSpecializationFormState {
   }
 }
 
-export async function deleteSpecialization(
+export async function deleteDoctor(
   path: string,
-  specializationId: string,
-  formState: DeleteSpecializationFormState,
+  doctorId: string,
+  formState: DeleteDoctorFormState,
   formData: FormData
-): Promise<DeleteSpecializationFormState> {
+): Promise<DeleteDoctorFormState> {
   // console.log({ path, storeId, categoryId })
   const session = await auth()
   if (!session || !session.user || session.user.role !== 'ADMIN') {
@@ -285,7 +423,7 @@ export async function deleteSpecialization(
     }
   }
   // console.log(result)
-  if (!specializationId) {
+  if (!doctorId) {
     return {
       errors: {
         _form: ['تخصص موجود نیست!'],
@@ -296,8 +434,8 @@ export async function deleteSpecialization(
   try {
     const isExisting:
       | (Specialization & { images: { id: string; key: string }[] | null })
-      | null = await prisma.specialization.findFirst({
-      where: { id: specializationId },
+      | null = await prisma.doctor.findFirst({
+      where: { id: doctorId },
       include: {
         images: { select: { id: true, key: true } },
       },
@@ -317,9 +455,9 @@ export async function deleteSpecialization(
         }
       }
     }
-    await prisma.specialization.delete({
+    await prisma.doctor.delete({
       where: {
-        id: specializationId,
+        id: doctorId,
       },
     })
   } catch (err: unknown) {
@@ -339,5 +477,5 @@ export async function deleteSpecialization(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/specialization`)
+  redirect(`/dashboard/doctors`)
 }

@@ -17,8 +17,18 @@ export const createDoctorSchema = z.object({
     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
     .optional(),
   description: z.string().optional(),
-  open_time: z.string().optional(),
-  close_time: z.string().optional(),
+  open_time: z
+    .array(
+      z
+        .string()
+        .min(1, {
+          message: 'تگ باید حداقل 1 حرف باشد.',
+        })
+        .max(15)
+    )
+    .max(15, {
+      message: 'تگ نمی‌تواند بیش از 15 حرف باشد.',
+    }),
   //   main_image: z
   //     .string()
   //     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
@@ -32,7 +42,8 @@ export const createDoctorSchema = z.object({
   specializationId: z
     .array(z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }))
     .optional(),
-}) satisfies z.Schema<Prisma.DoctorUncheckedCreateInput>
+  // }) satisfies z.Schema<Prisma.DoctorUncheckedCreateInput>
+})
 
 export const createIllnessSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),

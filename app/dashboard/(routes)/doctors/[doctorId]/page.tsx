@@ -13,6 +13,7 @@ const DoctorPage = async ({ params }: { params: { doctorId: string } }) => {
       images: true,
       // bookings: true,
       specialization: true,
+      open_time: true,
     },
   })
 

@@ -73,8 +73,7 @@ model Doctor {
   website     String?
   main_image  String?
   description String?
-  open_time   String?
-  close_time  String?
+  open_time   DateTag[]
   // slug              String?         @unique
   price       Int
   illnesses   Illness[]
@@ -87,6 +86,16 @@ model Doctor {
 
   Post    Post[]
   FaqPost FaqPost[]
+}
+
+model DateTag {
+  id   String @id @default(cuid())
+  time String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  doctor     Doctor?  @relation(fields: [doctorId], references: [id])
+  doctorId   String?
 }
 
 model Specialization {
