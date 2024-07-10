@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
 import { Search, User } from 'lucide-react'
+import { DockDemo } from './Doc'
 
 let clamp = (number: number, min: number, max: number) =>
   Math.min(Math.max(number, min), max)
@@ -61,7 +62,7 @@ const Navbar = () => {
   return (
     <>
       <motion.header
-        className="fixed inset-0 h-[150px] w-full z-30  sm:px-10 px-5 flex justify-between items-center  "
+        className="fixed inset-0 h-36 py-auto w-full z-30  sm:px-10 px-5 flex justify-between items-center  "
         style={{
           height: useTransform(
             scrollYBoundedProgressThrottled,
@@ -72,7 +73,7 @@ const Navbar = () => {
           backgroundColor: useMotionTemplate`rgb(255 255 255 / ${useTransform(
             scrollYBoundedProgressThrottled,
             [0, 1],
-            [0.1, 0.5]
+            [0.05, 0.3]
           )})`,
         }}
       >
@@ -212,7 +213,7 @@ const Navbar = () => {
       <div className="flex space-x-1">
         <div className=" ">
           <StickyNav>
-            {special.map((tab) => (
+            {/* {special.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -234,7 +235,8 @@ const Navbar = () => {
                 )}
                 {tab.name}
               </button>
-            ))}
+            ))} */}
+            <DockDemo />
           </StickyNav>
         </div>
       </div>

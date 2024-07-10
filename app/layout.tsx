@@ -6,6 +6,7 @@ import { numericFont, primaryFont } from '@/lib/fonts'
 import { ThemeProvider } from '@/providers/theme-provider'
 import { Toaster } from 'sonner'
 import Navbar from '@/components/home/nav/Navbar'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,8 +33,10 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {/* <ModalProvider /> */}
-            <Navbar />
-            {children}
+            <TooltipProvider>
+              <Navbar />
+              {children}
+            </TooltipProvider>
 
             <Toaster richColors position="bottom-left" />
           </ThemeProvider>

@@ -50,9 +50,7 @@ const StickyNav: FC<StickyNavProps> = ({
         isTop ? 'top-0 pt-3' : '-bottom-0 pb-0.5'
       } z-10 flex w-full justify-center `}
     >
-      <nav
-        className={`min-w-[180px]  flex justify-between gap-3 rounded-3xl bg-black/10 backdrop-blur-sm border rounded-b-none p-2.5 *:rounded-xl *:border *:border-gray-200 *:border-b-none *:px-7 *:py-1.5 *:transition-colors *:duration-300 hover:*:bg-gray-200 focus-visible:*:bg-gray-200 ${className} `}
-      >
+      <nav className={`min-w-[180px] max-w-full  ${className} `}>
         {children}
       </nav>
     </motion.div>
