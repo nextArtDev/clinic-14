@@ -50,6 +50,7 @@
     "date-fns": "^3.6.0",
     "date-fns-jalali": "3.6.0-1",
     "embla-carousel-react": "^8.1.6",
+    "framer-motion": "^11.2.12",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.290.0",
     "next": "14.2.4",
