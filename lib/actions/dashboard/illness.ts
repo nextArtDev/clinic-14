@@ -3,52 +3,46 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import {
   createDoctorSchema,
+  createIllnessSchema,
   createSpecializationSchema,
 } from '@/lib/schemas/dashboard'
-import { DateTag, Doctor, Specialization } from '@prisma/client'
+import { DateTag, Doctor, Illness, Specialization } from '@prisma/client'
 import { deleteFileFromS3, uploadFileToS3 } from '../s3Upload'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-interface CreateDoctorFormState {
+interface CreateIllnessFormState {
   // success?: string
   errors: {
     name?: string[]
     description?: string[]
-    phone?: string[]
-    price?: string[]
-    website?: string[]
-
-    open_time?: string[]
     specializationId?: string[]
-
+    doctorId?: string[]
     images?: string[]
     _form?: string[]
   }
 }
 
-export async function createDoctor(
+export async function createIllness(
   formData: FormData,
 
   path: string
-): Promise<CreateDoctorFormState> {
-  const result = createDoctorSchema.safeParse({
+): Promise<CreateIllnessFormState> {
+  const result = createIllnessSchema.safeParse({
     name: formData.get('name'),
-    phone: formData.get('phone'),
-    price: formData.get('price'),
-    website: formData.get('website'),
     description: formData.get('description'),
-    images: formData.getAll('images'),
-    open_time: formData.getAll('open_time'),
     specializationId: formData.getAll('specializationId'),
+    images: formData.getAll('images'),
+    doctorId: formData.getAll('doctorId'),
   })
+
   if (!result.success) {
     console.log(result.error.flatten().fieldErrors)
     return {
       errors: result.error.flatten().fieldErrors,
     }
   }
-  // console.log(result?.data.description)
+  // console.log(result?.data)
 
   const session = await auth()
   if (!session || !session.user || session.user.role !== 'ADMIN') {
@@ -61,9 +55,9 @@ export async function createDoctor(
 
   // console.log(result)
 
-  let doctor: Doctor
+  let illness: Illness
   try {
-    const isExisting = await prisma.doctor.findFirst({
+    const isExisting = await prisma.illness.findFirst({
       where: {
         name: result.data.name,
       },
@@ -71,12 +65,10 @@ export async function createDoctor(
     if (isExisting) {
       return {
         errors: {
-          _form: ['تخصص با این نام موجود است!'],
+          _form: ['بیماری با این نام موجود است!'],
         },
       }
     }
-    // console.log(isExisting)
-    // console.log(billboard)
 
     let imageIds: string[] = []
     for (let img of result.data?.images || []) {
@@ -88,51 +80,31 @@ export async function createDoctor(
       }
     }
 
-    doctor = await prisma.doctor.create({
+    illness = await prisma.illness.create({
       data: {
         name: result.data.name,
-        phone: result.data.phone,
-        price: +result.data.price,
-        website: result.data.website,
         description: result?.data.description,
         images: {
           connect: imageIds.map((id) => ({
             id: id,
           })),
         },
-        specialization: {
+
+        Specialization: {
           connect: result.data?.specializationId?.map((id: string) => ({
+            id: id,
+          })),
+        },
+        Doctor: {
+          connect: result.data?.doctorId?.map((id: string) => ({
             id: id,
           })),
         },
       },
     })
-    if (result.data.open_time) {
-      const timeData = []
-      for (const time of result.data.open_time) {
-        const newTimeData = await prisma.dateTag.create({
-          data: {
-            time,
-            doctorId: doctor.id,
-          },
-        })
-        timeData.push(newTimeData.id)
-      }
-      await prisma.doctor.update({
-        where: {
-          id: doctor.id,
-        },
-        data: {
-          open_time: {
-            connect: timeData.map((id: string) => ({
-              id,
-            })),
-          },
-        },
-      })
-    }
+
     // console.log(res?.imageUrl)
-    // console.log(category)
+    console.log(illness)
   } catch (err: unknown) {
     if (err instanceof Error) {
       return {
@@ -150,37 +122,34 @@ export async function createDoctor(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/doctors`)
+  redirect(`/dashboard/illness`)
 }
-interface EditDoctorFormState {
+interface CreateIllnessFormState {
+  // success?: string
   errors: {
     name?: string[]
     description?: string[]
-    phone?: string[]
-    price?: string[]
-    website?: string[]
 
-    open_time?: string[]
     specializationId?: string[]
+    doctorId?: string[]
 
     images?: string[]
     _form?: string[]
   }
 }
-export async function editDoctor(
+export async function editIllness(
   formData: FormData,
-  doctorId: string,
+  illnessId: string,
   path: string
-): Promise<EditDoctorFormState> {
-  const result = createDoctorSchema.safeParse({
+): Promise<CreateIllnessFormState> {
+  const result = createIllnessSchema.safeParse({
     name: formData.get('name'),
-    phone: formData.get('phone'),
-    price: formData.get('price'),
-    website: formData.get('website'),
+
     description: formData.get('description'),
     images: formData.getAll('images'),
-    open_time: formData.getAll('open_time'),
+
     specializationId: formData.getAll('specializationId'),
+    doctorId: formData.getAll('doctorId'),
   })
 
   // console.log(result)
@@ -202,31 +171,31 @@ export async function editDoctor(
   }
 
   try {
-    let doctor: Doctor
+    let illness: Doctor
     const isExisting:
-      | (Doctor & {
+      | (Illness & {
           images: { id: string; key: string }[] | null
-        } & { specialization: Specialization[] } & { open_time: DateTag[] })
-      | null = await prisma.doctor.findFirst({
-      where: { id: doctorId },
+        } & { Specialization: Specialization[] } & { Doctor: Doctor[] })
+      | null = await prisma.illness.findFirst({
+      where: { id: illnessId },
       include: {
         images: { select: { id: true, key: true } },
-        specialization: true,
-        open_time: true,
+        Specialization: true,
+        Doctor: true,
       },
     })
     if (!isExisting) {
       return {
         errors: {
-          _form: ['تخصص حذف شده است!'],
+          _form: ['بیماری حذف شده است!'],
         },
       }
     }
-    const isNameExisting = await prisma.doctor.findFirst({
+    const isNameExisting = await prisma.illness.findFirst({
       where: {
         name: result.data.name,
 
-        NOT: { id: doctorId },
+        NOT: { id: illnessId },
       },
     })
 
@@ -238,19 +207,20 @@ export async function editDoctor(
       }
     }
 
-    await prisma.doctor.update({
+    await prisma.illness.update({
       where: {
-        id: doctorId,
+        id: illnessId,
       },
       data: {
-        specialization: {
-          disconnect: isExisting.specialization?.map((specialization) => ({
+        Specialization: {
+          disconnect: isExisting.Specialization?.map((specialization) => ({
             id: specialization.id,
           })),
         },
-        open_time: {
-          disconnect: isExisting.open_time?.map((open) => ({
-            id: open.id,
+
+        Doctor: {
+          disconnect: isExisting.Doctor?.map((doctor) => ({
+            id: doctor.id,
           })),
         },
       },
@@ -269,9 +239,9 @@ export async function editDoctor(
         }
       }
       // console.log(res)
-      await prisma.doctor.update({
+      await prisma.illness.update({
         where: {
-          id: doctorId,
+          id: illnessId,
         },
         data: {
           images: {
@@ -281,98 +251,54 @@ export async function editDoctor(
           },
         },
       })
-      doctor = await prisma.doctor.update({
+      await prisma.illness.update({
         where: {
-          id: doctorId,
+          id: illnessId,
         },
         data: {
           name: result.data.name,
           description: result.data.description,
-
-          phone: result.data.phone,
-          price: +result.data.price,
-          website: result.data.website,
 
           images: {
             connect: imageIds.map((id) => ({
               id: id,
             })),
           },
-          specialization: {
+          Specialization: {
+            connect: result.data.specializationId?.map((id) => ({
+              id: id,
+            })),
+          },
+          Doctor: {
             connect: result.data.specializationId?.map((id) => ({
               id: id,
             })),
           },
         },
       })
-      if (result.data.open_time) {
-        const timeData = []
-        for (const time of result.data.open_time) {
-          const newTimeData = await prisma.dateTag.create({
-            data: {
-              time,
-              doctorId: doctor.id,
-            },
-          })
-          timeData.push(newTimeData.id)
-        }
-        await prisma.doctor.update({
-          where: {
-            id: doctor.id,
-          },
-          data: {
-            open_time: {
-              connect: timeData.map((id: string) => ({
-                id,
-              })),
-            },
-          },
-        })
-      }
     } else {
-      doctor = await prisma.doctor.update({
+      await prisma.illness.update({
         where: {
-          id: doctorId,
+          id: illnessId,
         },
         data: {
           name: result.data.name,
-          description: result.data.description,
-          phone: result.data.phone,
-          price: +result.data.price,
-          website: result.data.website,
+          description: result.data?.description,
 
-          specialization: {
+          Specialization: {
             connect: result.data.specializationId?.map((id) => ({
+              id: id,
+            })),
+          },
+          Doctor: {
+            connect: result.data.doctorId?.map((id) => ({
               id: id,
             })),
           },
         },
       })
     }
-    if (result.data.open_time) {
-      const timeData = []
-      for (const time of result.data.open_time) {
-        const newTimeData = await prisma.dateTag.create({
-          data: {
-            time,
-            doctorId: doctor.id,
-          },
-        })
-        timeData.push(newTimeData.id)
-      }
-      await prisma.doctor.update({
-        where: {
-          id: doctor.id,
-        },
-        data: {
-          open_time: {
-            connect: timeData.map((id: string) => ({
-              id,
-            })),
-          },
-        },
-      })
-    }
+
     // imageId: res?.imageId,
     // console.log(billboard)
   } catch (err: unknown) {
@@ -392,27 +318,23 @@ export async function editDoctor(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/doctors`)
+  redirect(`/dashboard/illness`)
 }
 
 //////////////////////
 
-interface DeleteDoctorFormState {
+interface DeleteIllnessFormState {
   errors: {
-    name?: string[]
-    description?: string[]
-
-    images?: string[]
     _form?: string[]
   }
 }
 
-export async function deleteDoctor(
+export async function deleteIllness(
   path: string,
-  doctorId: string,
-  formState: DeleteDoctorFormState,
+  illnessId: string,
+  formState: DeleteIllnessFormState,
   formData: FormData
-): Promise<DeleteDoctorFormState> {
+): Promise<DeleteIllnessFormState> {
   // console.log({ path, storeId, categoryId })
   const session = await auth()
   if (!session || !session.user || session.user.role !== 'ADMIN') {
@@ -423,19 +345,19 @@ export async function deleteDoctor(
     }
   }
   // console.log(result)
-  if (!doctorId) {
+  if (!illnessId) {
     return {
       errors: {
-        _form: ['تخصص موجود نیست!'],
+        _form: ['بیماری موجود نیست!'],
       },
     }
   }
 
   try {
     const isExisting:
-      | (Specialization & { images: { id: string; key: string }[] | null })
-      | null = await prisma.doctor.findFirst({
-      where: { id: doctorId },
+      | (Illness & { images: { id: string; key: string }[] | null })
+      | null = await prisma.illness.findFirst({
+      where: { id: illnessId },
       include: {
         images: { select: { id: true, key: true } },
       },
@@ -455,9 +377,9 @@ export async function deleteDoctor(
         }
       }
     }
-    await prisma.doctor.delete({
+    await prisma.illness.delete({
       where: {
-        id: doctorId,
+        id: illnessId,
       },
     })
   } catch (err: unknown) {
@@ -477,5 +399,5 @@ export async function deleteDoctor(
   }
 
   revalidatePath(path)
-  redirect(`/dashboard/doctors`)
+  redirect(`/dashboard/illness`)
 }

@@ -47,25 +47,17 @@ export const createDoctorSchema = z.object({
 
 export const createIllnessSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
-  description: z.string(),
-  open_time: z.string().optional(),
-  close_time: z.string().optional(),
-  //   main_image: z
-  //     .string()
-  //     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
-  //     .url()
-  //     .optional(),
+  description: z.string().optional(),
+
   images: z.any().optional(),
   // .array()  satisfies Prisma.ImagesUncheckedCreateNestedManyWithoutDoctorInput,
   // booking: z.object({ booking_time: z.date() }).array().optional(),
   //Because we're working with Decimal, we should add "coerce"
   specializationId: z
-    .string()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
+    .array(z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }))
     .optional(),
   doctorId: z
-    .string()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
+    .array(z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }))
     .optional(),
 }) satisfies z.Schema<Prisma.IllnessUncheckedCreateInput>
 

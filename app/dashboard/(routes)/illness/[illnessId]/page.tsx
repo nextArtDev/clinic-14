@@ -35,7 +35,6 @@ const IllnessPage = async ({ params }: { params: { illnessId: string } }) => {
           specialization={specialization}
           doctor={doctor}
         />
-        {/* <DoctorForm initialData={doctor} specialization={specialization} /> */}
       </div>
     </div>
   )

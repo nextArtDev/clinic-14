@@ -106,7 +106,6 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
   })
 
   const onSubmit = async (data: DoctorFormValues) => {
-    console.log(data)
     const formData = new FormData()
 
     formData.append('name', data.name)

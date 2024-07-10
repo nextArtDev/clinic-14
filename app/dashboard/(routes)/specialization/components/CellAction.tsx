@@ -3,7 +3,7 @@
 // import axios from 'axios'
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -26,7 +26,7 @@ interface CellActionProps {
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const path = usePathname()
-  const [loading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -67,7 +67,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={deleteAction}
-        isPending={loading}
+        isPending={isPending}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

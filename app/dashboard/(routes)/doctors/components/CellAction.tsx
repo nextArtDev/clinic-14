@@ -3,7 +3,7 @@
 // import axios from 'axios'
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -19,6 +19,7 @@ import { toast } from '@/components/ui/use-toast'
 import { AlertModal } from '../../../../../components/dashboard/AlertModal'
 import { useFormState } from 'react-dom'
 import { deleteDoctor } from '@/lib/actions/dashboard/doctor'
+import loading from '../../loading'
 
 interface CellActionProps {
   data: DoctorColumn
@@ -26,10 +27,9 @@ interface CellActionProps {
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const path = usePathname()
-  const [loading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState(false)
   const router = useRouter()
-  const params = useParams()
 
   const [deleteState, deleteAction] = useFormState(
     deleteDoctor.bind(null, path, data?.id as string),
@@ -49,7 +49,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={deleteAction}
-        isPending={loading}
+        isPending={isPending}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

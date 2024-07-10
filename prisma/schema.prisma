@@ -30,12 +30,10 @@ model User {
   imageId   String?
   Review    Review[]
 
-  username String?   @unique
+  username String? @unique
   bio      String?
   website  String?
   gender   String?
-  Post     Post[]
-  FaqPost  FaqPost[]
 }
 
 enum Role {
@@ -83,9 +81,6 @@ model Doctor {
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
   reviews        Review[]
-
-  Post    Post[]
-  FaqPost FaqPost[]
 }
 
 model DateTag {
@@ -101,7 +96,7 @@ model DateTag {
 model Specialization {
   id          String    @id @default(uuid())
   name        String
-  description String?   @db.LongText
+  description String?
   doctors     Doctor[]
   illness     Illness[]
   images      Image[]
@@ -111,22 +106,21 @@ model Specialization {
 }
 
 model Illness {
-  id          String @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
-  description String @db.LongText
+  description String?
 
   images Image[]
 
   Specialization Specialization[]
-  Doctor         Doctor?          @relation(fields: [doctorId], references: [id])
-  doctorId       String?
+  Doctor         Doctor[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
 
 model Review {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(uuid())
   name       String
   text       String
   rating     Float
@@ -134,36 +128,8 @@ model Review {
   updated_at DateTime @updatedAt
   doctor     Doctor?  @relation(fields: [doctorId], references: [id])
   doctorId   String?
+  isFaq      Boolean  @default(false)
 
   user   User?   @relation(fields: [userId], references: [id])
   userId String?
-}
-
-model Post {
-  id String @id @default(uuid())
-
-  content    String
-  myDoctorId String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  author   User    @relation(fields: [authorId], references: [id])
-  authorId String
-  // comments Comment[]
-  Doctor   Doctor? @relation(fields: [doctorId], references: [id])
-  doctorId String?
-}
-
-model FaqPost {
-  id String @id @default(uuid())
-
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  author   User    @relation(fields: [authorId], references: [id])
-  authorId String
-  // comments Comment[]
-  Doctor   Doctor? @relation(fields: [doctorId], references: [id])
-  doctorId String?
 }
