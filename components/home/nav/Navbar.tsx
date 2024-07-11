@@ -22,6 +22,8 @@ import { buttonVariants } from '@/components/ui/button'
 
 import { Search, User } from 'lucide-react'
 import { DockDemo } from './Doc'
+import { NavigationMenuDemo } from './NavigationMenuDemo'
+import ExpandableSearch from '../search/ExpandableSearch'
 
 let clamp = (number: number, min: number, max: number) =>
   Math.min(Math.max(number, min), max)
@@ -68,7 +70,7 @@ const Navbar = () => {
             scrollYBoundedProgressThrottled,
             [0, 1],
             // [max , min] height
-            [70, 50]
+            [75, 50]
           ),
           backgroundColor: useMotionTemplate`rgb(255 255 255 / ${useTransform(
             scrollYBoundedProgressThrottled,
@@ -77,7 +79,7 @@ const Navbar = () => {
           )})`,
         }}
       >
-        <nav className="flex flex-col justify-center w-full pt-4 screen-max-width">
+        <nav className="flex flex-col justify-center w-full   md:mt-4 pt-2 screen-max-width">
           <section className="flex justify-between items-center ">
             <div className="flex justify-between items-center ">
               <Link href={'/'}>
@@ -96,7 +98,7 @@ const Navbar = () => {
               </Link>
             </div>
 
-            <Menu
+            {/* <Menu
               setActive={setActive}
               className={'flex flex-1   justify-center  max-sm:hidden '}
             >
@@ -135,7 +137,8 @@ const Navbar = () => {
                   ))}
                 </div>
               </MenuItem>
-            </Menu>
+            </Menu> */}
+            <NavigationMenuDemo />
 
             <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
               <motion.figure
@@ -144,11 +147,12 @@ const Navbar = () => {
                     scrollYBoundedProgressThrottled,
                     [0, 1],
                     // [max , min] height
-                    [1, 1.3]
+                    [1, 1.1]
                   ),
                 }}
               >
-                <Search size={'sm'} className="w-4" />
+                {/* <Search size={'sm'} className="w-4" /> */}
+                <ExpandableSearch />
                 {/* <Image src={SearchImage} alt="search" width={18} height={18} /> */}
               </motion.figure>
 
