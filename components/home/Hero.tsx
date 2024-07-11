@@ -16,6 +16,7 @@ import HeroSmImage from '@/public/images/header-sm.jpg'
 import HeroLgImage from '@/public/images/header-lg.jpg'
 import { MapPin, Phone } from 'lucide-react'
 import HeroWhatsApp from './icons/HeroWhatsApp'
+import sun from '@/public/icons/sun.png'
 type Props = {}
 
 function Hero({}: Props) {
@@ -78,23 +79,23 @@ function Hero({}: Props) {
   }, [])
   return (
     <section className="relative w-full h-[calc(h-screen-5rem)]">
-      <div className="container absolute top-0 inset-0 grid place-items-center  ">
+      <div className="container absolute top-10 inset-0 grid place-items-center  ">
         <div className="content text-center z-10 ">
           <div className="flex justify-center items-center">
             <Image
-              src={logoSrc}
-              width={32}
-              height={32}
+              src={sun}
+              width={28}
+              height={28}
               // className="svgLogo block m-8 top-[20%] w-16 h-16"
-              className="svgLogo block w-32 h-32"
+              className="svgLogo block w-24 h-24"
               alt="logo"
             />
           </div>
           <div className="content-inner space-y-4">
-            <h1 className="text-reveal text-center text-3xl font-bold text-primary mb-0 py-1 ">
+            <h1 className="bg-gradient-to-r via-[#ffaa20] from-[#ef30009d] to-[#ff6c04] bg-clip-text text-transparent text-reveal text-center text-3xl font-bold   mb-0 py-1 ">
               درمانگاه آئین شفق
             </h1>
-            <p className="text-reveal flex flex-col justify-center items-center gap-4 text-center text-xl text-primary/70 font-semibold">
+            <p className="text-reveal flex flex-col justify-center items-center gap-4 text-center text-xl   font-semibold bg-gradient-to-r from-secondary/70 via-[#ef300070] to-secondary/70 bg-clip-text text-transparent">
               پذیرش بیماران درمانگاهی توسط پزشکان عمومی
             </p>
           </div>
@@ -142,7 +143,7 @@ function Hero({}: Props) {
           alt="کلینیک آیین شفق"
           src={HeroLgImage}
           fill
-          className="bg hidden md:block md:absolute md:top-0 md:left-0 md:w-full md:h-full md:-z-20  md:object-cover"
+          className="bg hidden md:block md:absolute md:top-0 md:left-0 md:w-full md:h-full md:-z-10  md:object-cover"
         />
         {/* <video
           ref={bgRef}

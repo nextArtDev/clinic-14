@@ -126,9 +126,6 @@ html {
   );
   background-image: url('/noise-svg/noise2.svg');
 }
-.dark-mode .headGradient {
-  filter: contrast(50%) brightness(50%);
-}
 
 .videoContainer::after {
   filter: contrast(150%) brightness(150%);
@@ -138,6 +135,11 @@ html {
     rgba(0, 0, 0, 0.23)
   );
   background-image: url('/noise-svg/noise2.svg');
+}
+.dark .videoContainer::after {
+  filter: contrast(180%) brightness(60%);
+  background: linear-gradient(0deg, rgba(7, 7, 44, 0.63), rgba(0, 0, 0, 0.23));
+  background-image: url('/noise-svg/noise1.svg');
 }
 
 .grainy {
