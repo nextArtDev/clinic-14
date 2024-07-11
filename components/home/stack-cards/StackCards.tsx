@@ -17,7 +17,7 @@ export default function StackCards() {
 
   useEffect(() => {
     function update(time: any) {
-      // @ignore-ts
+      // @ts-ignore
       container.current?.lenis?.raf(time * 1000)
     }
 

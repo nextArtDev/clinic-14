@@ -1,3 +1,4 @@
+import Footer from '@/components/home/Footer'
 import Hero from '@/components/home/Hero'
 import StackCards from '@/components/home/stack-cards/StackCards'
 
@@ -8,6 +9,7 @@ export default function Home() {
       <section className="bg-white/40">
         <StackCards />
       </section>
+      <Footer />
     </main>
   )
 }

@@ -4,10 +4,11 @@ import { Review } from '@prisma/client'
 import Stars from '@/components/Stars'
 import { Button } from '@/components/ui/button'
 import { Trash } from 'lucide-react'
-import { AlertModal } from '@/app/dashboard/(root)/(routes)/doctors/[doctorId]/components/AlertModal'
+
 import { useParams, useRouter } from 'next/navigation'
 // import axios from 'axios'
 import { toast } from '@/components/ui/use-toast'
+import { AlertModal } from './dashboard/AlertModal'
 
 interface ReviewCardProps {
   review: Review
@@ -43,7 +44,7 @@ const ReviewCard: FC<ReviewCardProps> = ({ review, isAdmin }) => {
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={onDelete}
-        loading={loading}
+        isPending={loading}
       />
       <div className="flex">
         <div className="w-1/6 flex flex-col items-center">
