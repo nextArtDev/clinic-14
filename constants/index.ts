@@ -1188,6 +1188,13 @@ export const special = [
   { id: 3, name: 'بیماری‌های عفونی', doctorId: [3] },
   { id: 4, name: 'کودکان و نوزادان', doctorId: [4] },
 ]
+export const slider = [
+  { id: '1', name: 'زنان و زایمان', imageUrl: '/images/head-1.webp' },
+  { id: '2', name: 'کودکان و نوزادان', imageUrl: '/images/head-2.webp' },
+  { id: '3', name: 'بیماری‌های عفونی', imageUrl: '/images/head-4.webp' },
+  { id: '4', name: 'غدد و متابولیسم', imageUrl: '/images/head-5.webp' },
+]
+export type Slider = { id: string; name: string; imageUrl: string }
 
 // function replaceNewLines(text) {
 //   // Replace new lines with '\n'

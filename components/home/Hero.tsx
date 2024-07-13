@@ -17,6 +17,8 @@ import HeroLgImage from '@/public/images/header-lg.jpg'
 import { MapPin, Phone } from 'lucide-react'
 import HeroWhatsApp from './icons/HeroWhatsApp'
 import sun from '@/public/icons/sun.png'
+import Carousel from './landing/Carousel'
+import { slider } from '@/constants'
 type Props = {}
 
 function Hero({}: Props) {
@@ -130,33 +132,8 @@ function Hero({}: Props) {
         </div>
       </div>
 
-      <div className="videoContainer relative w-full h-screen after:-z-10 after:absolute after:content-[''] after:h-full after:top-0 after:w-full after:left-0 after:opacity-70 ">
-        <Image
-          ref={bgRef}
-          alt="کلینیک آیین شفق"
-          src={HeroLgImage}
-          fill
-          className="bg hidden md:block md:absolute md:top-0 md:left-0 md:w-full md:h-full md:-z-10    md:object-cover"
-        />
-        <Image
-          ref={bgRef}
-          alt="کلینیک آیین شفق"
-          src={HeroSmImage}
-          fill
-          className="bg md:hidden absolute top-0 left-0 w-full h-full -z-20  object-cover"
-        />
-        {/* <video
-          ref={bgRef}
-          autoPlay
-          muted
-          loop
-          // ref={videoRef}
-          className="bg absolute top-0 left-0 w-full h-full -z-20 aspect-video object-cover object-top "
-        >
-          <source src="/videos/hero.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video> */}
-      </div>
+      {/* <div className="videoContainer relative w-full h-screen after:-z-10 after:absolute after:content-[''] after:h-full after:top-0 after:w-full after:left-0 after:opacity-70 "></div> */}
+      <Carousel slides={slider} />
 
       <div className="location-container absolute w-full flex flex-col gap-2 top-[62%] h-[30%] -right-1  md:-right-2 text-black/50 text-right ">
         <Link
