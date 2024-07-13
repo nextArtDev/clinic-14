@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 interface CardProps {
   i: number
   title: string
-  description: string
+  description?: string
   src: string
   url?: string
   color: string
@@ -50,12 +50,12 @@ const Card = ({
         }}
         className={cn(
           styles.card,
-          "videoContainer relative w-full after:-z-10 after:absolute after:content-[''] after:h-full after:top-0 after:w-full after:left-0 after:opacity-70 outline-dashed -outline-offset-[3px] outline-[1.5px] outline-mix-blend-multiply outline-[#9b795f] "
+          "  grainy relative w-full after:-z-10 after:absolute after:content-[''] after:h-full after:top-0 after:w-full after:left-0 after:opacity-70   "
         )}
       >
-        <h2>{title}</h2>
+        <h2 className="text-primary">{title}</h2>
         <div className={styles.body}>
-          <div className={styles.description}>
+          {/* <div className={styles.description}>
             <p>{description}</p>
             <span>
               <a href={url} target="_blank">
@@ -74,11 +74,11 @@ const Card = ({
                 />
               </svg>
             </span>
-          </div>
+          </div> */}
 
           <div className={styles.imageContainer}>
             <motion.div className={styles.inner} style={{ scale: imageScale }}>
-              <Image fill src={`${src}`} alt="image" />
+              <Image fill src={src} alt="image" />
             </motion.div>
           </div>
         </div>

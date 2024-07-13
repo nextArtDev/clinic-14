@@ -1,3 +1,8 @@
+import special1 from '@/public/images/parallax/0001.webp'
+import special2 from '@/public/images/parallax/0020.webp'
+import special3 from '@/public/images/parallax/0017.webp'
+import special4 from '@/public/images/parallax/0000.webp'
+
 export const footerLinks = [
   {
     title: 'بیماری‌ها',
@@ -1183,10 +1188,30 @@ export const illnessInography = [
 ]
 
 export const special = [
-  { id: 1, name: 'غدد و متابولیسم', doctorId: [1] },
-  { id: 2, name: 'زنان و زایمان', doctorId: [2] },
-  { id: 3, name: 'بیماری‌های عفونی', doctorId: [3] },
-  { id: 4, name: 'کودکان و نوزادان', doctorId: [4] },
+  {
+    id: 1,
+    title: 'غدد و متابولیسم',
+    doctorId: [1],
+    src: special1,
+  },
+  {
+    id: 2,
+    title: 'زنان و زایمان',
+    doctorId: [2],
+    src: special2,
+  },
+  {
+    id: 3,
+    title: 'بیماری‌های عفونی',
+    doctorId: [3],
+    src: special3,
+  },
+  {
+    id: 4,
+    title: 'کودکان و نوزادان',
+    doctorId: [4],
+    src: special4,
+  },
 ]
 export const slider = [
   { id: '1', name: 'زنان و زایمان', imageUrl: '/images/head-1.webp' },

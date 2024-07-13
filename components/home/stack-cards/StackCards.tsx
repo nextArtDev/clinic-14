@@ -6,6 +6,7 @@ import { ReactLenis, useLenis } from 'lenis/react'
 import Card from './Card'
 import { projects } from './data'
 import gsap from 'gsap/all'
+import { special } from '@/constants'
 
 export default function StackCards() {
   const lenisRef = useRef(null)
@@ -31,13 +32,13 @@ export default function StackCards() {
   return (
     <ReactLenis ref={lenisRef} autoRaf={false}>
       <section ref={container} className="relative -mt-12">
-        {projects.map((project, i) => {
-          const targetScale = 1 - (projects.length - i) * 0.05
+        {special.map((spec, i) => {
+          const targetScale = 1 - (special.length - i) * 0.05
           return (
             <Card
               key={`p_${i}`}
               i={i}
-              {...project}
+              {...spec}
               progress={scrollYProgress}
               range={[i * 0.25, 1]}
               targetScale={targetScale}
