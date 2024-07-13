@@ -92,7 +92,7 @@ function Hero({}: Props) {
             />
           </div>
           <div className="content-inner space-y-4">
-            <h1 className="bg-gradient-to-r via-[#ffaa20] from-[#ef30009d] to-[#ff6c04] bg-clip-text text-transparent text-reveal text-center text-3xl font-bold   mb-0 py-1 ">
+            <h1 className="bg-gradient-to-r via-[#dbd821] from-[#c75c42] to-[#e96f18] bg-clip-text text-transparent text-reveal text-center text-3xl font-bold   mb-0 py-1 ">
               درمانگاه آئین شفق
             </h1>
             <p className="text-reveal flex flex-col justify-center items-center gap-4 text-center text-xl   font-semibold bg-gradient-to-r from-secondary/70 via-[#ef300070] to-secondary/70 bg-clip-text text-transparent">
@@ -134,16 +134,16 @@ function Hero({}: Props) {
         <Image
           ref={bgRef}
           alt="کلینیک آیین شفق"
-          src={HeroSmImage}
+          src={HeroLgImage}
           fill
-          className="bg md:hidden absolute top-0 left-0 w-full h-full -z-20  object-cover"
+          className="bg hidden md:block md:absolute md:top-0 md:left-0 md:w-full md:h-full md:-z-10    md:object-cover"
         />
         <Image
           ref={bgRef}
           alt="کلینیک آیین شفق"
-          src={HeroLgImage}
+          src={HeroSmImage}
           fill
-          className="bg hidden md:block md:absolute md:top-0 md:left-0 md:w-full md:h-full md:-z-10  md:object-cover"
+          className="bg md:hidden absolute top-0 left-0 w-full h-full -z-20  object-cover"
         />
         {/* <video
           ref={bgRef}
