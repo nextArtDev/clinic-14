@@ -48,7 +48,7 @@ function Hero({}: Props) {
       )
       .to('.text-reveal', {
         clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
-        y: -200,
+        y: -150,
         duration: 0.2,
         delay: 0.25,
       })
@@ -61,7 +61,7 @@ function Hero({}: Props) {
       .to('.svgLogo', {
         clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
         duration: 1,
-        y: -200,
+        y: -150,
       })
       .to(
         '.local',
@@ -134,102 +134,6 @@ function Hero({}: Props) {
 
       {/* <div className="videoContainer relative w-full h-screen after:-z-10 after:absolute after:content-[''] after:h-full after:top-0 after:w-full after:left-0 after:opacity-70 "></div> */}
       <Carousel slides={slider} />
-
-      <div className="location-container absolute w-full flex flex-col gap-2 top-[62%] h-[30%] -right-1  md:-right-2 text-black/50 text-right ">
-        <Link
-          href="/inography"
-          className={cn(
-            buttonVariants(),
-            ' local grainy text-right text-black/50 w-[40%] h-[25%] overflow-hidden bg-[#C69B7B45]   bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 border border-[#C69B7B55]  outline-dashed -outline-offset-2 outline-1 outline-[#C69B7B] hover:text-black hover:bg-[#C69B7B]'
-          )}
-        >
-          {/* <Image
-            src={partOneSrcImage}
-            fill
-            className="object-cover "
-            alt="اینوگرافی بیماری‌ها"
-          /> */}
-          {/* <Button
-            className="absolute text-black  top-[50%] left-[50%] translate-x-[-50%] box-shadow z-20"
-            variant="outline"
-          > */}
-          <p className="text-black/70 text-right z-10">اینوگرافی بیماری‌ها</p>
-          {/* </Button> */}
-          {/* <span className="absolute inset-0 bg-transparent text-black text-sm top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-           اینوگرافی
-          </span  > */}
-        </Link>
-        {/* <div className=" local rounded-t-3xl grid place-items-center w-[33%] h-[12rem] bg-hero-parts-gradient">
-          <Button
-            className=" bg-transparent rounded-3xl border-black"
-            variant="outline"
-          >
-            بیماری‌ها
-          </Button>
-        </div> */}
-        <Link
-          href="#search"
-          className={cn(
-            buttonVariants(),
-            'local grainy bg-[#C69B7B65] scroll-smooth bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 border border-[#C69B7B65] w-[60%] h-[25%] overflow-hidden outline-dashed -outline-offset-2 outline-1 outline-[#C69B7B] hover:text-black hover:bg-[#C69B7B]'
-          )}
-        >
-          {/* <Image
-            src={'/images/1.png'}
-            fill
-            className="object-cover "
-            alt="جست و جوی بیماری‌ها"
-          /> */}
-          {/* <Button
-            className="absolute text-black  top-[50%] left-[50%] translate-x-[-50%] box-shadow z-20"
-            variant="outline"
-          > */}
-          <p className=" text-right text-black/70 z-10">
-            جست‌وجوی نام دکتر و بیماری
-          </p>
-          {/* </Button> */}
-          {/* <span className="absolute inset-0 bg-transparent text-black text-sm top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-           اینوگرافی
-          </span  > */}
-        </Link>
-        {/* <div className=" local rounded-t-3xl grid place-items-center w-[33%] h-[12rem] bg-hero-parts-gradient">
-          <Button
-            className=" bg-transparent rounded-3xl border-black"
-            variant="outline"
-          >
-            ارتباط با ما
-          </Button>
-        </div> */}
-        <div
-          className={cn(
-            buttonVariants(),
-            'local grainy bg-[#C69B7B75] scroll-smooth bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 border border-[#C69B7B85] w-[80%] h-[25%] overflow-hidden outline-dashed -outline-offset-2 outline-1 outline-[#C69B7B] hover:text-black hover:bg-[#C69B7B]'
-          )}
-          onClick={() =>
-            window.open(
-              'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d840.1737458707142!2d51.584555694442685!3d32.61431114769074!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fbc31589c7322eb%3A0x31ea7b3386684a83!2z2K_Yp9ix2YjYrtin2YbZhyDYr9qp2KrYsdi02KfZh9ix2LbYp9uM24w!5e0!3m2!1sen!2sus!4v1691049962745!5m2!1sen!2sus'
-            )
-          }
-        >
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d840.1737458707142!2d51.584555694442685!3d32.61431114769074!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fbc31589c7322eb%3A0x31ea7b3386684a83!2z2K_Yp9ix2YjYrtin2YbZhyDYr9qp2KrYsdi02KfZh9ix2LbYp9uM24w!5e0!3m2!1sen!2sus!4v1691049962745!5m2!1sen!2sus"
-            loading="lazy"
-            className="opacity-10 absolute inset-0 w-full h-full bottom-0 object-cover "
-          ></iframe>
-          {/* <Button
-            className="absolute text-black/80 bg-opacity-30 border-black top-[50%] left-[50%] translate-x-[-50%] z-20"
-            variant="outline"
-          > */}
-          <span className="text-right  text-black/80 flex justify-center items-center gap-2 ">
-            نشانی بر روی گوگل مپ
-            <MapPin className="text-red-700 animate-pulse " />
-          </span>
-          {/* </Button> */}
-          {/* <span className="absolute inset-0 bg-transparent text-black text-sm top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-           اینوگرافی
-          </span  > */}
-        </div>
-      </div>
     </section>
   )
 }

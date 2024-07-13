@@ -1196,6 +1196,18 @@ export const slider = [
 ]
 export type Slider = { id: string; name: string; imageUrl: string }
 
+export const deal = [
+  { id: '1', name: 'آتیه‌سازان', imageUrl: '/images/deal/atieh.svg' },
+  { id: '2', name: 'بیمه ایران', imageUrl: '/images/deal/iran.svg' },
+  {
+    id: '3',
+    name: 'بیمه خدمات درمانی',
+    imageUrl: '/images/deal/khadamatdarmani.svg',
+  },
+  { id: '4', name: 'بیمه سلامت', imageUrl: '/images/deal/salamat.svg' },
+]
+export type Deal = { id: string; name: string; imageUrl: string }
+
 // function replaceNewLines(text) {
 //   // Replace new lines with '\n'
 //   var replacedText = text.replace(/\n/g, '\\n')
