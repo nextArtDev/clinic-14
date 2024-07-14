@@ -4,6 +4,7 @@ import Hero from '@/components/home/landing/Hero'
 import Carousel from '@/components/home/landing/Carousel'
 import StackCards from '@/components/home/stack-cards/StackCards'
 import { slider } from '@/constants'
+import Slider from '@/components/home/Slider'
 
 export default function Home() {
   return (
@@ -11,10 +12,10 @@ export default function Home() {
       <Hero />
       <Deal />
       {/* <Carousel slides={slider} /> */}
-      <section className="">
-        <StackCards />
+      <StackCards />
+      <section className="relative ">
+        <Slider />
       </section>
-
       <Footer />
     </main>
   )

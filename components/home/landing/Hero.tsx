@@ -18,7 +18,7 @@ import { MapPin, Phone } from 'lucide-react'
 import HeroWhatsApp from '../icons/HeroWhatsApp'
 import sun from '@/public/icons/sun.png'
 import Carousel from './Carousel'
-import { slider } from '@/constants'
+import { slider, special } from '@/constants'
 import RotateBetween from './RevealWord'
 type Props = {}
 const words = ['CREATE', 'LEARN', 'ENJOY', 'IMPRESS']
@@ -130,11 +130,11 @@ function Hero({}: Props) {
               </Button>
             </Link>
           </div>
-          <div className="z-10 my-4 w-full rounded-lg  px-4 dark:bg-zinc-900">
-            <div className="flex h-20 items-center justify-start space-x-1 px-2 text-4xl font-normal text-neutral-800 dark:text-gray-300">
-              <p>Contribute us to</p>
+          <div className="z-10 text-center w-full rounded-lg   ">
+            <div className="flex h-20 items-center justify-start space-x-1 px-2 text-2xl font-normal text-neutral-800 dark:text-gray-300">
+              <p> دارای متخصص</p>
               <RotateBetween
-                words={words}
+                words={special.map((spec) => spec.title)}
                 className="text-balance bg-gradient-to-tr from-black from-30% to-black/60 bg-clip-text px-1 py-2 font-bold leading-none tracking-tighter text-transparent dark:from-white dark:to-white/40"
               />
             </div>

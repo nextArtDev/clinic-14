@@ -1192,25 +1192,33 @@ export const special = [
     id: 1,
     title: 'غدد و متابولیسم',
     doctorId: [1],
-    src: special1,
+    src: '/images/parallax/0001.webp',
+    description:
+      'در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها',
   },
   {
     id: 2,
     title: 'زنان و زایمان',
     doctorId: [2],
-    src: special2,
+    src: '/images/parallax/0020.webp',
+    description:
+      'در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها',
   },
   {
     id: 3,
     title: 'بیماری‌های عفونی',
     doctorId: [3],
-    src: special3,
+    src: '/images/parallax/0017.webp',
+    description:
+      'در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها',
   },
   {
     id: 4,
     title: 'کودکان و نوزادان',
     doctorId: [4],
-    src: special4,
+    src: '/images/parallax/0000.webp',
+    description:
+      'در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها',
   },
 ]
 export const slider = [

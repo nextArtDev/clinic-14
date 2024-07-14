@@ -11,7 +11,7 @@ interface CardProps {
   description?: string
   src: string
   url?: string
-  color: string
+  // color: string
   progress: MotionValue<number>
   range: number[]
   targetScale: number
@@ -22,7 +22,7 @@ const Card = ({
   description,
   src,
   url,
-  color,
+  // color,
   progress,
   range,
   targetScale,
@@ -43,7 +43,7 @@ const Card = ({
         style={{
           // backgroundImage: `url(/parallax-images/${src})`,
           // backgroundBlendMode: 'exclusion',
-          backgroundColor: color,
+          // backgroundColor: color,
           mixBlendMode: 'multiply',
           scale,
           top: `calc(-5vh + ${i * 25}px)`,

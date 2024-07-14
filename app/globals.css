@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* * {
+  border: 1px solid red;
+} */
 html {
   height: 100%;
   -o-backface-visibility: hidden;
