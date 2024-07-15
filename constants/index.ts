@@ -184,6 +184,14 @@ export const days = [
   { id: 5, name: 'چهارشنبه' },
   { id: 6, name: 'پنجشنبه' },
 ]
+export type DoctorType = {
+  id: number
+  name: string
+  imageSrc: string
+  specialty: string[]
+  illnessId: number[]
+  booking: string[]
+}
 export const doctors = [
   {
     id: 1,
@@ -192,10 +200,11 @@ export const doctors = [
     url: '/abrishamchian',
     imageSrc: '/images/1.jpg',
     specialty: ['فوق تخصص غدد و متابولیسم بالغین'],
-    booking: [
-      { dayId: 2, hours: ['14', '17'] },
-      { dayId: 3, hours: ['14', '17'] },
-    ],
+    // booking: [
+    //   { dayId: 2, hours: ['14', '17'] },
+    //   { dayId: 3, hours: ['14', '17'] },
+    // ],
+    booking: ['یکشنبه 2 تا 5', 'دوشنبه 2 تا 5'],
   },
   {
     id: 2,
@@ -206,10 +215,12 @@ export const doctors = [
     url: '/toutounian',
     imageSrc: '/images/1.jpg',
     specialty: ['جراح و متخصص زنان و زایمان'],
-    booking: [
-      { dayId: 2, hours: ['11', '13'] },
-      { dayId: 4, hours: ['15:30', '17:30'] },
-    ],
+    // booking: [
+    //   { dayId: 2, hours: ['11', '13'] },
+    //   { dayId: 4, hours: ['15:30', '17:30'] },
+    // ],
+
+    booking: ['یکشنبه 11 تا 13', 'دوشنبه 15:30 تا 17:30'],
   },
   {
     id: 3,
@@ -218,10 +229,12 @@ export const doctors = [
     url: '/taeti',
     imageSrc: '/images/1.jpg',
     specialty: ['متخصص بیماری‌های عفونی ', 'فلوشیپ AIDS/HIV بالینی'],
-    booking: [
-      { dayId: 3, hours: ['16', '20'] },
-      { dayId: 6, hours: ['13:30', '15:30'] },
-    ],
+    // booking: [
+    //   { dayId: 3, hours: ['16', '20'] },
+    //   { dayId: 6, hours: ['13:30', '15:30'] },
+    // ],
+
+    booking: ['چهارشنبه 16 تا 20', 'پنجشنبه 13:30 تا 15:30'],
   },
   {
     id: 4,
@@ -230,11 +243,12 @@ export const doctors = [
     url: '/hashemi',
     imageSrc: '/images/1.jpg',
     specialty: ['دارای بورد تخصصی کودکان و نوزادان'],
-    booking: [
-      { dayId: 1, hours: ['10', '12'] },
-      { dayId: 3, hours: ['10', '12'] },
-      { dayId: 5, hours: ['10', '12'] },
-    ],
+    // booking: [
+    //   { dayId: 1, hours: ['10', '12'] },
+    //   { dayId: 3, hours: ['10', '12'] },
+    //   { dayId: 5, hours: ['10', '12'] },
+    // ],
+    booking: ['شنبه 10 تا 12', 'چهارشنبه 10 تا 12'],
   },
   {
     id: 5,
@@ -243,7 +257,8 @@ export const doctors = [
     url: '/eshaghian',
     imageSrc: '/images/1.jpg',
     specialty: ['پزشک عمومی'],
-    booking: [{ dayId: 0, hours: ['', ''] }],
+    booking: [''],
+    // booking: [{ dayId: 0, hours: ['', ''] }],
   },
   {
     id: 6,
@@ -252,7 +267,8 @@ export const doctors = [
     url: '/kaveh',
     imageSrc: '/images/1.jpg',
     specialty: ['پزشک عمومی'],
-    booking: [{ dayId: 0, hours: ['', ''] }],
+    booking: [''],
+    // booking: [{ dayId: 0, hours: ['', ''] }],
   },
   {
     id: 7,
@@ -261,7 +277,8 @@ export const doctors = [
     url: '/pirmoradian',
     imageSrc: '/images/1.jpg',
     specialty: ['پزشک عمومی'],
-    booking: [{ dayId: 0, hours: ['', ''] }],
+    booking: [''],
+    // booking: [{ dayId: 0, hours: ['', ''] }],
   },
   {
     id: 8,
@@ -270,7 +287,8 @@ export const doctors = [
     url: '/akbari',
     imageSrc: '/images/1.jpg',
     specialty: ['پزشک عمومی'],
-    booking: [{ dayId: 0, hours: ['', ''] }],
+    booking: [''],
+    // booking: [{ dayId: 0, hours: ['', ''] }],
   },
   {
     id: 9,
@@ -279,7 +297,8 @@ export const doctors = [
     url: '/parham',
     imageSrc: '/images/1.jpg',
     specialty: ['پزشک عمومی'],
-    booking: [{ dayId: 0, hours: ['', ''] }],
+    booking: [''],
+    // booking: [{ dayId: 0, hours: ['', ''] }],
   },
 ]
 

@@ -3,8 +3,9 @@ import Footer from '@/components/home/Footer'
 import Hero from '@/components/home/landing/Hero'
 import Carousel from '@/components/home/landing/Carousel'
 import StackCards from '@/components/home/stack-cards/StackCards'
-import { slider } from '@/constants'
+import { doctors, slider } from '@/constants'
 import Slider from '@/components/home/Slider'
+import DoctorCarousel from '@/components/home/Doctor/DoctorsCarousel'
 
 export default function Home() {
   return (
@@ -13,9 +14,11 @@ export default function Home() {
       <Deal />
       {/* <Carousel slides={slider} /> */}
       <StackCards />
+      <DoctorCarousel slides={doctors} />
       <section className="relative ">
         <Slider />
       </section>
+
       <Footer />
     </main>
   )
