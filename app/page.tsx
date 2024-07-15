@@ -6,6 +6,7 @@ import StackCards from '@/components/home/stack-cards/StackCards'
 import { doctors, slider } from '@/constants'
 import Slider from '@/components/home/Slider'
 import DoctorCarousel from '@/components/home/Doctor/DoctorsCarousel'
+import Reviews from '@/components/home/review/Reviews'
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
       <section className="relative ">
         <Slider />
       </section>
-
+      <Reviews />
       <Footer />
     </main>
   )

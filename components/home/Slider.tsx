@@ -120,7 +120,7 @@ const Single = ({ item }: SingleProps) => {
               //   hidden: { opacity: 0 },
               //   visible: { opacity: 1, scale: 1 },
               // }}
-              className=" relative w-32 h-32  border-none   cursor-pointer overflow-hidden aspect-square shrink-0 after:content-[''] after:absolute after:-bottom-6 after:w-32 after:h-12 after:bg-red-500"
+              className={` relative w-32 h-32  border-none   cursor-pointer overflow-hidden aspect-square shrink-0 after:content-[""] after:absolute after:-bottom-6 after:w-32 after:h-12 after:bg-black/20`}
               style={{
                 y: y1,
                 scale: ImageScale,
@@ -130,7 +130,7 @@ const Single = ({ item }: SingleProps) => {
                 fill
                 alt="dr"
                 src={DoctorImage.src}
-                className="object-contain after:content-[''] after:absolute after:bottom-0 after:w-12 after:h-4 after:bg-red-500 "
+                className="object-contain   "
               />
               {/* after:-z-10 after:absolute after:content-[''] after:h-full
               after:top-0 after:w-full after:left-0 after:opacity-70 */}
