@@ -1204,7 +1204,7 @@ export const illnessInography = [
     ],
     description: '',
   },
-]
+] as const
 
 export const special = [
   {

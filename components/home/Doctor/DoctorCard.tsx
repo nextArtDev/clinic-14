@@ -55,18 +55,16 @@ const DoctorCard: FC<DoctorCardProps> = ({ doctor, className }) => {
     //   </Link>
     // </section>
     // <section className={`mt-16 w-[60vw] md:w-[40vw] h-[60vh] ${className}`}>
-    <section
-      className={` mt-16 pb-4 w-[60vw] md:w-[40vw] h-[60vh] ${className}`}
-    >
+    <section className={` mt-16 pb-4  ${className}`}>
       <GlowingCard
-        fromColor="transparent"
-        viaColor="transparent"
-        toColor="transparent"
+        fromColor="#FFF8DC"
+        viaColor="#ADD8E6"
+        toColor="#FFB6C1"
         className=" "
       >
-        <div className="rounded-lg overflow-hidden min-h-[50vh] sm:min-h-[30vh] bg-transparent backdrop-blur-sm border border-white/70 shadow-2xl">
+        <div className=" rounded-2xl   bg-transparent backdrop-blur-sm overflow-hidden">
           {/* <div className=" rounded-none overflow-hidden min-h-[50vh] sm:min-h-[30vh]  "> */}
-          <div className="grainy p-6 ">
+          <div className=" p-6 ">
             {/* <div className="p-3 md:p-6 grainy w-[var(---slide-size)]"> */}
             <div className=" sm:flex sm:items-center sm:justify-between">
               <div className="sm:flex sm:justify-center sm:items-center sm:space-x-5">

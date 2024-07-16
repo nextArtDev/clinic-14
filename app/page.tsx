@@ -3,10 +3,11 @@ import Footer from '@/components/home/Footer'
 import Hero from '@/components/home/landing/Hero'
 import Carousel from '@/components/home/landing/Carousel'
 import StackCards from '@/components/home/stack-cards/StackCards'
-import { doctors, slider } from '@/constants'
+import { doctors, illness, slider } from '@/constants'
 import Slider from '@/components/home/Slider'
 import DoctorCarousel from '@/components/home/Doctor/DoctorsCarousel'
 import Reviews from '@/components/home/review/Reviews'
+import IllnessCarousel from '@/components/home/illness/IllnessCarousel'
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <section className="relative ">
         <Slider />
       </section>
+      <IllnessCarousel slides={illness} />
       <Reviews />
       <Footer />
     </main>

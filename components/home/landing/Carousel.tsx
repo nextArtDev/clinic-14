@@ -18,8 +18,8 @@ const Carousel: React.FC<PropType> = (props) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, axis: 'y' }, [
     Autoplay({
       delay: DELAY * 1000,
-      stopOnInteraction: false,
-      stopOnFocusIn: false,
+      // stopOnInteraction: false,
+      // stopOnFocusIn: false,
     }),
   ])
 
