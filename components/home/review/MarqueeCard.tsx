@@ -1,4 +1,5 @@
 import React from 'react'
+import { GlareCard } from '../GlareCard'
 
 export const marquees = [
   {
@@ -58,9 +59,12 @@ const renderStars = (rating: number) => {
 
 function MarqueeCard({ id, name, text, time, rate }: Props) {
   return (
-    <div dir="rtl" className="overflow-y-hidden    py-6 sm:py-8 lg:py-12">
-      <div className="mx-auto   px-2 md:px-4">
-        <div className="grainy w-[250px] md:w-[450px] h-[150px] flex flex-col gap-3 rounded-lg  p-4 md:p-6">
+    <div
+      dir="rtl"
+      className="overflow-y-hidden   rounded-xl py-6 sm:py-8 lg:py-12"
+    >
+      <GlareCard className="mx-auto   px-2 md:px-4">
+        <div className="  w-[250px] md:w-[450px] h-[150px] flex flex-col gap-3 rounded-xl   p-4 md:p-6">
           <div className="flex justify-between">
             <span className="block md:text-sm text-xs font-bold lg:text-base">
               {name}
@@ -76,7 +80,7 @@ function MarqueeCard({ id, name, text, time, rate }: Props) {
             {text}
           </p>
         </div>
-      </div>
+      </GlareCard>
     </div>
   )
 }

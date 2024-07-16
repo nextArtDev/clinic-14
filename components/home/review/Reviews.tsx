@@ -13,7 +13,7 @@ function Reviews({}: Props) {
       <h2 className="mb-4 text-center font-bold  md:mb-8 lg:text-3xl xl:mb-12">
         نظرات
       </h2>
-      <Marquee pauseOnHover className="[--duration:20s]">
+      <Marquee reverse pauseOnHover className="[--duration:20s]">
         {marquees.map((marquee) => (
           <MarqueeCard key={marquee.id} {...marquee} />
         ))}
