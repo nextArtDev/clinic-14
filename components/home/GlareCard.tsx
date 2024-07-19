@@ -119,7 +119,7 @@ export const GlareCard = ({
     >
       <div className="h-full grid will-change-transform origin-center transition-transform duration-[var(--duration)] ease-[var(--easing)] delay-[var(--delay)] [transform:rotateY(var(--r-x))_rotateX(var(--r-y))] rounded-[var(--radius)]   hover:[--opacity:0.6] hover:[--duration:200ms] hover:[--easing:linear] hover:filter-none overflow-hidden">
         <div className="w-full h-full grid [grid-area:1/1] mix-blend-overlay [clip-path:inset(0_0_0_0_round_var(--radius))]">
-          <div className={cn('h-full w-full bg-slate-600/40', className)}>
+          <div className={cn('h-full w-full gradient-base-r', className)}>
             {children}
           </div>
         </div>

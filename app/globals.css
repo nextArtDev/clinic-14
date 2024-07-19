@@ -99,6 +99,16 @@ html {
   }
 }
 
+/* fromColor="#FFB6C1" viaColor="#ADD8E6" toColor="#FFF8DC"; */
+
+@layer components {
+  .gradient-base {
+    @apply bg-gradient-to-r from-[#FFB6C1] via-[#ADD8E6] to-[#FFF8DC];
+  }
+  .gradient-base-r {
+    @apply bg-gradient-to-r from-[#FFF8DC] via-[#ADD8E6] to-[#FFB6C1];
+  }
+}
 .clip {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   -webkit-background-clip: polygon(0 0, 100% 0, 100% 100%, 0 100%);

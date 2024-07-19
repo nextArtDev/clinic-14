@@ -16,10 +16,11 @@ import {
 
 import { DoctorColumn } from './columns'
 import { toast } from '@/components/ui/use-toast'
-import { AlertModal } from '../../../../../components/dashboard/AlertModal'
+
 import { useFormState } from 'react-dom'
 import { deleteDoctor } from '@/lib/actions/dashboard/doctor'
 import loading from '../../loading'
+import { AlertModal } from '@/components/dashboard/AlertModal'
 
 interface CellActionProps {
   data: DoctorColumn

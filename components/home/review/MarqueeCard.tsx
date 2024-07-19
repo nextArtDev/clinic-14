@@ -61,7 +61,7 @@ function MarqueeCard({ id, name, text, time, rate }: Props) {
   return (
     <div
       dir="rtl"
-      className="overflow-y-hidden   rounded-xl py-6 sm:py-8 lg:py-12"
+      className="  overflow-y-hidden   rounded-xl py-6 sm:py-8 lg:py-12"
     >
       <GlareCard className="mx-auto   px-2 md:px-4">
         <div className="  w-[250px] md:w-[450px] h-[150px] flex flex-col gap-3 rounded-xl   p-4 md:p-6">

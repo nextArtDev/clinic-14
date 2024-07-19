@@ -173,10 +173,10 @@ const Slider = () => {
       style={{ position: 'relative' }}
     >
       <div className="progress z-30 sticky top-0 left-0 p-0.5 pt-12 text-center text-orange-400  ">
-        <h1>کلینیک‌ها</h1>
+        <h1 className="text-2xl">کلینیک‌ها</h1>
         <motion.div
           style={{ scaleX }}
-          className="progressBar rounded-full grainy h-1.5"
+          className="progressBar rounded-full gradient-base-r h-2.5   "
         ></motion.div>
       </div>
       {special.map((item) => (

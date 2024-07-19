@@ -50,7 +50,8 @@ const Card = ({
         }}
         className={cn(
           styles.card,
-          "  grainy relative w-full after:-z-10 after:absolute after:content-[''] after:h-full after:top-0 after:w-full after:left-0 after:opacity-70   "
+          "relative w-full after:-z-10 after:absolute after:content-[''] after:h-full after:top-0 after:w-full after:left-0 after:opacity-70",
+          i % 2 ? 'gradient-base' : 'gradient-base-r'
         )}
       >
         <h2 className="text-primary">{title}</h2>

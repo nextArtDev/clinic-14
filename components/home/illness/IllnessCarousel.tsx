@@ -66,9 +66,9 @@ const IllnessCarousel: React.FC<PropType> = (props) => {
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div> */}
 
-        <div className={`${style.embla__progress} grainy`}>
+        <div className={`${style.embla__progress} grainy `}>
           <div
-            className={`${style.embla__progress__bar} !bg-primary/80 `}
+            className={`${style.embla__progress__bar} !gradient-base `}
             style={{ transform: `translate3d(${scrollProgress}%,0px,0px)` }}
           />
         </div>
