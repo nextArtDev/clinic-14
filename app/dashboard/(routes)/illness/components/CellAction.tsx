@@ -16,7 +16,7 @@ import {
 
 import { IllnessColumn } from './columns'
 import { toast } from '@/components/ui/use-toast'
-import { AlertModal } from '../../../../../../components/dashboard/AlertModal'
+import { AlertModal } from '../../../../../components/dashboard/AlertModal'
 import { useFormState } from 'react-dom'
 import { deleteIllness } from '@/lib/actions/dashboard/illness'
 
