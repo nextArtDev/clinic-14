@@ -33,7 +33,7 @@ export default function RootLayout({
           >
             {/* <ModalProvider /> */}
             <TooltipProvider>
-              <Navbar />
+              {/* <Navbar /> */}
               {children}
             </TooltipProvider>
 

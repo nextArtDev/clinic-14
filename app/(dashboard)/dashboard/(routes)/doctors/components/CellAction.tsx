@@ -19,7 +19,7 @@ import { toast } from '@/components/ui/use-toast'
 
 import { useFormState } from 'react-dom'
 import { deleteDoctor } from '@/lib/actions/dashboard/doctor'
-import loading from '../../loading'
+import loading from '../../../loading'
 import { AlertModal } from '@/components/dashboard/AlertModal'
 
 interface CellActionProps {

@@ -8,7 +8,7 @@ function Reviews({}: Props) {
   return (
     <div
       dir="ltr"
-      className=" relative flex h-[400px]  w-full flex-col items-center justify-center overflow-hidden rounded-lg border   md:shadow-xl"
+      className=" relative flex h-[400px]  w-full flex-col items-center justify-center overflow-hidden rounded-lg  md:shadow-xl"
     >
       <h2 className="mb-4 text-center font-bold  md:mb-8 lg:text-3xl xl:mb-12">
         نظرات

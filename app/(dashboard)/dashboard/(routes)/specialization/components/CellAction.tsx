@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { toast } from '@/components/ui/use-toast'
-import { AlertModal } from '../../../../../components/dashboard/AlertModal'
+import { AlertModal } from '../../../../../../components/dashboard/AlertModal'
 import { SpecializationColumn } from './columns'
 import { useFormState } from 'react-dom'
 import { deleteSpecialization } from '@/lib/actions/dashboard/specialization'

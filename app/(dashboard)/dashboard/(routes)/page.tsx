@@ -9,13 +9,7 @@ import { Separator } from '@/components/ui/separator'
 import { CreditCard, DollarSign, Package } from 'lucide-react'
 // import { LuCreditCard, LuDollarSign, LuPackage } from 'react-icons/lu'
 
-interface DashboardPageProps {
-  params: {
-    storeId: string
-  }
-}
-
-const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
+const DashboardPage = () => {
   // const totalRevenuePromise = getTotalRevenue(params.storeId)
   // const graphRevenuePromise = getGraphRevenue(params.storeId)
   // const salesCountPromise = getSalesCount(params.storeId)

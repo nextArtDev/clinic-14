@@ -37,6 +37,12 @@ export function MainNav({
   const routes = [
     {
       //just redirecting to dashboard, it can be home or everything
+      href: `/`,
+      label: 'خانه',
+      active: pathname === `/`,
+    },
+    {
+      //just redirecting to dashboard, it can be home or everything
       href: `/dashboard`,
       label: 'وضعیت',
       active: pathname === `/dashboard`,

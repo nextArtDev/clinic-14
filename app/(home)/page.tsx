@@ -9,9 +9,9 @@ import DoctorCarousel from '@/components/home/Doctor/DoctorsCarousel'
 import Reviews from '@/components/home/review/Reviews'
 import IllnessCarousel from '@/components/home/illness/IllnessCarousel'
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <main className="grainy">
+    <div className="grainy">
       <Hero />
       <Deal />
       {/* <Carousel slides={slider} /> */}
@@ -23,6 +23,7 @@ export default function Home() {
       <IllnessCarousel slides={illness} />
       <Reviews />
       <Footer />
-    </main>
+    </div>
   )
 }
+export default HomePage
