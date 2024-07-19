@@ -6,10 +6,8 @@ import Navbar from '@/components/dashboard/Navbar'
 
 export default async function DashboardLayout({
   children,
-  params,
 }: {
   children: React.ReactNode
-  params: { storeId: string }
 }) {
   const session = await auth()
   const userId = session?.user.id
