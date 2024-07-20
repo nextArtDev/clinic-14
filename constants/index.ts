@@ -1266,3 +1266,43 @@ export type Deal = { id: string; name: string; imageUrl: string }
 
 //   return console.log(replacedText)
 // }
+export const rooms = [
+  {
+    id: '1',
+    title: 'اقدامات عمومی',
+    imageUrl: '/images/parts/omomi.webp',
+    items: [
+      { id: '1', text: 'تزریق وریدی با رعایت طرح انطباق' },
+      { id: '2', text: 'تزریق ماهیچه‌ای با رعایت طرح انطباق' },
+
+      { id: '3', text: 'وصل سرم' },
+      { id: '4', text: 'انجام نوار قلب' },
+      { id: '5', text: 'انجام بخیه' },
+      { id: '6', text: 'انجام پانسمان ساده و تخصصی' },
+      { id: '7', text: 'برداشتن خال، میخچه، کرایوتراپی' },
+    ],
+  },
+  {
+    id: '2',
+    title: 'اتاق احیاء',
+    imageUrl: '/images/parts/CPR.webp',
+    items: [
+      { id: '1', text: 'تشخیص سریع و انجام آزمون‌های تشخیصی ' },
+      { id: '2', text: 'مانورهای تنفسی پیشرفته' },
+
+      { id: '3', text: 'انجام آزمون‌های تشخیصی ' },
+      { id: '4', text: 'نظارت مستمر بر بیمار' },
+    ],
+  },
+  {
+    id: '3',
+    title: 'زیبایی عمومی',
+    imageUrl: 'images/parts/emergency.webp',
+    items: [
+      { id: '1', text: 'تزریق بوتاکس' },
+      { id: '2', text: 'تزریق ژل' },
+
+      { id: '3', text: 'لیزر موهای زائد با دستگاه دایود' },
+    ],
+  },
+] as const

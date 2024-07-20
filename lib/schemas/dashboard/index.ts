@@ -5,40 +5,38 @@ export const createDoctorSchema = z.object({
   name: z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
   phone: z
     .string()
-    .regex(new RegExp('^(09|۰۹)\\d{9}$'), {
-      message: 'شماره موبایل معتبر نیست.',
-    })
-    .regex(new RegExp('^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'), {
-      message: 'شماره موبایل معتبر نیست.',
-    })
+    // .regex(new RegExp('^(09|۰۹)\\d{9}$'), {
+    //   message: 'شماره موبایل معتبر نیست.',
+    // })
+    // .regex(new RegExp('^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'), {
+    //   message: 'شماره موبایل معتبر نیست.',
+    // })
     .optional(),
   website: z
     .string()
-    .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
+    // .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
     .optional(),
   description: z.string().optional(),
-  open_time: z
-    .array(
-      z
-        .string()
-        .min(1, {
-          message: 'تگ باید حداقل 1 حرف باشد.',
-        })
-        .max(15)
-    )
-    .max(15, {
-      message: 'تگ نمی‌تواند بیش از 15 حرف باشد.',
-    }),
+  open_time: z.array(
+    z
+      .string()
+      .min(1, {
+        message: 'تگ باید حداقل 1 حرف باشد.',
+      })
+      .max(35, {
+        message: 'تگ نمی‌تواند بیش از 35 حرف باشد.',
+      })
+  ),
   //   main_image: z
   //     .string()
   //     .min(1, { message: 'این قسمت نمی‌تواند خالی باشد' })
   //     .url()
-  //     .optional(),
+  // .optional(),
   images: z.any().optional(),
   // .array()  satisfies Prisma.ImagesUncheckedCreateNestedManyWithoutDoctorInput,
   // booking: z.object({ booking_time: z.date() }).array().optional(),
   //Because we're working with Decimal, we should add "coerce"
-  price: z.coerce.number().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
+  // price: z.coerce.number().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }),
   specializationId: z
     .array(z.string().min(1, { message: 'این قسمت نمی‌تواند خالی باشد' }))
     .optional(),

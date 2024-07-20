@@ -8,7 +8,7 @@ export type DoctorColumn = {
   id: string
   name: string | null
   phone: string | null
-  price: number
+  // price: number
   description: string | null
   main_image: string | null
   // open_time: string | null
@@ -28,18 +28,15 @@ export const columns: ColumnDef<DoctorColumn>[] = [
     accessorKey: 'description',
     header: 'توضیحات',
   },
-  {
-    accessorKey: 'website',
-    header: 'وبسایت',
-  },
-  {
-    accessorKey: 'price',
-    header: 'ویزیت',
-  },
-  {
-    accessorKey: 'main_image',
-    header: 'عکس اصلی',
-  },
+  // {
+  //   accessorKey: 'website',
+  //   header: 'وبسایت',
+  // },
+
+  // {
+  //   accessorKey: 'main_image',
+  //   header: 'عکس اصلی',
+  // },
   // {
   //   accessorKey: 'open_time',
   //   header: 'زمان شروع',

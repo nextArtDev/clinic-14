@@ -24,7 +24,7 @@ const Carousel: React.FC<PropType> = (props) => {
   ])
 
   return (
-    <section className="embla ">
+    <section className="embla pointer-events-none ">
       <div className="relative embla__viewport" ref={emblaRef}>
         <div className=" embla__container  ">
           {slides.map((slide) => (
@@ -38,7 +38,7 @@ const Carousel: React.FC<PropType> = (props) => {
                     delay: 0.4,
                     ease: 'easeOut',
                   }}
-                  className="absolute inset-0 bg-blue-300/30  backdrop-blur-sm z-[1]"
+                  className="absolute inset-0 gradient-base opacity-40 backdrop-blur-sm z-[1]"
                 ></motion.div>
                 <Image
                   src={slide.imageUrl}

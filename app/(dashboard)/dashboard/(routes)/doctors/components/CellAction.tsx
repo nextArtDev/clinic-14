@@ -52,7 +52,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={deleteAction}
         isPending={isPending}
       />
-      <DropdownMenu>
+      <DropdownMenu dir="rtl">
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">بازکردن منو</span>
@@ -61,9 +61,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>عملیات</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => onCopy(`${data.id}`)}>
-            <Copy className="ml-2 h-4 w-4" /> کپی ID
-          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => router.push(`/dashboard/doctors/${data.id}`)}
           >
@@ -71,6 +68,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="ml-2 h-4 w-4" /> حذف
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onCopy(`${data.id}`)}>
+            <Copy className="ml-2 h-4 w-4" /> کپی ID
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

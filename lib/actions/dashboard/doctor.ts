@@ -16,7 +16,7 @@ interface CreateDoctorFormState {
     name?: string[]
     description?: string[]
     phone?: string[]
-    price?: string[]
+    // price?: string[]
     website?: string[]
 
     open_time?: string[]
@@ -35,7 +35,7 @@ export async function createDoctor(
   const result = createDoctorSchema.safeParse({
     name: formData.get('name'),
     phone: formData.get('phone'),
-    price: formData.get('price'),
+    // price: formData.get('price'),
     website: formData.get('website'),
     description: formData.get('description'),
     images: formData.getAll('images'),
@@ -92,7 +92,7 @@ export async function createDoctor(
       data: {
         name: result.data.name,
         phone: result.data.phone,
-        price: +result.data.price,
+        // price: +result.data.price,
         website: result.data.website,
         description: result?.data.description,
         images: {
@@ -157,7 +157,7 @@ interface EditDoctorFormState {
     name?: string[]
     description?: string[]
     phone?: string[]
-    price?: string[]
+    // price?: string[]
     website?: string[]
 
     open_time?: string[]
@@ -175,7 +175,7 @@ export async function editDoctor(
   const result = createDoctorSchema.safeParse({
     name: formData.get('name'),
     phone: formData.get('phone'),
-    price: formData.get('price'),
+    // price: formData.get('price'),
     website: formData.get('website'),
     description: formData.get('description'),
     images: formData.getAll('images'),
@@ -290,7 +290,7 @@ export async function editDoctor(
           description: result.data.description,
 
           phone: result.data.phone,
-          price: +result.data.price,
+          // price: +result.data.price,
           website: result.data.website,
 
           images: {
@@ -338,7 +338,7 @@ export async function editDoctor(
           name: result.data.name,
           description: result.data.description,
           phone: result.data.phone,
-          price: +result.data.price,
+          // price: +result.data.price,
           website: result.data.website,
 
           specialization: {

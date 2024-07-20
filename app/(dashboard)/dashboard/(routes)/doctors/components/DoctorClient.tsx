@@ -18,9 +18,6 @@ interface DoctorsClientProps {
 }
 
 export const DoctorsClient: React.FC<DoctorsClientProps> = ({ data }) => {
-  const params = useParams()
-  const router = useRouter()
-
   return (
     <>
       <div className="flex items-center justify-between">

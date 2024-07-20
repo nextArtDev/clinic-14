@@ -76,7 +76,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
     ? {
         ...initialData,
         //In prisma mysql price is Decimal but here it has to be a float
-        price: parseFloat(String(initialData?.price)),
+        // price: parseFloat(String(initialData?.price)),
         phone: initialData.phone || '',
         website: initialData.website || '',
         open_time:
@@ -96,7 +96,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
         // booking: [],
         open_time: [],
         // close_time: [],
-        price: 0,
+        // price: 0,
         specializationId: [],
       }
 
@@ -113,7 +113,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
     formData.append('website', data.website || '')
     formData.append('description', data.description || '')
 
-    formData.append('price', String(data.price))
+    // formData.append('price', String(data.price))
     if (data.specializationId && data.specializationId.length > 0) {
       for (let i = 0; i < data.specializationId.length; i++) {
         formData.append('specializationId', data.specializationId[i])
@@ -223,9 +223,13 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
                 })
               } else if (res?.errors?._form) {
                 toast.error(res?.errors._form?.join(' و '))
+                form.setError('root', {
+                  type: 'custom',
+                  message: res?.errors?._form?.join(' و '),
+                })
               }
             })
-            .catch(() => toast.error('مشکلی پیش آمده.'))
+            .catch(() => console.log('مشکلی پیش آمده.'))
         })
       }
     } catch {
@@ -312,13 +316,9 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
                 name="images"
                 render={({ field: { onChange }, ...field }) => (
                   <FormItem>
-                    <FormLabel className="mx-auto cursor-pointer bg-transparent rounded-xl flex flex-col justify-center gap-4 items-center border-2 border-black/20 dark:border-white/20 border-dashed w-full h-24 shadow  ">
+                    <FormLabel className="mx-auto cursor-pointer bg-transparent rounded-xl flex flex-col justify-center gap-4 items-center border-2   border-dashed w-full h-24 shadow  ">
                       {/* <FileUp size={42} className=" " /> */}
-                      <span
-                        className={cn(buttonVariants({ variant: 'ghost' }))}
-                      >
-                        انتخاب عکس
-                      </span>
+                      <span className={cn(buttonVariants())}>انتخاب عکس</span>
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -371,7 +371,10 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>نام و نام خانوادگی دکتر </FormLabel>
+                  <FormLabel>
+                    نام و نام خانوادگی دکتر{' '}
+                    <span className="text-rose-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -388,7 +391,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>نام</FormLabel>
+                  <FormLabel>شماره تماس</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -434,7 +437,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="price"
               render={({ field }) => (
@@ -446,13 +449,15 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <FormField
               control={form.control}
               name="specializationId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>تخصص</FormLabel>
+                  <FormLabel>
+                    تخصص <span className="text-rose-500">*</span>
+                  </FormLabel>
                   {/* <MultiSelect
                     selected={field.value!}
                     options={specialization.map((specialization) => {
@@ -490,14 +495,12 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
             control={form.control}
             name="open_time"
             render={({ field }) => (
-              <FormItem className="flex w-full flex-col">
-                <FormLabel>
-                  روز و ساعت حضور <span className="text-rose-500">*</span>
-                </FormLabel>
+              <FormItem className="flex w-fit flex-col">
+                <FormLabel>روز و ساعت حضور</FormLabel>
                 <FormControl className="mt-3.5">
                   <>
                     <Input
-                      className="min-h-[56px] border text-slate-700 dark:text-inherit "
+                      className="min-h-[56px] "
                       // {...field}
                       onKeyDown={(e) => handleInputKeyDown(e, field)}
                       placeholder="اضافه کردن روز و ساعت..."

@@ -75,7 +75,7 @@ model Doctor {
   description String?
   open_time   DateTag[]
   // slug              String?         @unique
-  price       Int
+  // price       Int
   illnesses   Illness[]
   images      Image[]
 
