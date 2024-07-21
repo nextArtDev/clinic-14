@@ -1305,4 +1305,4 @@ export const rooms = [
       { id: '3', text: 'لیزر موهای زائد با دستگاه دایود' },
     ],
   },
-] as const
+]

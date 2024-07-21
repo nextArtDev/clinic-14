@@ -10,7 +10,7 @@ import { CheckCircle } from 'lucide-react'
 interface CardProps {
   i: number
   title: string
-  items?: { id: string; text: string }[]
+  items: { id: string; text: string }[]
   src: string
   // url?: string
   // color: string
@@ -72,20 +72,24 @@ const Card = ({
               'text-lg font-semibold  text-right'
             )}
           >
-            <ul className="absolute top-16 left-1/2 w-full space-y-4 -translate-x-1/2 flex flex-col  justify-around items-center text-justify z-[2]">
+            <motion.ul
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, staggerChildren: 0.5 }}
+              className=" opacity-15  absolute top-16 left-1/2 w-full space-y-4 -translate-x-1/2 flex flex-col  justify-around items-center text-justify z-[2]"
+            >
               {items?.map((item) => (
-                <li key={item.id} className=" ">
-                  <Badge className="flex bg-muted-foreground/30 backdrop-blur-md bg-opacity-20 rounded-full text-sm md:text-base">
+                <motion.li key={item.id} className="">
+                  <Badge className="px-2 py-1 flex gap-1 grainy backdrop-blur-md  rounded-full text-sm md:text-base">
                     <CheckCircle
-                      className="text-yellow-700"
+                      className="text-primary"
                       size={16}
-                      strokeWidth={1}
+                      strokeWidth={2}
                     />
                     <p>{item.text}</p>
                   </Badge>
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </div>
         </div>
       </motion.div>
