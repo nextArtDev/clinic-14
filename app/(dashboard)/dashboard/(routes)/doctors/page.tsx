@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma'
 import { DoctorColumn } from './components/columns'
 import { DoctorsClient } from './components/DoctorClient'
 
-const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
+const ProductsPage = async () => {
   const doctors = await prisma.doctor.findMany({
     where: {},
     //we include them to access them like individual objects and for example we can show them in table

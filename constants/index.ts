@@ -1270,7 +1270,7 @@ export const rooms = [
   {
     id: '1',
     title: 'اقدامات عمومی',
-    imageUrl: '/images/parts/omomi.webp',
+    src: '/images/parts/omomi.webp',
     items: [
       { id: '1', text: 'تزریق وریدی با رعایت طرح انطباق' },
       { id: '2', text: 'تزریق ماهیچه‌ای با رعایت طرح انطباق' },
@@ -1285,7 +1285,7 @@ export const rooms = [
   {
     id: '2',
     title: 'اتاق احیاء',
-    imageUrl: '/images/parts/CPR.webp',
+    src: '/images/parts/CPR.webp',
     items: [
       { id: '1', text: 'تشخیص سریع و انجام آزمون‌های تشخیصی ' },
       { id: '2', text: 'مانورهای تنفسی پیشرفته' },
@@ -1297,7 +1297,7 @@ export const rooms = [
   {
     id: '3',
     title: 'زیبایی عمومی',
-    imageUrl: 'images/parts/emergency.webp',
+    src: '/images/parts/emergency.webp',
     items: [
       { id: '1', text: 'تزریق بوتاکس' },
       { id: '2', text: 'تزریق ژل' },

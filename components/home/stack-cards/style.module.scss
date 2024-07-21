@@ -11,7 +11,7 @@
         flex-direction: column;
         position: relative;
         top: -25%;
-        height: 500px;
+        height: 600px;
         width: 1000px;
         // border-radius: 25px;
         border-radius: 7px;
@@ -21,41 +21,25 @@
         h2 {
             text-align: center;
             margin: 0px;
-            font-size: 28px;
+            // font-size: 28px;
         }
 
         .body {
-            display: flex;
-            height: 100%;
-            margin-top: 50px;
-            gap: 50px;
+            // display: flex;
+            // height: 100%;
+            // margin-top: 50px;
+            // gap: 50px;
 
-            .description {
-                width: 40%;
-                position: relative;
-                top: 10%;
+            // .description {
+            //     width: 40%;
+            //     position: relative;
+            //     top: 10%;
 
-                p {
-                    font-size: 16px;
+            //     p {
+            //         font-size: 16px;
+            //     }
 
-                    &::first-letter {
-                        font-size: 28px;
-                        font-family: 'Title';
-                    }
-                }
-
-                span {
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-
-                    a {
-                        font-size: 12px;
-                        text-decoration: underline;
-                        cursor: pointer;
-                    }
-                }
-            }
+            // }
 
             .imageContainer {
                 position: relative;

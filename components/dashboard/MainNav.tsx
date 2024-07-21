@@ -97,11 +97,11 @@ export function MainNav({
           key={route.href}
           href={route.href}
           className={cn(
-            buttonVariants({ variant: 'ghost' }),
-            'hidden  md:flex md:items-center w-full text-sm font-medium transition-colors hover:text-primary',
-            route.active
-              ? 'text-black underline underline-offset-8 dark:text-white'
-              : 'text-muted-foreground'
+            buttonVariants({ variant: route.active ? 'link' : 'ghost' }),
+            'hidden  md:flex md:items-center w-full text-sm font-medium transition-colors hover:text-primary'
+            // route.active
+            //   ? 'text-secondary underline underline-offset-8 '
+            //   : 'text-muted-foreground'
           )}
         >
           {route.label}
