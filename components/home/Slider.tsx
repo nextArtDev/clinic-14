@@ -7,6 +7,7 @@ import ImageEffect from './ImageEffect'
 import { special } from '@/constants'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import Image from 'next/image'
+import { Doctor, Specialization } from '@prisma/client'
 
 const items = [
   {
@@ -36,12 +37,8 @@ const items = [
 ]
 
 interface SingleProps {
-  item: {
-    id: number
-    title: string
-    imgUrl: string
-    description: string
-    doctorId: number[]
+  item: Specialization & { images: { url: string }[] | null } & {
+    doctors: (Doctor[] & { images: { url: string }[] | null }) | null
   }
 }
 const Single = ({ item }: SingleProps) => {
@@ -73,7 +70,7 @@ const Single = ({ item }: SingleProps) => {
               className=""
             /> */}
             <ImageEffect
-              imageSrc={item.imgUrl || '/images/parallax/0003.webp'}
+              imageSrc={item.images?.[0]?.url || '/images/parallax/0003.webp'}
             />
             {/* <img
               src={item.img}
@@ -93,7 +90,7 @@ const Single = ({ item }: SingleProps) => {
             }}
             style={{
               y,
-              backgroundImage: item.imgUrl,
+              // backgroundImage: item.images[0]?.url,
             }}
           >
             <motion.h2
@@ -103,7 +100,7 @@ const Single = ({ item }: SingleProps) => {
                 visible: { opacity: 1, y: 0, scale: 1 },
               }}
             >
-              {item.title}
+              {item.name}
             </motion.h2>
             <motion.p
               variants={{
@@ -120,29 +117,27 @@ const Single = ({ item }: SingleProps) => {
               //   hidden: { opacity: 0 },
               //   visible: { opacity: 1, scale: 1 },
               // }}
-              className={` relative w-32 h-32  border-none   cursor-pointer overflow-hidden aspect-square shrink-0 after:content-[""] after:absolute after:-bottom-6 after:w-32 after:h-12 after:bg-black/20`}
+              className={` relative   border-none   cursor-pointer overflow-hidden aspect-square shrink-0 after:content-[""] after:absolute after:-bottom-6 after:w-32 after:h-12 after:bg-black/20`}
               style={{
                 y: y1,
                 scale: ImageScale,
               }}
             >
-              <Image
+              {/* <Image
                 fill
                 alt="dr"
-                src={DoctorImage.src}
+                src={item.doctors?.images?.[0]?.url || DoctorImage.src}
                 className="object-contain   "
-              />
+              /> */}
               {/* after:-z-10 after:absolute after:content-[''] after:h-full
               after:top-0 after:w-full after:left-0 after:opacity-70 */}
-              {/* <Avatar
-                className={`w-[${ImageWidth}px]`}
-                style={{
-                  width: `${ImageWidth}px`,
-                }}
-              >
-                <AvatarImage src="/images/1.jpg" alt="@shadcn" />
+              <Avatar className={'w-32 h-32'}>
+                <AvatarImage
+                  src={item.doctors?.images?.[0]?.url || DoctorImage.src}
+                  alt={item.doctors?.[0].name}
+                />
                 <AvatarFallback>Doctor</AvatarFallback>
-              </Avatar> */}
+              </Avatar>
             </motion.div>
           </motion.div>
         </div>
@@ -151,7 +146,19 @@ const Single = ({ item }: SingleProps) => {
   )
 }
 
-const Slider = () => {
+type SliderProps = {
+  specializations: (Specialization & {
+    images:
+      | {
+          url: string
+        }[]
+      | null
+  } & {
+    doctors: (Doctor[] & { images: { url: string }[] | null }) | null
+  })[]
+}
+
+const Slider = ({ specializations }: SliderProps) => {
   const ref = useRef(null)
 
   const { scrollYProgress } = useScroll({
@@ -179,7 +186,7 @@ const Slider = () => {
           className="progressBar rounded-full gradient-base-r h-2.5   "
         ></motion.div>
       </div>
-      {special.map((item) => (
+      {specializations.map((item) => (
         <Single item={item} key={item.id} />
       ))}
     </div>

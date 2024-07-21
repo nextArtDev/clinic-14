@@ -6,10 +6,14 @@ import StackCards from '@/components/home/stack-cards/StackCards'
 import { doctors, illness, slider } from '@/constants'
 import Slider from '@/components/home/Slider'
 import DoctorCarousel from '@/components/home/Doctor/DoctorsCarousel'
-import Reviews from '@/components/home/review/Reviews'
-import IllnessCarousel from '@/components/home/illness/IllnessCarousel'
 
-const HomePage = () => {
+import IllnessCarousel from '@/components/home/illness/IllnessCarousel'
+import Reviews from '@/components/home/review/Reviews'
+import { getAllSpecializations } from '@/lib/queries/home'
+
+const HomePage = async () => {
+  const specializations = await getAllSpecializations()
+
   return (
     <div className="grainy">
       <Hero />
@@ -17,9 +21,11 @@ const HomePage = () => {
       {/* <Carousel slides={slider} /> */}
       <StackCards />
       <DoctorCarousel slides={doctors} />
-      <section className="relative ">
-        <Slider />
-      </section>
+      {specializations?.length && (
+        <section className="relative ">
+          <Slider specializations={specializations} />
+        </section>
+      )}
       <IllnessCarousel slides={illness} />
       <Reviews />
       <Footer />
