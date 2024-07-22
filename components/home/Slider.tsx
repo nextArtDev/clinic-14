@@ -8,6 +8,7 @@ import { special } from '@/constants'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import Image from 'next/image'
 import { Doctor, Specialization } from '@prisma/client'
+import { Badge } from '../ui/badge'
 
 const items = [
   {
@@ -38,7 +39,7 @@ const items = [
 
 interface SingleProps {
   item: Specialization & { images: { url: string }[] | null } & {
-    doctors: (Doctor[] & { images: { url: string }[] | null }) | null
+    doctors: (Doctor & { images: { url: string }[] | null })[] | null
   }
 }
 const Single = ({ item }: SingleProps) => {
@@ -47,21 +48,24 @@ const Single = ({ item }: SingleProps) => {
 
   const { scrollYProgress } = useScroll({
     target: ref,
+    offset: ['start end', 'end start'],
   })
 
   // the bigger numbers, the faster response to reference point (here img)
-  const y = useTransform(scrollYProgress, [0, 1], [-170, 170])
-  const y0 = useTransform(scrollYProgress, [0, 1], [-120, 120])
-  const y1 = useTransform(scrollYProgress, [0, 1], [-120, 120])
-  const ImageScale = useTransform(scrollYProgress, [0, 1], [1, 0])
+  const sm = useTransform(scrollYProgress, [0, 1], [0, -50])
+  const md = useTransform(scrollYProgress, [0, 1], [0, -150])
+  const lg = useTransform(scrollYProgress, [0, 1], [0, 30])
+  const lgScale = useTransform(scrollYProgress, [0, 1], [1, 0])
+  const smScale = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
     <section>
       <div className="container flex items-center justify-center w-full h-full overflow-hidden">
         <div className="wrapper relative max-w-[1366px] m-auto flex items-center justify-center gap-12 ">
-          <div
-            className="imageContainer max-sm:absolute max-sm:inset-0 h-1/2 p-4 md:block md:flex-1 md:h-full md:shrink-0"
+          <motion.div
+            className="imageContainer  p-4  flex-1 m h-full  shrink-0"
             ref={ref}
+            // style={{ y }}
           >
             {/* <img
               src={item.img}
@@ -78,23 +82,25 @@ const Single = ({ item }: SingleProps) => {
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               className=""
             /> */}
-          </div>
+          </motion.div>
           <motion.div
-            className="textContainer min-h-[400px] md:flex md:flex-1 md:flex-col md:gap-6"
+            className="textContainer absolute inset-0 top-2 left-1/2 -translate-x-1/2   min-h-[600px] z-[1] text-center"
             initial="hidden"
             whileInView="visible"
-            variants={{
-              visible: {
-                transition: { staggerChildren: 0.4, delay: 0.4 },
-              },
-            }}
-            style={{
-              y,
-              // backgroundImage: item.images[0]?.url,
-            }}
+            // variants={{
+            //   visible: {
+            //     transition: { staggerChildren: 0.4, delay: 0.4 },
+            //   },
+            // }}
+            style={
+              {
+                // y: sm,
+                // backgroundImage: item.images[0]?.url,
+              }
+            }
           >
             <motion.h2
-              className="opacity-0 scale-0 text-2xl text-primary font-bold"
+              className="  text-2xl text-primary font-bold"
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, scale: 1 },
@@ -102,7 +108,7 @@ const Single = ({ item }: SingleProps) => {
             >
               {item.name}
             </motion.h2>
-            <motion.p
+            {/* <motion.p
               variants={{
                 hidden: { opacity: 0 },
                 visible: { opacity: 1, scale: 1 },
@@ -111,33 +117,44 @@ const Single = ({ item }: SingleProps) => {
               style={{ y: y0 }}
             >
               {item.description}
-            </motion.p>
+            </motion.p> */}
             <motion.div
-              // variants={{
-              //   hidden: { opacity: 0 },
-              //   visible: { opacity: 1, scale: 1 },
-              // }}
-              className={` relative   border-none   cursor-pointer overflow-hidden aspect-square shrink-0 after:content-[""] after:absolute after:-bottom-6 after:w-32 after:h-12 after:bg-black/20`}
+              initial="hidden"
+              whileInView="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1 },
+              }}
+              className={`z-[2] absolute w-full h-full bottom-0 left-1/2 -translate-x-1/2  border-none   cursor-pointer overflow-hidden aspect-square   `}
               style={{
-                y: y1,
-                scale: ImageScale,
+                x: sm,
+                y: lg,
+                scale: smScale,
               }}
             >
-              {/* <Image
-                fill
-                alt="dr"
-                src={item.doctors?.images?.[0]?.url || DoctorImage.src}
-                className="object-contain   "
-              /> */}
-              {/* after:-z-10 after:absolute after:content-[''] after:h-full
-              after:top-0 after:w-full after:left-0 after:opacity-70 */}
-              <Avatar className={'w-32 h-32'}>
-                <AvatarImage
-                  src={item.doctors?.images?.[0]?.url || DoctorImage.src}
-                  alt={item.doctors?.[0].name}
-                />
-                <AvatarFallback>Doctor</AvatarFallback>
-              </Avatar>
+              <motion.article className="flex flex-col gap-4 ">
+                {item?.doctors?.map((doctor) => {
+                  const firstImage = doctor?.images?.[0]
+                  return (
+                    <div
+                      key={doctor.id}
+                      className="flex flex-col items-center justify-center gap-0.5"
+                    >
+                      <Avatar className={'h-32 w-32'}>
+                        <AvatarImage
+                          className="object-cover"
+                          src={firstImage?.url || DoctorImage.src}
+                          alt={doctor.name}
+                        />
+                        <AvatarFallback>Doctor</AvatarFallback>
+                      </Avatar>
+                      <Badge className="gradient-base rounded-full text-sm text-center flex items-center justify-center">
+                        دکتر {doctor.name}
+                      </Badge>
+                    </div>
+                  )
+                })}
+              </motion.article>
             </motion.div>
           </motion.div>
         </div>
@@ -154,7 +171,7 @@ type SliderProps = {
         }[]
       | null
   } & {
-    doctors: (Doctor[] & { images: { url: string }[] | null }) | null
+    doctors: (Doctor & { images: { url: string }[] | null })[] | null
   })[]
 }
 
@@ -179,11 +196,11 @@ const Slider = ({ specializations }: SliderProps) => {
       ref={ref}
       style={{ position: 'relative' }}
     >
-      <div className="progress z-30 sticky top-0 left-0 p-0.5 pt-12 text-center text-orange-400  ">
+      <div className="progress z-30 sticky top-8 left-0  py-8 text-center text-primary text-xl font-semibold ">
         <h1 className="text-2xl">کلینیک‌ها</h1>
         <motion.div
           style={{ scaleX }}
-          className="progressBar rounded-full gradient-base-r h-2.5   "
+          className="progressBar mt-3 rounded-full gradient-base-r h-2.5   "
         ></motion.div>
       </div>
       {specializations.map((item) => (

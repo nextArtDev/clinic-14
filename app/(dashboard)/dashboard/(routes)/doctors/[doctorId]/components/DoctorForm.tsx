@@ -477,7 +477,9 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
                       label: special.name,
                     }))}
                     onValueChange={(data) => field.onChange(data)}
-                    defaultValue={[]}
+                    defaultValue={
+                      initialData ? defaultValues.specializationId : []
+                    }
                     placeholder="انتخاب تخصص"
                     variant="inverted"
                     animation={2}

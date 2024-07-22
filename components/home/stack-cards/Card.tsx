@@ -72,13 +72,14 @@ const Card = ({
               'text-lg font-semibold  text-right'
             )}
           >
-            <motion.ul
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.5, staggerChildren: 0.5 }}
-              className=" opacity-15  absolute top-16 left-1/2 w-full space-y-4 -translate-x-1/2 flex flex-col  justify-around items-center text-justify z-[2]"
-            >
+            <motion.ul className="   absolute top-16 left-1/2 w-full space-y-4 -translate-x-1/2 flex flex-col  justify-around items-center text-justify z-[2]">
               {items?.map((item) => (
-                <motion.li key={item.id} className="">
+                <motion.li
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delayChildren: 1.5, staggerChildren: 0.5 }}
+                  key={item.id}
+                  className="opacity-15"
+                >
                   <Badge className="px-2 py-1 flex gap-1 grainy backdrop-blur-md  rounded-full text-sm md:text-base">
                     <CheckCircle
                       className="text-primary"
