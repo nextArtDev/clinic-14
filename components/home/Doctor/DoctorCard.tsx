@@ -62,51 +62,51 @@ const DoctorCard: FC<DoctorCardProps> = ({ doctor, className }) => {
         toColor="#FFB6C1"
         className=" "
       >
-        <div className=" rounded-2xl   bg-transparent backdrop-blur-sm overflow-hidden">
+        <div className=" rounded-2xl min-h-[50vh] sm:min-h-[30vh]  bg-transparent backdrop-blur-sm overflow-hidden">
           {/* <div className=" rounded-none overflow-hidden min-h-[50vh] sm:min-h-[30vh]  "> */}
-          <div className=" p-6 ">
+          <div className="p-2 md:p-6 ">
             {/* <div className="p-3 md:p-6 grainy w-[var(---slide-size)]"> */}
-            <div className=" sm:flex sm:items-center sm:justify-between">
-              <div className="sm:flex sm:justify-center sm:items-center sm:space-x-5">
+            <div className=" sm:flex sm:items-center sm:justify-between ">
+              <div className="sm:flex sm:justify-center md:justify-around sm:items-center sm:space-x-5 ">
                 <div className="flex-shrink-0 md:ml-4 ">
                   <Image
                     width={120}
                     height={120}
-                    className="mx-auto shadow-md shadow-gray-400 rounded-full object-contain cursor-none"
+                    className="mx-auto shadow-md   rounded-full object-contain cursor-none"
                     src={doctor.imageSrc}
                     alt=""
                   />
                 </div>
                 <div className="mt-4 sm:pr-4 text-center sm:mt-0 sm:pt-1 sm:text-right">
                   <p className="text-sm font-medium text-black/60">دکتر</p>
-                  <p className="inline-block py-3 text-xl font-bold text-blue-600 sm:text-2xl">
+                  <p className="inline-block py-3 text:sm md:text-lg xl:text-lg font-bold text-blue-600 sm:text-2xl">
                     {doctor.name}
                   </p>
-                  <p className="text-sm font-medium text-black/60">
+                  <p className="text-sm font-medium text-muted">
                     {doctor.specialty}
                   </p>
-                </div>
-              </div>
-              <div className=" mt-5 flex justify-center sm:mt-0">
-                {/* <Link
+                  <div className=" ">
+                    {/* <Link
                   href={`/doctors/${doctor.id}`}
                   className={cn(
                     buttonVariants(),
                     ' flex items-center justify-center rounded-md  px-3 py-2 text-sm font-semibold text-yellow-500 outline-black outline-dashed -outline-offset-2 shadow-md shadow-white ring-1 ring-inset ring-white-300 '
                   )}
                 > */}
-                <Link
-                  href={`/doctors/${doctor.id}`}
-                  className={cn(buttonVariants(), '  ')}
-                >
-                  صفحه شخصی
-                </Link>
+                    <Link
+                      href={`/doctors/${doctor.id}`}
+                      className={cn(buttonVariants(), '  ')}
+                    >
+                      صفحه شخصی
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="  flex mb-0 gap-x-4 justify-around text-black/80 border-t border-gray-200  ">
-            {/* {stats.map((stat) => (
+          {/* <div className="  flex mb-0 gap-x-4 justify-around text-black/80 border-t border-gray-200  "> */}
+          {/* {stats.map((stat) => (
             <div
               key={stat.label}
               className="px-6 py-5 text-center text-sm font-medium"
@@ -116,7 +116,7 @@ const DoctorCard: FC<DoctorCardProps> = ({ doctor, className }) => {
             </div>
           ))} */}
 
-            {/* {doctor?.booking?.map((book) => {
+          {/* {doctor?.booking?.map((book) => {
               return days.map((day) => {
                 if (book.dayId === day.id) {
                   return (
@@ -136,7 +136,7 @@ const DoctorCard: FC<DoctorCardProps> = ({ doctor, className }) => {
                 }
               })
             })} */}
-          </div>
+          {/* </div> */}
         </div>
       </GlowingCard>
     </section>

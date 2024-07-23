@@ -53,10 +53,11 @@ const Single = ({ item }: SingleProps) => {
 
   // the bigger numbers, the faster response to reference point (here img)
   const sm = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const md = useTransform(scrollYProgress, [0, 1], [0, -150])
-  const lg = useTransform(scrollYProgress, [0, 1], [0, 30])
+  const md = useTransform(scrollYProgress, [0, 1], [0, 30])
+  const lg = useTransform(scrollYProgress, [0, 1], [0, -150])
+
+  const smScale = useTransform(scrollYProgress, [0, 1], [0.2, 1])
   const lgScale = useTransform(scrollYProgress, [0, 1], [1, 0])
-  const smScale = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
     <section>
@@ -118,44 +119,45 @@ const Single = ({ item }: SingleProps) => {
             >
               {item.description}
             </motion.p> */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 1 },
-              }}
-              className={`z-[2] absolute w-full h-full bottom-0 left-1/2 -translate-x-1/2  border-none   cursor-pointer overflow-hidden aspect-square   `}
-              style={{
-                x: sm,
-                y: lg,
-                scale: smScale,
-              }}
-            >
-              <motion.article className="flex flex-col gap-4 ">
-                {item?.doctors?.map((doctor) => {
-                  const firstImage = doctor?.images?.[0]
-                  return (
-                    <div
-                      key={doctor.id}
-                      className="flex flex-col items-center justify-center gap-0.5"
-                    >
-                      <Avatar className={'h-32 w-32'}>
-                        <AvatarImage
-                          className="object-cover"
-                          src={firstImage?.url || DoctorImage.src}
-                          alt={doctor.name}
-                        />
-                        <AvatarFallback>Doctor</AvatarFallback>
-                      </Avatar>
-                      <Badge className="gradient-base rounded-full text-sm text-center flex items-center justify-center">
-                        دکتر {doctor.name}
-                      </Badge>
-                    </div>
-                  )
-                })}
-              </motion.article>
-            </motion.div>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            // variants={{
+            //   hidden: { opacity: 0 },
+            //   visible: { opacity: 1 },
+            // }}
+            className={`z-[2] absolute w-fit h-fit bottom-2 left-1/2  -translate-x-1/2  border-none   cursor-pointer overflow-hidden   `}
+            style={{
+              x: lg,
+
+              y: sm,
+              scale: smScale,
+            }}
+          >
+            <motion.article className="flex   gap-4 ">
+              {item?.doctors?.map((doctor) => {
+                const firstImage = doctor?.images?.[0]
+                return (
+                  <div
+                    key={doctor.id}
+                    className="flex flex-col items-center justify-center gap-0.5"
+                  >
+                    <Avatar className={'h-32 w-32'}>
+                      <AvatarImage
+                        className="object-cover"
+                        src={firstImage?.url || DoctorImage.src}
+                        alt={doctor.name}
+                      />
+                      <AvatarFallback>Doctor</AvatarFallback>
+                    </Avatar>
+                    <Badge className="gradient-base rounded-full text-sm text-center flex items-center justify-center">
+                      دکتر {doctor.name}
+                    </Badge>
+                  </div>
+                )
+              })}
+            </motion.article>
           </motion.div>
         </div>
       </div>
