@@ -170,7 +170,7 @@ export const getAllIllnesses = async (params: GetIllnessParams) => {
     console.log(error)
   }
 }
-export const getIllnessesWithId = async ({ id }: { id: string }) => {
+export const getIllnessesById = async ({ id }: { id: string }) => {
   try {
     const illness = await prisma.illness.findUnique({
       where: { id },

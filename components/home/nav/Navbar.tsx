@@ -141,7 +141,7 @@ const Navbar = () => {
             <NavigationMenuDemo />
 
             <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
-              <motion.figure
+              <motion.div
                 style={{
                   scale: useTransform(
                     scrollYBoundedProgressThrottled,
@@ -154,7 +154,7 @@ const Navbar = () => {
                 {/* <Search size={'sm'} className="w-4" /> */}
                 <ExpandableSearch />
                 {/* <Image src={SearchImage} alt="search" width={18} height={18} /> */}
-              </motion.figure>
+              </motion.div>
 
               <motion.figure
                 style={{
@@ -207,7 +207,7 @@ const Navbar = () => {
                     'backdrop-blur-2xl hover:backdrop-blur-sm hover:bg-transparent rounded-full -mt-0.5'
                   )}
                 >
-                  {nav.name}
+                  {nav.title}
                 </Link>
               </motion.li>
             ))}

@@ -5,8 +5,8 @@ type Props = {}
 
 function ExpandableSearch({}: Props) {
   return (
-    // <GlobalSearch />
-    null
+    <GlobalSearch />
+
     // <form action="" className="transition-all relative mx-auto w-max">
     //   <input
     //     type="search"
