@@ -12,7 +12,7 @@ import Reviews from '@/components/home/review/Reviews'
 import { getAllSpecializations } from '@/lib/queries/home'
 
 const HomePage = async () => {
-  const specializations = await getAllSpecializations()
+  const specializations = await getAllSpecializations({})
 
   return (
     <div className="grainy">
@@ -21,9 +21,9 @@ const HomePage = async () => {
       {/* <Carousel slides={slider} /> */}
       <StackCards />
       <DoctorCarousel slides={doctors} />
-      {specializations?.length && (
+      {specializations?.specializations?.length && (
         <section className="relative ">
-          <Slider specializations={specializations} />
+          <Slider specializations={specializations.specializations} />
         </section>
       )}
       <IllnessCarousel slides={illness} />
