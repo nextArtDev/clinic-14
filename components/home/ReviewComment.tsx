@@ -87,7 +87,7 @@ function ReviewComment({}: Props) {
           </div>
           <div className="flex flex-col w-full">
             <textarea
-              rows="3"
+              rows={3}
               placeholder="Message..."
               className="p-4 rounded-md resize-none dark:text-gray-800 dark:bg-gray-50"
             ></textarea>

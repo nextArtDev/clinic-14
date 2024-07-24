@@ -1,0 +1,60 @@
+import DoctorCard from '@/components/home/Doctor/DoctorCard'
+
+import LocalSearchbar from '@/components/search/LocalSearchbar'
+import Pagination from '@/components/search/Pagination'
+import { getAllDoctors, getAllSpecializations } from '@/lib/queries/home'
+import SearchIcon from '@/public/icons/search.svg'
+
+async function page({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined }
+}) {
+  const specializations = await getAllSpecializations({
+    searchQuery: searchParams.q,
+
+    page: searchParams.page ? +searchParams.page : 1,
+  })
+  if (!specializations?.specializations)
+    return (
+      <p className="w-full h-screen flex items-center justify-center text-muted text-2xl">
+        هیچ متخصصی اضافه نشده است.
+      </p>
+    )
+  return (
+    <div className="">
+      <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
+        <h2 className="sr-only">دکترها</h2>
+        <div className="my-8 pt-20 flex flex-col gap-6 max-w-lg mx-auto">
+          <LocalSearchbar
+            route="/specialities"
+            iconPosition="left"
+            imgSrc={SearchIcon}
+            placeholder="جست‌وجوی دکتر "
+            otherClasses="flex-1 max-w-md mx-auto "
+          />
+        </div>
+        <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+          {specializations.specializations.map((special) => (
+            // <DoctorCard key={doctor.id} doctor={doctor} />
+            <div
+              key={special.id}
+              className="flex flex-col p-4 items-center justify-center w-64 h-32 rounded-xl grainy"
+            >
+              <div>{special.name}</div>
+              <div>{special.description}</div>
+            </div>
+          ))}
+          <div className="mt-10">
+            <Pagination
+              pageNumber={searchParams?.page ? +searchParams.page : 1}
+              isNext={specializations.isNext}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default page

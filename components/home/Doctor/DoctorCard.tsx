@@ -13,9 +13,10 @@ import {
 } from 'lucide-react'
 import GlowingCard from './GlowingCard'
 import { buttonVariants } from '@/components/ui/button'
+import { Doctor } from '@prisma/client'
 
 interface DoctorCardProps {
-  doctor: DoctorType
+  doctor: Doctor & { images: { url: string | null }[] }
   className?: string
 }
 
@@ -73,7 +74,7 @@ const DoctorCard: FC<DoctorCardProps> = ({ doctor, className }) => {
                     width={120}
                     height={120}
                     className="mx-auto shadow-md   rounded-full object-contain cursor-none"
-                    src={doctor.imageSrc}
+                    src={doctor.images?.[0]?.url || '/images/doctor.png'}
                     alt=""
                   />
                 </div>
@@ -83,7 +84,7 @@ const DoctorCard: FC<DoctorCardProps> = ({ doctor, className }) => {
                     {doctor.name}
                   </p>
                   <p className="text-sm font-medium text-muted">
-                    {doctor.specialty}
+                    {doctor.description}
                   </p>
                   <div className=" ">
                     {/* <Link
