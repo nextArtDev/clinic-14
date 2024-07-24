@@ -1306,3 +1306,18 @@ export const rooms = [
     ],
   },
 ]
+
+export const GlobalSearchFilters = [
+  {
+    name: 'تخصص',
+    value: 'specilozation',
+  },
+  {
+    name: 'دکتر',
+    value: 'doctor',
+  },
+  {
+    name: 'بیماری',
+    value: 'illness',
+  },
+]

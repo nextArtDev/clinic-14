@@ -111,3 +111,13 @@ export const removeKeysFromUrlQuery = ({
     { skipNull: true }
   )
 }
+
+export function translateGlobalSearchFiltersType(input: string): string {
+  const translationMap: { [key: string]: string } = {
+    specialization: 'تخصص',
+    doctor: 'دکتر',
+    illness: 'بیماری',
+  }
+
+  return translationMap[input]
+}

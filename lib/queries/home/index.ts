@@ -1,3 +1,4 @@
+'use server'
 import { prisma } from '@/lib/prisma'
 
 export interface GetSpecializationParams {
@@ -180,5 +181,99 @@ export const getIllnessesWithId = async ({ id }: { id: string }) => {
     return illness
   } catch (error) {
     console.log(error)
+  }
+}
+// Global Search
+export interface SearchParams {
+  query?: string | null
+  type?: string | null
+}
+
+const searchableHomeTypes = ['specialization', 'doctor', 'illness']
+export async function globalHomeSearch(params: SearchParams) {
+  try {
+    const { query, type } = params
+
+    const regexQuery = { contains: query }
+
+    let results = []
+
+    const modelsAndTypes = [
+      { model: prisma.doctor, searchField: 'name', type: 'doctor' },
+      { model: prisma.doctor, searchField: 'description', type: 'doctor' },
+
+      {
+        model: prisma.specialization,
+        searchField: 'name',
+        type: 'specialization',
+      },
+      {
+        model: prisma.specialization,
+        searchField: 'description',
+        type: 'specialization',
+      },
+
+      { model: prisma.illness, searchField: 'name', type: 'illness' },
+      { model: prisma.illness, searchField: 'description', type: 'illness' },
+    ]
+
+    const typeLower = type?.toLowerCase()
+
+    if (!typeLower || !searchableHomeTypes.includes(typeLower)) {
+      // Search across everything
+
+      for (const { model, searchField, type } of modelsAndTypes) {
+        //@ts-ignore
+        const queryResults = await model.findMany({
+          where: { [searchField]: regexQuery },
+          take: 3,
+        })
+
+        results.push(
+          ...queryResults.map((item: any) => ({
+            title: type === 'doctor' ? `${query}` : item[searchField],
+            type,
+
+            id: item.id,
+            // type === 'specialization'
+            //   ? item.id
+            //   : type === 'contributor'
+            //     ? item.id
+            //     :item.id,
+          }))
+        )
+      }
+    } else {
+      // Search across specific model type
+      const modelInfo = modelsAndTypes.find((item) => item.type === type)
+
+      if (!modelInfo) {
+        throw new Error('invalid search type')
+      }
+      //@ts-ignore
+      const queryResults = await modelInfo.model.findMany({
+        where: { [modelInfo.searchField]: regexQuery },
+        take: 8,
+      })
+
+      results = queryResults.map((item: any) => ({
+        title: item[modelInfo.searchField],
+        // type === 'specialization'
+        //   ? `تخصص شامل ${query}`
+        //   : item[modelInfo.searchField],
+        type,
+        id: item.id,
+        // type === 'specialization'
+        //   ? item.id
+        //   : // : type === 'answer'
+        //     // ? item.questionId
+        //     item.id,
+      }))
+    }
+    // console.log(results)
+    return JSON.stringify(results)
+  } catch (error) {
+    console.log(error)
+    throw error
   }
 }
