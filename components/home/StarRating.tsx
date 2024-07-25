@@ -7,8 +7,6 @@ import type { LucideIcon, LucideProps } from 'lucide-react'
 import { StarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-// import { ny } from '~/lib/utils'
-
 interface StarWrapperProps {
   value?: number
   setValue?: Dispatch<SetStateAction<number>>
