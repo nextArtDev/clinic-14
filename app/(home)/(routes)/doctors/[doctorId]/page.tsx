@@ -7,9 +7,8 @@ const DoctorPage = async ({ params }: { params: { doctorId: string } }) => {
   if (!doctor?.id) notFound()
 
   return (
-    <div className="">
-      {/* <DoctorPersonalPage doctor={doctor} /> */}
-      <div className="pt-40">{doctor.name}</div>
+    <div className="grainy min-h-screen">
+      <DoctorPersonalPage doctor={doctor} />
     </div>
   )
 }
