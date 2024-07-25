@@ -34,20 +34,20 @@ function StarRating({
 
   return (
     <div
-      className={cn('flex items-center gap-1', wrapperClassName)}
+      className={cn('cursor-pointer flex items-center gap-1', wrapperClassName)}
       {...restWrapperProps}
     >
       {Array.from({ length: numStars }, (_, i) => {
         const isRated = i < value!
         const styledIconProps: LucideProps = {
-          onMouseEnter: () => !showcase && !disabled && setValue!(i + 1),
+          onClick: () => !showcase && !disabled && setValue!(i + 1),
           className: cn(
-            'fill-primary stroke-primary size-6',
+            'fill-green-500 stroke-green-500 size-6',
             {
               'opacity-50 pointer-events-none': disabled,
               'transition-transform duration-300 hover:scale-110':
                 !disabled && !showcase,
-              '!fill-muted !stroke-muted': !isRated,
+              '!fill-transparent !stroke-muted': !isRated,
             },
             iconClassName
           ),

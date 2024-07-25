@@ -122,9 +122,9 @@ model Illness {
 }
 
 model Review {
-  id         String   @id @default(uuid())
-  name       String
-  text       String
+  id String @id @default(uuid())
+
+  comment    String
   rating     Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

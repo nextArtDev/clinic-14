@@ -110,9 +110,20 @@ export const getDoctorById = async ({ id }: { id: string }) => {
       where: { id },
       include: {
         images: { select: { url: true } },
+        reviews: {
+          include: { user: { include: { image: { select: { url: true } } } } },
+        },
       },
     })
-    return doctor
+    const doctorAverageRating = await prisma.review.aggregate({
+      where: {
+        doctorId: id,
+      },
+      _avg: {
+        rating: true,
+      },
+    })
+    return { doctor, rate: doctorAverageRating._avg.rating }
   } catch (error) {
     console.log(error)
   }

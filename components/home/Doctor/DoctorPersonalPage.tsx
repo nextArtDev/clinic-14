@@ -22,13 +22,21 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { url } from 'inspector'
-import { Doctor } from '@prisma/client'
+import { Doctor, Review, User } from '@prisma/client'
 import SkewedInfiniteScroll from './SkewedInfiniteScroll'
+import DoctorComment from './DoctorComment'
 
 interface pageProps {
-  doctor: Doctor & { images: { url: string | null }[] }
+  doctor: Doctor & { images: { url: string | null }[] } & {
+    reviews: Review[] | null
+  }
+  rate: number | null
+  user: (User & { image: { url: string } | null }) | null
+  beforeRated?: {
+    rating: number
+  } | null
 }
-function DoctorPersonalPage({ doctor }: pageProps) {
+function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
   // const ref = useRef(null)
   // const { scrollYProgress } = useScroll({
   //   target: ref,
@@ -144,8 +152,8 @@ function DoctorPersonalPage({ doctor }: pageProps) {
               })} */}
             </ul>
           </div>
-          {/* <DoctorComment doctor={doctor} />
-          <PostPage doctor={doctor} /> */}
+          {!beforeRated && <DoctorComment doctor={doctor} user={user} />}
+          {/* <PostPage doctor={doctor} /> */}
           {/* <div className="mt-6 hidden min-w-0 flex-1 sm:block md:hidden">
             <h1 className="truncate text-2xl font-bold text-gray-900">
               {profile.name}
