@@ -25,10 +25,12 @@ import { url } from 'inspector'
 import { Doctor, Review, User } from '@prisma/client'
 import SkewedInfiniteScroll from './SkewedInfiniteScroll'
 import DoctorComment from './DoctorComment'
+import DoctorReviews from './DoctorReviews'
+import { ReviewsWithUserAndImage } from '@/lib/queries/home'
 
 interface pageProps {
   doctor: Doctor & { images: { url: string | null }[] } & {
-    reviews: Review[] | null
+    reviews: ReviewsWithUserAndImage[] | null
   }
   rate: number | null
   user: (User & { image: { url: string } | null }) | null
@@ -153,7 +155,7 @@ function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
             </ul>
           </div>
           {!beforeRated && <DoctorComment doctor={doctor} user={user} />}
-          {/* <PostPage doctor={doctor} /> */}
+          <DoctorReviews reviews={doctor.reviews} />
           {/* <div className="mt-6 hidden min-w-0 flex-1 sm:block md:hidden">
             <h1 className="truncate text-2xl font-bold text-gray-900">
               {profile.name}

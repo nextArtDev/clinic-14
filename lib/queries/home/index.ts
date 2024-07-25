@@ -1,5 +1,6 @@
 'use server'
 import { prisma } from '@/lib/prisma'
+import { Review, User } from '@prisma/client'
 
 export interface GetSpecializationParams {
   page?: number
@@ -287,4 +288,14 @@ export async function globalHomeSearch(params: SearchParams) {
     console.log(error)
     throw error
   }
+}
+
+export type ReviewsWithUserAndImage = Review & {
+  user:
+    | (Partial<User> & {
+        image: {
+          url: string
+        } | null
+      })
+    | null
 }
