@@ -8,7 +8,10 @@ type Props = {
 }
 
 function IllnessPage({ illness }: Props) {
-  const illnessImages = illness?.images.map((image) => image?.url)
+  // const illnessImages = illness?.images.map((image) => image?.url)
+  const illnessImages = illness.images.map((image) => {
+    return { alt: illness.name, urls: image?.url }
+  })
 
   return (
     <div>
@@ -18,7 +21,7 @@ function IllnessPage({ illness }: Props) {
       >
         <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-8">
           {illnessImages.length > 0 ? (
-            <CarouselOrientation urls={illnessImages} />
+            <CarouselOrientation images={illnessImages} />
           ) : (
             <Image
               src={'/images/parallax/0000.webp'}
