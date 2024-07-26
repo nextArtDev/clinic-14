@@ -79,9 +79,9 @@ const DoctorCard: FC<DoctorCardProps> = ({ doctor, className }) => {
                   />
                 </div>
                 <div className="mt-4 sm:pr-4 text-center sm:mt-0 sm:pt-1 sm:text-right">
-                  <p className="text-sm font-medium text-black/60">دکتر</p>
+                  {/* <p className="text-sm font-medium text-black/60"></p> */}
                   <p className="inline-block py-3 text:sm md:text-lg xl:text-lg font-bold text-blue-600 sm:text-2xl">
-                    {doctor.name}
+                    دکتر {doctor.name}
                   </p>
                   <p className="text-sm font-medium text-muted">
                     {doctor.description}

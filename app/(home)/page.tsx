@@ -3,16 +3,22 @@ import Footer from '@/components/home/Footer'
 import Hero from '@/components/home/landing/Hero'
 import Carousel from '@/components/home/landing/Carousel'
 import StackCards from '@/components/home/stack-cards/StackCards'
-import { doctors, illness, slider } from '@/constants'
+import { illness, slider } from '@/constants'
 import Slider from '@/components/home/Slider'
 import DoctorCarousel from '@/components/home/Doctor/DoctorsCarousel'
 
 import IllnessCarousel from '@/components/home/illness/IllnessCarousel'
 import Reviews from '@/components/home/review/Reviews'
-import { getAllSpecializations } from '@/lib/queries/home'
+import {
+  getAllDoctors,
+  getAllIllnesses,
+  getAllSpecializations,
+} from '@/lib/queries/home'
 
 const HomePage = async () => {
   const specializations = await getAllSpecializations({})
+  const doctors = await getAllDoctors({})
+  const illnesses = await getAllIllnesses({})
 
   return (
     <div className="grainy">
@@ -20,13 +26,13 @@ const HomePage = async () => {
       <Deal />
       {/* <Carousel slides={slider} /> */}
       <StackCards />
-      <DoctorCarousel slides={doctors} />
-      {specializations?.specializations?.length && (
+      {doctors?.doctors?.length && (
         <section className="relative ">
-          <Slider specializations={specializations.specializations} />
+          <DoctorCarousel slides={doctors.doctors} />
         </section>
       )}
-      <IllnessCarousel slides={illness} />
+      {/* <DoctorCarousel slides={doctors} /> */}
+      <IllnessCarousel slides={illnesses?.illnesses} />
       <Reviews />
       <Footer />
     </div>

@@ -11,9 +11,10 @@ import {
   PrevButton,
   usePrevNextButtons,
 } from './EmblaCarouseelArrowButtons'
+import { Doctor } from '@prisma/client'
 
 type PropType = {
-  slides: DoctorType[]
+  slides: (Doctor & { images: { url: string | null }[] })[]
   options?: EmblaOptionsType
 }
 
