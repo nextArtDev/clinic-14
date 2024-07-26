@@ -1,5 +1,7 @@
 import { Illness } from '@prisma/client'
 import React from 'react'
+import CarouselOrientation from '../carousel/IllnessCarousel'
+import Image from 'next/image'
 
 type Props = {
   illness: Illness & { images: { url: string | null }[] }
@@ -10,16 +12,22 @@ function IllnessPage({ illness }: Props) {
 
   return (
     <div>
-      <div key={illness.id} className="  px-4 py-10 sm:px-6 lg:px-8  ">
+      <div
+        key={illness.id}
+        className="grainy  px-4 py-10 pt-20 sm:px-6 lg:px-8  "
+      >
         <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-8">
-          {/* <Image
-                  src={ill.imageUrl[0]}
-                  width={250}
-                  height={250}
-                  alt={ill.name}
-                  className="mx-auto"
-                /> */}
-
+          {illnessImages.length > 0 ? (
+            <CarouselOrientation urls={illnessImages} />
+          ) : (
+            <Image
+              src={'/images/parallax/0000.webp'}
+              width={250}
+              height={250}
+              alt={illness.name}
+              className="mx-auto"
+            />
+          )}
           {/* <Gallery images={illnessImages} /> */}
           <div className="mt-10 flex-col items-center justify-center  px-4 sm:mt-16 sm:px-0 lg:mt-0">
             <div className="font-semibold pb-4 lg:text-lg text-blue-950 ">

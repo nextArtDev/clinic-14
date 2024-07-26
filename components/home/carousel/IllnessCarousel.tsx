@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 // https://mixcn-ui.vercel.app/docs/custom/carousel
 import {
   Carousel,
@@ -11,31 +12,42 @@ import {
   SliderThumbItem,
 } from './EmbolaCarousel'
 
-const CarouselOrientation = () => {
+const CarouselOrientation = ({ urls }: { urls: string[] | [] }) => {
   return (
-    <Carousel>
+    <Carousel dir="ltr">
       <CarouselNext className="top-1/3 -translate-y-1/3" />
       <CarouselPrevious className="top-1/3 -translate-y-1/3" />
       <CarouselMainContainer className="h-60">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {urls.map((url, index) => (
           <SliderMainItem key={index} className="bg-transparent">
             <div
-              className="outline outline-1 outline-border size-full flex items-center justify-center
-            rounded-xl bg-background"
+              className="relative outline outline-1 outline-border size-full flex items-center justify-center
+            rounded-xl bg-background overflow-hidden"
             >
-              Slide {index + 1}
+              <Image
+                src={url}
+                fill
+                alt="disease"
+                className="object-cover gradient-base"
+              />
             </div>
           </SliderMainItem>
         ))}
       </CarouselMainContainer>
       <CarouselThumbsContainer>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {urls.map((url, index) => (
           <SliderThumbItem key={index} index={index} className="bg-transparent">
             <div
-              className="outline outline-1 outline-border size-full flex items-center
-            justify-center rounded-xl bg-background"
+              className="relative outline outline-1 outline-border size-full flex items-center
+            justify-center rounded-xl bg-background overflow-hidden"
             >
-              Slide {index + 1}
+              {/* Slide {index + 1} */}
+              <Image
+                src={url}
+                fill
+                alt="disease"
+                className="object-cover gradient-base"
+              />
             </div>{' '}
           </SliderThumbItem>
         ))}

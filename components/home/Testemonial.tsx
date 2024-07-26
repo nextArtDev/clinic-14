@@ -45,7 +45,7 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
       setCurrentTestimonial(
         (prevTestimonial) => (prevTestimonial + 1) % testimonials.length
       )
-    }, 5000) // Change Time here
+    }, 4000) // Change Time here
 
     return () => {
       clearInterval(intervalId)

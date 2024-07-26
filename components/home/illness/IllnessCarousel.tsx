@@ -75,10 +75,10 @@ const IllnessCarousel: React.FC<PropType> = (props) => {
       </div>
       <div className={`${style.embla__viewport}`} ref={emblaRef}>
         <div className={`${style.embla__container}`}>
-          {slides.map((illness: any) => (
+          {slides?.map((illness: any) => (
             <div className={`${style.embla__slide}`} key={illness.id}>
               <div className={`${style.embla__slide__number}`}>
-                <IllnessCard ill={illness} />
+                <IllnessCard illness={illness} />
               </div>
             </div>
           ))}

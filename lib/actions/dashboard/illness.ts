@@ -104,7 +104,7 @@ export async function createIllness(
     })
 
     // console.log(res?.imageUrl)
-    console.log(illness)
+    // console.log(illness)
   } catch (err: unknown) {
     if (err instanceof Error) {
       return {

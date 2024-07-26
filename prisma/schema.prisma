@@ -72,7 +72,7 @@ model Doctor {
   phone       String?
   website     String?
   main_image  String?
-  description String?
+  description String?   @db.Text
   open_time   DateTag[]
   // slug              String?         @unique
   // price       Int
@@ -98,7 +98,7 @@ model DateTag {
 model Specialization {
   id          String    @id @default(uuid())
   name        String
-  description String?
+  description String?   @db.Text
   doctors     Doctor[]
   illness     Illness[]
   images      Image[]
@@ -110,7 +110,7 @@ model Specialization {
 model Illness {
   id          String  @id @default(uuid())
   name        String
-  description String?
+  description String? @db.Text
 
   images Image[]
 
@@ -124,7 +124,7 @@ model Illness {
 model Review {
   id String @id @default(uuid())
 
-  comment    String
+  comment    String   @db.Text
   rating     Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

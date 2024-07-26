@@ -5,13 +5,14 @@ import Link from 'next/link'
 import { buttonVariants } from '../../ui/button'
 import { cn } from '@/lib/utils'
 import GlowingCard from '../Doctor/GlowingCard'
+import { Illness } from '@prisma/client'
 
 interface IllnessCardProps {
-  ill: any
+  illness: Illness & { images: { url: string }[] | null }
   className?: string
 }
 
-const IllnessCard: FC<IllnessCardProps> = ({ ill, className }) => {
+const IllnessCard: FC<IllnessCardProps> = ({ illness, className }) => {
   return (
     <section className={`mt-16   h-auto ${className} `}>
       {/* <Link href={`Diseases/${ill.id}`}>
@@ -45,19 +46,21 @@ const IllnessCard: FC<IllnessCardProps> = ({ ill, className }) => {
                     width={200}
                     height={200}
                     className="mx-auto  aspect-square rounded-3xl object-cover shadow-md shadow-gray-400 "
-                    src={ill.imageUrl?.[0]}
+                    src={
+                      illness.images?.[0]?.url || '/images/parallax/0000.webp'
+                    }
                     alt=""
                   />
                 </div>
                 <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-right">
                   <p className="text-xl font-bold pt-4 text-blue-600 sm:text-2xl">
-                    {ill.name}
+                    {illness.name}
                   </p>
                   <span className="text-black/60 text-right pt-1 px-2 ">
                     <p>
-                      {ill.description?.substring(
+                      {illness.description?.substring(
                         0,
-                        ill.description?.indexOf(' ', 100)
+                        illness.description?.indexOf(' ', 100)
                       )}{' '}
                       {'...'}
                     </p>
@@ -78,7 +81,7 @@ const IllnessCard: FC<IllnessCardProps> = ({ ill, className }) => {
           ))} */}
           <div className=" flex justify-center items-center  py-4 sm:mt-0">
             <Link
-              href={`/Diseases/${ill.id}`}
+              href={`/illnesses/${illness.id}`}
               className={cn(
                 buttonVariants(),
                 'flex items-center justify-center rounded-md  px-8 py-2 text-sm font-semibold  shadow-md shadow-white text-yellow-500 outline-black outline-dashed -outline-offset-2 ring-1 ring-inset ring-white-300 '

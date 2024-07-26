@@ -16,6 +16,7 @@ async function page({
 
     page: searchParams.page ? +searchParams.page : 1,
   })
+  // console.log(illnesses)
   if (!illnesses?.illnesses)
     return (
       <p className="w-full h-full flex items-center justify-center text-muted text-2xl">
@@ -23,7 +24,7 @@ async function page({
       </p>
     )
   return (
-    <div className="grainy">
+    <div className="grainy py-20">
       <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
         <h2 className="sr-only">دکترها</h2>
         <div className="my-8 pt-20 flex flex-col gap-6 max-w-lg mx-auto">
@@ -37,7 +38,7 @@ async function page({
         </div>
         <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
           {illnesses.illnesses.map((illness) => (
-            <IllnessCard key={illness.id} ill={illnesses} />
+            <IllnessCard key={illness.id} illness={illness} />
           ))}
           <div className="mt-10">
             <Pagination

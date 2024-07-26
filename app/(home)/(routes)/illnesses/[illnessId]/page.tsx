@@ -8,11 +8,10 @@ const page = async ({ params }: { params: { illnessId: string } }) => {
   if (!illness?.id) notFound()
   return (
     <div className="min-h-screen">
-      <section className="w-full h-full relative">
-        <CarouselOrientation />
-      </section>
+      {/* <section className="w-full h-full relative">
+       
+      </section> */}
       <IllnessPage illness={illness} />
-      <div>{illness.name}</div>
     </div>
   )
 }

@@ -40,6 +40,7 @@ import {
   deleteIllness,
   editIllness,
 } from '@/lib/actions/dashboard/illness'
+import { Textarea } from '@/components/ui/textarea'
 
 type IllnessFormValues = z.infer<typeof createIllnessSchema>
 
@@ -196,7 +197,7 @@ const IllnessForm: FC<IllnessFormProps> = ({
               //    toast.success(toastMessage)
               // }
             })
-            .catch(() => toast.error('مشکلی پیش آمده.'))
+            .catch((error) => console.log(error))
         })
       }
     } catch {
@@ -334,7 +335,7 @@ const IllnessForm: FC<IllnessFormProps> = ({
                 <FormItem>
                   <FormLabel>توضیحات بیماری</FormLabel>
                   <FormControl>
-                    <Input
+                    <Textarea
                       disabled={isPending}
                       placeholder="توضیحات بیماری"
                       {...field}

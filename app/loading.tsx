@@ -21,7 +21,7 @@ export default function RippleLoader() {
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex w-full h-screen items-center justify-center">
       <div className="relative h-10 w-10">
         <motion.div
           className="absolute h-full w-full rounded-full bg-red-500 opacity-0"
