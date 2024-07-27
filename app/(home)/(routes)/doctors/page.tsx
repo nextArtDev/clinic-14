@@ -1,4 +1,5 @@
 import DoctorCard from '@/components/home/Doctor/DoctorCard'
+import DoctorReservationCard from '@/components/home/Doctor/DoctorReservationCard'
 
 import LocalSearchbar from '@/components/search/LocalSearchbar'
 import Pagination from '@/components/search/Pagination'
@@ -23,6 +24,9 @@ async function page({
     )
   return (
     <div className="grainy">
+      <div className="relative py-32">
+        <DoctorReservationCard />
+      </div>
       <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
         <h2 className="sr-only">دکترها</h2>
         <div className="my-8 pt-20 flex flex-col gap-6 max-w-lg mx-auto">
