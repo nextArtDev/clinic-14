@@ -22,16 +22,17 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { url } from 'inspector'
-import { Doctor, Review, User } from '@prisma/client'
+import { DateTag, Doctor, Review, User } from '@prisma/client'
 import SkewedInfiniteScroll from './SkewedInfiniteScroll'
 import DoctorComment from './DoctorComment'
 import DoctorReviews from './DoctorReviews'
 import { ReviewsWithUserAndImage } from '@/lib/queries/home'
+import DoctorReservationCard from './DoctorReservationCard'
 
 interface pageProps {
   doctor: Doctor & { images: { url: string | null }[] } & {
     reviews: ReviewsWithUserAndImage[] | null
-  }
+  } & { open_time: DateTag[] | null }
   rate: number | null
   user: (User & { image: { url: string } | null }) | null
   beforeRated?: {
@@ -70,6 +71,7 @@ function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
           /> */}
           <SkewedInfiniteScroll />
         </div>
+
         <div className="  mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="-mt-12 ">
             <div className="flex-col ">

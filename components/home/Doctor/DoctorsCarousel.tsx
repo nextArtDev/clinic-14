@@ -11,10 +11,13 @@ import {
   PrevButton,
   usePrevNextButtons,
 } from './EmblaCarouseelArrowButtons'
-import { Doctor } from '@prisma/client'
+import { DateTag, Doctor } from '@prisma/client'
+import DoctorReservationCard from './DoctorReservationCard'
 
 type PropType = {
-  slides: (Doctor & { images: { url: string | null }[] })[]
+  slides: (Doctor & { images: { url: string | null }[] } & {
+    open_time: DateTag[] | null
+  })[]
   options?: EmblaOptionsType
 }
 
@@ -81,8 +84,9 @@ const DoctorCarousel: React.FC<PropType> = (props) => {
         <div className={`${style.embla__container}`}>
           {slides.map((doctor) => (
             <div className={`${style.embla__slide}`} key={doctor.id}>
-              <div className={`${style.embla__slide__number}`}>
-                <DoctorCard doctor={doctor} />
+              <div className={`relative pt-6 ${style.embla__slide__number}`}>
+                {/* <DoctorCard doctor={doctor} /> */}
+                <DoctorReservationCard dir="ltr" doctor={doctor} />
               </div>
             </div>
           ))}

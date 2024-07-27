@@ -89,6 +89,7 @@ export const getAllDoctors = async (params: GetDoctorParams) => {
       where: query,
       include: {
         images: { select: { url: true } },
+        open_time: true,
       },
       skip: skipAmount,
       take: pageSize,
@@ -114,6 +115,7 @@ export const getDoctorById = async ({ id }: { id: string }) => {
         reviews: {
           include: { user: { include: { image: { select: { url: true } } } } },
         },
+        open_time: true,
       },
     })
     const doctorAverageRating = await prisma.review.aggregate({

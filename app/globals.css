@@ -210,3 +210,11 @@ html {
   gap: 1.2rem;
   margin-top: 1.8rem;
 }
+
+/* Custom box shadow  */
+.custom-box-shadow {
+  box-shadow: 1px 1px #fff8dc, -1px -1px #ffb6c1;
+}
+.custom-text-shadow {
+  text-shadow: 1px 1px #ffb6c1, -1px -1px #fff8dc;
+}
