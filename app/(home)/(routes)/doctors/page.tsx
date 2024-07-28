@@ -5,6 +5,7 @@ import LocalSearchbar from '@/components/search/LocalSearchbar'
 import Pagination from '@/components/search/Pagination'
 import { getAllDoctors } from '@/lib/queries/home'
 import SearchIcon from '@/public/icons/search.svg'
+import Link from 'next/link'
 
 async function page({
   searchParams,
@@ -35,9 +36,16 @@ async function page({
             otherClasses="flex-1 max-w-md mx-auto "
           />
         </div>
-        <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        <div className=" mx-auto w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 place-items-center gap-4">
           {doctors.doctors.map((doctor) => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
+            // <DoctorCard key={doctor.id} doctor={doctor} />
+            <Link
+              href={`/doctors/${doctor.id}`}
+              key={doctor.id}
+              className="cursor-pointer"
+            >
+              <DoctorReservationCard doctor={doctor} isVertical={true} />
+            </Link>
           ))}
           <div className="mt-10">
             <Pagination

@@ -9,10 +9,14 @@ type Props = {
     open_time: DateTag[] | null
   }
   dir?: string
+  isVertical?: boolean
 }
 
-function DoctorReservationCard({ doctor, dir = 'rtl' }: Props) {
-  console.log(doctor)
+function DoctorReservationCard({
+  doctor,
+  dir = 'rtl',
+  isVertical = false,
+}: Props) {
   return (
     <div
       dir={dir}
@@ -20,7 +24,10 @@ function DoctorReservationCard({ doctor, dir = 'rtl' }: Props) {
         background:
           'linear-gradient(to bottom, #fff8dc 0%, #add8e6 60%, #ffb6c1 100%)',
       }}
-      className={` relative w-[400px] h-48 rounded-xl overflow-hidden  `}
+      className={cn(
+        ` relative  rounded-xl overflow-hidden  `,
+        isVertical ? 'max-w-sm w-[96vw] h-[50vh]' : 'w-[400px] h-48'
+      )}
     >
       <div className={`absolute w-full h-12 bottom-0 left-0 ${style.svgs}`}>
         <svg
@@ -54,8 +61,18 @@ function DoctorReservationCard({ doctor, dir = 'rtl' }: Props) {
           />
         </svg>
       </div>
-      <div className=" w-full h-full flex  justify-around px-1.5 items-center ">
-        <div className="h-full pt-4 flex flex-col items-center justify-between">
+      <div
+        className={cn(
+          ' w-full h-full flex   px-1.5  ',
+          isVertical ? 'flex-col   ' : 'justify-around items-center'
+        )}
+      >
+        <div
+          className={cn(
+            ' flex flex-col items-center ',
+            isVertical ? 'h-fit pb-2' : 'pt-4 justify-between h-full'
+          )}
+        >
           <div className="pt-6 flex flex-col gap-2 items-center text-center ">
             <p className={` text-2xl text-secondary font-bold ${style.title}`}>
               {doctor.name}
@@ -66,7 +83,10 @@ function DoctorReservationCard({ doctor, dir = 'rtl' }: Props) {
           </div>
           <ul
             className={cn(
-              'absolute inset-0 bottom-0 z-[1] flex items-end pb-1  gap-1 ',
+              'font-semibold',
+              isVertical
+                ? 'flex flex-wrap gap-x-2 py-4 order-4 items-center '
+                : 'absolute inset-0 bottom-1.5 z-[1] flex items-end pb-1  gap-1 ',
               dir === 'ltr' ? 'left-4' : 'right-4'
             )}
           >
@@ -80,7 +100,9 @@ function DoctorReservationCard({ doctor, dir = 'rtl' }: Props) {
           </ul>
         </div>
         <div
-          className={`${style.eight} w-36 h-36  rounded-full overflow-hidden self-center `}
+          className={`${style.eight} ${
+            isVertical ? 'flex-col-reverse' : ''
+          } w-36 h-36  rounded-full overflow-hidden self-center `}
         >
           <Image
             fill

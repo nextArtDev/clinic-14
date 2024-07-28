@@ -13,6 +13,7 @@ import {
 } from './EmblaCarouseelArrowButtons'
 import { DateTag, Doctor } from '@prisma/client'
 import DoctorReservationCard from './DoctorReservationCard'
+import Link from 'next/link'
 
 type PropType = {
   slides: (Doctor & { images: { url: string | null }[] } & {
@@ -86,7 +87,9 @@ const DoctorCarousel: React.FC<PropType> = (props) => {
             <div className={`${style.embla__slide}`} key={doctor.id}>
               <div className={`relative pt-6 ${style.embla__slide__number}`}>
                 {/* <DoctorCard doctor={doctor} /> */}
-                <DoctorReservationCard dir="ltr" doctor={doctor} />
+                <Link href={`/doctors/${doctor.id}`}>
+                  <DoctorReservationCard dir="ltr" doctor={doctor} />
+                </Link>
               </div>
             </div>
           ))}
