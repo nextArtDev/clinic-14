@@ -8,6 +8,7 @@ import { doctors, DoctorType, illness } from '@/constants'
 import AutoScroll from 'embla-carousel-auto-scroll'
 
 import IllnessCard from './IllnessCard'
+import IllnessShowCard from './IllnessShowCard'
 
 type PropType = {
   slides: any
@@ -78,7 +79,8 @@ const IllnessCarousel: React.FC<PropType> = (props) => {
           {slides?.map((illness: any) => (
             <div className={`${style.embla__slide}`} key={illness.id}>
               <div className={`${style.embla__slide__number}`}>
-                <IllnessCard illness={illness} />
+                {/* <IllnessCard illness={illness} /> */}
+                <IllnessShowCard illness={illness} isVertical={true} />
               </div>
             </div>
           ))}

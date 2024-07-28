@@ -1,5 +1,6 @@
 import DoctorCard from '@/components/home/Doctor/DoctorCard'
 import IllnessCard from '@/components/home/illness/IllnessCard'
+import IllnessShowCard from '@/components/home/illness/IllnessShowCard'
 
 import LocalSearchbar from '@/components/search/LocalSearchbar'
 import Pagination from '@/components/search/Pagination'
@@ -24,7 +25,7 @@ async function page({
       </p>
     )
   return (
-    <div className="grainy py-20">
+    <div className="grainy min-h-screen py-20">
       <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
         <h2 className="sr-only">دکترها</h2>
         <div className="my-8 pt-20 flex flex-col gap-6 max-w-lg mx-auto">
@@ -32,13 +33,14 @@ async function page({
             route="/doctors"
             iconPosition="left"
             imgSrc={SearchIcon}
-            placeholder="جست‌وجوی دکتر "
+            placeholder="جست‌وجوی بیماری "
             otherClasses="flex-1 max-w-md mx-auto "
           />
         </div>
-        <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        <div className=" w-full h-full grid gap-4 place-items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
           {illnesses.illnesses.map((illness) => (
-            <IllnessCard key={illness.id} illness={illness} />
+            // <IllnessCard key={illness.id} illness={illness} />
+            <IllnessShowCard key={illness.id} illness={illness} />
           ))}
           <div className="mt-10">
             <Pagination

@@ -58,7 +58,7 @@ const LocalSearchbar: FC<LocalSearchbarProps> = ({
   return (
     <article
       className={cn(
-        'flex min-h-[56px] grow items-center gap-4 rounded-[10px] px-4 bg-muted',
+        'flex min-h-[56px] grow items-center gap-4 rounded-[10px] px-4  gradient-base-r',
         otherClasses
       )}
     >
@@ -78,7 +78,7 @@ const LocalSearchbar: FC<LocalSearchbarProps> = ({
         onChange={(e) => {
           setSearch(e.target.value)
         }}
-        className="border-none outline-none "
+        className="border-none outline-none text-primary-foreground "
       />
       {iconPosition === 'right' && (
         <Image

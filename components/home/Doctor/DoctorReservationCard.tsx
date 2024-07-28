@@ -3,6 +3,7 @@ import style from './DoctorReservationCard.module.css'
 import { DateTag, Doctor } from '@prisma/client'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
+import BoxReveal from '../BoxReveal'
 
 type Props = {
   doctor: Doctor & { images: { url: string | null }[] } & {
@@ -74,11 +75,14 @@ function DoctorReservationCard({
           )}
         >
           <div className="pt-6 flex flex-col gap-2 items-center text-center ">
-            <p className={` text-2xl text-secondary font-bold ${style.title}`}>
+            <p
+              className={` text-xl text-secondary font-semibold ${style.title}`}
+            >
               {doctor.name}
             </p>
-
-            <p className={'text-base text-muted'}>{doctor.description}</p>
+            <BoxReveal boxColor="transparent">
+              <p className={'text-sm px-1 text-muted'}>{doctor.description}</p>
+            </BoxReveal>
             {/* <Separator className="my-1 text-muted opacity-40 " /> */}
           </div>
           <ul
@@ -92,9 +96,11 @@ function DoctorReservationCard({
           >
             {doctor?.open_time?.map((booking) => (
               <li key={booking.id} className={'text-base text-muted '}>
-                <time className=" !custom-box-shadow text-xs rounded-full border border-green-700/40 text-green-700 px-1 ">
-                  {booking.time}
-                </time>
+                <BoxReveal boxColor="transparent">
+                  <time className=" !custom-box-shadow text-xs rounded-full border border-green-700/40 text-green-700 px-1 ">
+                    {booking.time}
+                  </time>
+                </BoxReveal>
               </li>
             ))}
           </ul>
