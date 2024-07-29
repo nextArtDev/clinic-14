@@ -31,7 +31,7 @@ const HomePage = async () => {
 
       {doctors?.doctors?.length && (
         <section className="relative ">
-          <DoctorCarousel slides={doctors.doctors} />
+          <DoctorCarousel slides={doctors.doctorsWithRatings} />
         </section>
       )}
       {specializations?.specializations?.length && (

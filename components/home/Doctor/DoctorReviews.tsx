@@ -1,15 +1,8 @@
 'use client'
 import { FC } from 'react'
 
-import { Separator } from '@/components/ui/separator'
-
-import { Review, User } from '@prisma/client'
-
-import { Dot, Heart } from 'lucide-react'
-
-import { formatTimeToNow } from '@/lib/utils/date-utils'
 import { ReviewsWithUserAndImage } from '@/lib/queries/home'
-import { StarRating } from '../StarRating'
+
 import TestimonialCarousel from '../Testemonial'
 interface DoctorReviewsProps {
   reviews: ReviewsWithUserAndImage[] | null
@@ -26,8 +19,8 @@ const DoctorReviews: FC<DoctorReviewsProps> = ({ reviews }) => {
   })
   if (!testimonials?.length) return <div></div>
   return (
-    <section className="pb-36 ">
-      <h2 className=" py-8  text-xl font-semibold">نظرات</h2>
+    <section className="pb-36 pt-6 ">
+      {/* <h2 className=" py-8  text-xl font-semibold">نظرات</h2> */}
       <section className="flex flex-col gap-4 justify-center items-center col-span-2">
         {testimonials?.length > 0 ? (
           <TestimonialCarousel testimonials={testimonials} />

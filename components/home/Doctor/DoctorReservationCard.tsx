@@ -4,10 +4,13 @@ import { DateTag, Doctor } from '@prisma/client'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import BoxReveal from '../BoxReveal'
+import { StarRating } from '../StarRating'
+import { Heart } from 'lucide-react'
 
 type Props = {
   doctor: Doctor & { images: { url: string | null }[] } & {
     open_time: DateTag[] | null
+    averageRating: number | null
   }
   dir?: string
   isVertical?: boolean
@@ -71,15 +74,27 @@ function DoctorReservationCard({
         <div
           className={cn(
             ' flex flex-col items-center ',
-            isVertical ? 'h-fit pb-2' : 'pt-4 justify-between h-full'
+            isVertical ? 'h-fit pb-2' : 'pt-2 justify-between h-full'
           )}
         >
           <div className="pt-6 flex flex-col gap-2 items-center text-center ">
+            {doctor.averageRating && (
+              <article className="pb-2 -mt-2">
+                <StarRating
+                  disabled
+                  numStars={doctor.averageRating}
+                  value={doctor.averageRating}
+                  // icon={Heart}
+                  iconProps={{ className: 'size-5' }}
+                />
+              </article>
+            )}
             <p
               className={` text-xl text-secondary font-semibold ${style.title}`}
             >
               {doctor.name}
             </p>
+
             <BoxReveal boxColor="transparent">
               <p className={'text-sm px-1 text-muted'}>{doctor.description}</p>
             </BoxReveal>

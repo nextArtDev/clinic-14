@@ -94,13 +94,28 @@ export const getAllDoctors = async (params: GetDoctorParams) => {
       skip: skipAmount,
       take: pageSize,
     })
-
+    const doctorsWithRatings = await Promise.all(
+      doctors.map(async (doctor) => {
+        const doctorAverageRating = await prisma.review.aggregate({
+          where: {
+            doctorId: doctor.id,
+          },
+          _avg: {
+            rating: true,
+          },
+        })
+        return {
+          ...doctor,
+          averageRating: doctorAverageRating._avg.rating || null, // Handle case where there are no ratings
+        }
+      })
+    )
     const totalDoctors = await prisma.doctor.count({ where: query })
 
     // Calculate if there are more questions to be fetched
     const isNext = totalDoctors > skipAmount + doctors.length
 
-    return { doctors, isNext }
+    return { doctors, isNext, doctorsWithRatings }
   } catch (error) {
     console.log(error)
   }
@@ -115,6 +130,7 @@ export const getDoctorById = async ({ id }: { id: string }) => {
         reviews: {
           include: { user: { include: { image: { select: { url: true } } } } },
         },
+        illnesses: true,
         open_time: true,
       },
     })

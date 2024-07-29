@@ -184,14 +184,20 @@ const DoctorComment: FC<DoctorCommentProps> = ({ doctor, user }) => {
                 control={form.control}
                 name="rating"
                 render={({ field }) => (
-                  <FormItem className="w-full mx-auto">
-                    <FormControl className=" ">
+                  <FormItem className="">
+                    <FormControl className="w-full  !text-center  ">
                       <StarRating
+                        wrapperProps={{
+                          className:
+                            'pb-2 flex !items-center !justify-center w-full text-center',
+                        }}
                         value={field.value}
                         setValue={(d) => field.onChange(d)}
-                        icon={Heart}
                       />
                     </FormControl>
+                    <DialogDescription className="text-black/50">
+                      به دکتر {doctor.name} از یک تا پنج ستاره بدهید.
+                    </DialogDescription>
                     <FormMessage />
                   </FormItem>
                 )}

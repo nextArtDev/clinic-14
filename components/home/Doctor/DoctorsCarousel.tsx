@@ -18,7 +18,7 @@ import Link from 'next/link'
 type PropType = {
   slides: (Doctor & { images: { url: string | null }[] } & {
     open_time: DateTag[] | null
-  })[]
+  } & { averageRating: number | null })[]
   options?: EmblaOptionsType
 }
 
@@ -41,21 +41,6 @@ const DoctorCarousel: React.FC<PropType> = (props) => {
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi)
 
-  const onButtonAutoplayClick = useCallback(
-    (callback: () => void) => {
-      const autoScroll = emblaApi?.plugins()?.autoScroll
-      if (!autoScroll) return
-
-      const resetOrStop =
-        autoScroll.options.stopOnInteraction === false
-          ? autoScroll.reset
-          : autoScroll.stop
-
-      resetOrStop()
-      callback()
-    },
-    [emblaApi]
-  )
   useEffect(() => {
     if (!emblaApi) return
 

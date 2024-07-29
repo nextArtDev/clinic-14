@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
-import useKeypress from 'react-use-keypress'
+// import useKeypress from 'react-use-keypress'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import Image from 'next/image'
 
@@ -40,17 +40,17 @@ let gap = 2
 export default function Gallery() {
   let [index, setIndex] = useState(0)
 
-  useKeypress('ArrowRight', () => {
-    if (index < images.length - 1) {
-      setIndex(index + 1)
-    }
-  })
+  // useKeypress('ArrowRight', () => {
+  //   if (index < images.length - 1) {
+  //     setIndex(index + 1)
+  //   }
+  // })
 
-  useKeypress('ArrowLeft', () => {
-    if (index > 0) {
-      setIndex(index - 1)
-    }
-  })
+  // useKeypress('ArrowLeft', () => {
+  //   if (index > 0) {
+  //     setIndex(index - 1)
+  //   }
+  // })
 
   return (
     <MotionConfig transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}>
