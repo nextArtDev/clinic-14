@@ -8,9 +8,10 @@ function Reviews({}: Props) {
   return (
     <div
       dir="ltr"
-      className=" relative flex h-[400px]  w-full flex-col items-center justify-center overflow-hidden rounded-lg  md:shadow-xl"
+      className="mt-10 relative flex h-[400px]  w-full flex-col items-center justify-center overflow-hidden rounded-lg  md:shadow-xl"
     >
-      <h2 className="mb-4 text-center font-bold  md:mb-8 lg:text-3xl xl:mb-12">
+      <h2 className="text-2xl text-center font-bold text-pretty text-primary">
+        {' '}
         نظرات
       </h2>
       <Marquee reverse pauseOnHover className="[--duration:20s]">

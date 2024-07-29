@@ -23,11 +23,11 @@ const FooterColumn = ({ title, links }: ColumnProps) => (
 
 const Footer = () => (
   <div
-    className="relative min-h-screen h-[750px]"
+    className="gradient-base relative min-h-screen h-[750px]"
     style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}
   >
     <div className="fixed bottom-0  h-[670px] w-full">
-      <section className="grainy text-black px-8 flex items-center justify-start flex-col paddings w-full gap-20 border-t border-t-primary/30  ">
+      <section className="gradient-base   text-black px-8 flex items-center justify-start flex-col paddings w-full gap-20 border-t border-t-primary/30  ">
         <div className="flex flex-col gap-8 w-full text-xs md:text-sm lg:text-base ">
           <div className="flex items-start flex-col">
             {/* <Image src="/logo-purple.svg" width={116} height={38} alt="logo" /> */}

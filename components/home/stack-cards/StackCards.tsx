@@ -31,7 +31,7 @@ export default function StackCards() {
 
   return (
     <ReactLenis ref={lenisRef} autoRaf={false}>
-      <section ref={container} className="relative -mt-12">
+      <section ref={container} className="relative">
         {rooms.map((room, i) => {
           const targetScale = 1 - (rooms.length - i) * 0.05
           return (

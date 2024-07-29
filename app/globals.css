@@ -106,7 +106,7 @@ html {
     @apply bg-gradient-to-t from-[#FFB6C1] via-[#ADD8E6] to-[#FFF8DC];
   }
   .gradient-base-r {
-    @apply bg-gradient-to-b from-[#FFF8DC] via-[#ADD8E6] to-[#FFB6C1];
+    @apply bg-gradient-to-t from-[#FFF8DC] via-[#ADD8E6] to-[#FFB6C1];
   }
 }
 .clip {

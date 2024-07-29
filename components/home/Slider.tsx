@@ -127,7 +127,7 @@ const Single = ({ item }: SingleProps) => {
             //   hidden: { opacity: 0 },
             //   visible: { opacity: 1 },
             // }}
-            className={`z-[2] absolute w-fit h-fit bottom-2 left-1/2  -translate-x-1/2  border-none   cursor-pointer overflow-hidden   `}
+            className={`z-[2] absolute w-fit h-fit bottom-3 left-1/2  -translate-x-1/2  border-none   cursor-pointer overflow-hidden   `}
             style={{
               x: lg,
 
@@ -141,17 +141,17 @@ const Single = ({ item }: SingleProps) => {
                 return (
                   <div
                     key={doctor.id}
-                    className="flex flex-col items-center justify-center gap-0.5"
+                    className="flex flex-col items-center justify-center gap-0.5 "
                   >
-                    <Avatar className={'h-32 w-32'}>
+                    <Avatar className={'h-32 w-32 border-4 border-white '}>
                       <AvatarImage
-                        className="object-cover"
+                        className="object-cover rounded-full "
                         src={firstImage?.url || DoctorImage.src}
                         alt={doctor.name}
                       />
                       <AvatarFallback>Doctor</AvatarFallback>
                     </Avatar>
-                    <Badge className="gradient-base rounded-full text-sm text-center flex items-center justify-center">
+                    <Badge className="gradient-base ring-2 ring-white rounded-full text-sm text-center flex items-center justify-center">
                       دکتر {doctor.name}
                     </Badge>
                   </div>

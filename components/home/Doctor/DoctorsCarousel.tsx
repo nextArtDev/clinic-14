@@ -59,9 +59,13 @@ const DoctorCarousel: React.FC<PropType> = (props) => {
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>
 
+        <h2 className="text-2xl text-center font-bold text-pretty text-primary">
+          {' '}
+          کادر درمان
+        </h2>
         <div className={`${style.embla__progress} grainy `}>
           <div
-            className={`${style.embla__progress__bar} !gradient-base-r `}
+            className={`${style.embla__progress__bar} !gradient-base `}
             style={{ transform: `translate3d(${scrollProgress}%,0px,0px)` }}
           />
         </div>

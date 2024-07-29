@@ -23,14 +23,14 @@ const HomePage = async () => {
   const illnesses = await getAllIllnesses({})
 
   return (
-    <div className="grainy">
+    <div className="gradient-base">
       <Hero />
       <Deal />
       {/* <Carousel slides={slider} /> */}
       <StackCards />
 
       {doctors?.doctors?.length && (
-        <section className="relative ">
+        <section className="relative my-24">
           <DoctorCarousel slides={doctors.doctorsWithRatings} />
         </section>
       )}

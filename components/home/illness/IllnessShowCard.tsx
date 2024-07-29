@@ -15,7 +15,7 @@ type Props = {
 function IllnessShowCard({ illness, dir = 'rtl', isVertical = false }: Props) {
   return (
     <Link href={`/illnesses/${illness.id}`}>
-      <div
+      <section
         dir={dir}
         style={{
           background:
@@ -60,40 +60,41 @@ function IllnessShowCard({ illness, dir = 'rtl', isVertical = false }: Props) {
           </svg>
         </div>
 
-        <div className=" flex flex-col gap-2 justify-between items-end text-center ">
-          <div className="text-primary-foreground p-4 pt-8 h-full w-full flex flex-col items-center gap-4 justify-evenly z-[2]">
-            <BoxReveal boxColor="transparent" duration={0.5}>
+        <article className="text-primary-foreground  h-full w-full flex flex-col items-center justify-evenly gap-4   z-[2]">
+          <div className="pt-4 flex-1">
+            <BoxReveal boxColor="transparent" duration={0.2}>
               <p
-                className={` rounded-full   px-2  text-xl  font-semibold ${style.title}`}
+                className={` rounded-full px-2  text-xl  font-semibold ${style.title}`}
               >
                 {illness.name}
               </p>
             </BoxReveal>
+          </div>
 
-            <BoxReveal duration={0.5}>
+          <div className="z-[2] mix-blend-hard-light flex-1  line-clamp-3 ">
+            <BoxReveal duration={0.4}>
               <p
-                className={
-                  ' rounded-2xl h-full  p-2  text-sm  font-semibold  line-clamp-3 '
-                }
+                className={' rounded-2xl h-full  p-2  text-sm  font-semibold '}
               >
                 {illness.description}
               </p>
             </BoxReveal>
           </div>
-          <div
-            className={`z-[1] mix-blend-hard-light ${style.eight} ${
-              isVertical ? 'flex-col-reverse' : ''
-            } w-36 h-36  rounded-full  self-center `}
+        </article>
+        <article className="absolute inset-0 top-12 ">
+          <figure
+            className={`z-[1]  ${style.eight}
+              rounded-full  self-center `}
           >
             <Image
               fill
               alt={illness.name}
-              className="eight pt-20 object-cover"
+              className="eight  object-cover"
               src={illness?.images?.[0]?.url || '/images/0000.webp'}
             />
-          </div>
-        </div>
-      </div>
+          </figure>
+        </article>
+      </section>
     </Link>
   )
 }

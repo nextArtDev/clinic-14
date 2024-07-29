@@ -53,7 +53,7 @@ const Card = ({
         className={cn(
           styles.card,
           "overflow-hidden relative w-full after:-z-10 after:absolute after:content-[''] after:h-full after:top-0 after:w-full after:left-0 after:opacity-70",
-          i % 2 ? 'gradient-base' : 'gradient-base-r'
+          i % 2 ? 'gradient-base-r' : 'gradient-base'
         )}
       >
         <div className={`absolute w-full h-20 bottom-0 left-0 `}>
@@ -88,7 +88,11 @@ const Card = ({
             />
           </svg>
         </div>
-        <h2 className="text-primary text-xl md:text-2xl -m-6">{title}</h2>
+        {/* <h2 className="text-primary text-xl md:text-2xl  "></h2> */}
+        <h2 className="text-2xl text-center font-bold text-pretty text-primary pb-2 ">
+          {' '}
+          {title}
+        </h2>
         <div
           className={cn(styles.body, 'relative flex flex-col w-full h-full')}
         >
@@ -104,7 +108,7 @@ const Card = ({
               'text-lg font-semibold  text-right'
             )}
           >
-            <motion.ul className="   absolute top-16 left-1/2 w-full space-y-4 -translate-x-1/2 flex flex-col  justify-around items-center text-justify z-[2]">
+            <motion.ul className="absolute top-16 left-1/2 w-full space-y-4 -translate-x-1/2 flex flex-col  justify-around items-center text-justify z-[2]">
               {items?.map((item) => (
                 <motion.li
                   whileInView={{ opacity: 1 }}
@@ -112,7 +116,7 @@ const Card = ({
                   key={item.id}
                   className="opacity-15"
                 >
-                  <Badge className="px-2 py-1 flex gap-1 grainy backdrop-blur-md  rounded-full text-sm md:text-base">
+                  <Badge className="px-2 py-1 flex gap-1 gradient-base backdrop-blur-md  rounded-full text-sm md:text-base">
                     <CheckCircle
                       className="text-primary"
                       size={16}

@@ -112,9 +112,12 @@ function DoctorReservationCard({
             {doctor?.open_time?.map((booking) => (
               <li key={booking.id} className={'text-base text-muted '}>
                 <BoxReveal boxColor="transparent">
-                  <time className=" !custom-box-shadow text-xs rounded-full border border-green-700/40 text-green-700 px-1 ">
+                  <span
+                    style={{ borderRadius: '7px' }}
+                    className=" !custom-box-shadow text-xs border border-green-700/40 text-green-700 px-1 "
+                  >
                     {booking.time}
-                  </time>
+                  </span>
                 </BoxReveal>
               </li>
             ))}
