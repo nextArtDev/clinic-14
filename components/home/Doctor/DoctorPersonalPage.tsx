@@ -28,6 +28,7 @@ import DoctorComment from './DoctorComment'
 import DoctorReviews from './DoctorReviews'
 import { ReviewsWithUserAndImage } from '@/lib/queries/home'
 import DoctorReservationCard from './DoctorReservationCard'
+import BoxReveal from '../BoxReveal'
 
 interface pageProps {
   doctor: Doctor & { images: { url: string | null }[] } & {
@@ -40,28 +41,29 @@ interface pageProps {
   } | null
 }
 function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
-  // const ref = useRef(null)
-  // const { scrollYProgress } = useScroll({
-  //   target: ref,
-  //   offset: ['start start', 'end end'],
-  // })
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end end'],
+  })
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.7])
   // const scrollYProgressSpring = useSpring(scrollYProgress, {
   //   stiffness: 300,
   //   damping: 40,
   // }) as MotionValue<number>
-  // const scale = useTransform(scrollYProgressSpring, [0, 1], [1, 12])
   // const imageX = useTransform(scrollYProgressSpring, [0, 1], [50, 0])
   // const imageXCalc = useMotionTemplate`max(0px, calc(${imageX}% + calc(${imageX}vw - 300px)))`
   // const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
   return (
     <>
       <div
-        className=" bg-transparent mix-blend-normal "
+        ref={ref}
+        className=" bg-transparent py-12 pb-32 "
         // style={{
         //   backgroundImage: "url('/noise-svg/noise4.svg')",
         // }}
       >
-        <div className="min-h-[20vh] w-full">
+        <motion.div style={{ scale }} className=" min-h-[20vh] w-full">
           {/* <Image
             height={128}
             width={128}
@@ -70,19 +72,22 @@ function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
             alt=""
           /> */}
           <SkewedInfiniteScroll />
-        </div>
+        </motion.div>
 
         <div className="  mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="-mt-12 ">
             <div className="flex-col ">
-              <figure className="relative h-24 w-24 sm:h-32 sm:w-32">
+              <motion.figure
+                style={{ scale }}
+                className="relative h-24 w-24 sm:h-32 sm:w-32 "
+              >
                 <Image
                   fill
                   className=" object-cover  rounded-full ring-4 ring-white "
                   src={doctor.images?.[0]?.url || '/images/1.jpg'}
                   alt=""
                 />
-              </figure>
+              </motion.figure>
               <div className="mt-6 min-w-0 ">
                 <h1 className=" text-2xl font-bold text-blue-950">
                   دکتر {doctor.name}
@@ -90,45 +95,48 @@ function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
               </div>
             </div>
             <div className=" mt-6  sm:min-w-0 sm:flex-1 sm:items-center sm:justify-between sm:space-x-6 sm:pb-1">
-              <div className="mt-6  flex flex-col justify-stretch space-y-3 sm:flex-row sm:justify-evenly sm:space-x-4 sm:space-y-0">
-                <div className="grainy  inline-flex text-center justify-center items-center rounded-md bg-transparent backdrop-blur-sm px-3 py-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 ">
-                  <span>{doctor.description}</span>
-                </div>
-                <div className="grainy flex justify-around rounded-md bg-transparent backdrop-blur-sm px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 ">
-                  {/* {doctor?.booking?.map((book) => {
-                    return days.map((day) => {
-                      if (book.dayId === day.id) {
-                        return (
-                          <div
-                            key={day.id}
-                            className="px-2  text-center text-sm font-medium"
-                          >
-                            <div className="flex flex-col gap-4 text-black text-center  pt-1 ">
-                              <p className="text-base"> {day.name}</p>
-                              <Separator className="bg-red-300" />
-                              <span>
-                                <Badge className="p-1 bg-black text-yellow-500 ">{` ${book.hours[0]}`}</Badge>{' '}
-                                {` - `}
-                                <Badge className="p-1 bg-black text-yellow-500 ">{` ${book.hours[1]}`}</Badge>{' '}
-                              </span>
-                            </div>
-                          </div>
-                        )
-                      }
-                    })
-                  })} */}
-                </div>
+              <div className="mt-6 text-secondary flex flex-col justify-stretch space-y-3 sm:flex-row sm:justify-evenly sm:space-x-4 sm:space-y-0">
+                {!!doctor?.description && (
+                  <div className="grainy  inline-flex text-center justify-center items-center rounded-md bg-transparent backdrop-blur-sm px-3 py-4 text-sm font-semibold shadow-sm ring-1 ring-inset  ">
+                    <BoxReveal boxColor="transparent">
+                      <span>{doctor.description}</span>
+                    </BoxReveal>
+                  </div>
+                )}
+                {doctor?.open_time?.length ? (
+                  <div className="grainy flex justify-around rounded-md bg-transparent backdrop-blur-sm px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset  ">
+                    <ul
+                      className={cn(
+                        'font-semibold',
+                        'flex flex-wrap gap-x-2 py-4 order-4 items-center '
+                      )}
+                    >
+                      {doctor?.open_time?.map((booking) => (
+                        <li
+                          key={booking.id}
+                          className={'text-base text-muted '}
+                        >
+                          <BoxReveal boxColor="transparent">
+                            <time className=" !custom-box-shadow text-xs rounded-full   px-1 ">
+                              {booking.time}
+                            </time>
+                          </BoxReveal>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
           <div className="pt-8 w-full flex-auto">
-            <h2 className="text-xl font-bold tracking-tight text-black sm:text-2xl">
+            <h2 className="text-xl font-bold tracking-tight  sm:text-2xl">
               موارد معالجه{' '}
             </h2>
 
             <ul
               role="list"
-              className="mt-4 grid grid-cols-1 place-items-center gap-x-8 gap-y-4 text-base leading-7 text-black sm:grid-cols-2 "
+              className="mt-4 grid grid-cols-1 place-items-center gap-x-8 gap-y-4 text-base leading-7  sm:grid-cols-2 "
             >
               {/* {doctor.illnessId.map((illId) => {
                 return illness.map((ill) => {

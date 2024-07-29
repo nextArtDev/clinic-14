@@ -137,13 +137,13 @@ const DoctorComment: FC<DoctorCommentProps> = ({ doctor, user }) => {
     <article className="flex flex-col items-center justify-center ">
       <Dialog>
         <DialogTrigger asChild className="">
-          <Button className="grainy fixed text-black hover:bg-gray-gradient hover:text-blue-950 left-[50%] -translate-x-1/2 bottom-0  w-[50%] max-w-xl p-8 mb-8 shadow-2xl z-50 ">
+          <Button className="grainy fixed  left-[50%] -translate-x-1/2 bottom-8  w-[50%] max-w-xl p-8 mb-8 shadow-2xl z-50 ">
             ثبت نظر
           </Button>
         </DialogTrigger>
         <DialogContent className="grainy max-w-[95%] rounded-xl ">
           <DialogHeader className="flex items-center justify-center space-y-4">
-            <DialogTitle className="text-blue-950">ثبت نظر </DialogTitle>
+            <DialogTitle className=" ">ثبت نظر </DialogTitle>
             <DialogDescription className="text-black/50">
               نظر یا پیشنهاد خود راجع به دکتر {doctor.name} را بنویسد.
             </DialogDescription>
