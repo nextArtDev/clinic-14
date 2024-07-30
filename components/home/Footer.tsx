@@ -116,8 +116,11 @@ const Footer = ({ specializations, doctors, illnesses }: FooterProps) => {
           //   links={footerLinks[6].links.url}
           /> */}
             </div>
+            <p dir="ltr" className=" xl:hidden text-center text-black/40  ">
+              @2023 Saeid_Mehmanparast: +989352310831. All rights reserved
+            </p>
           </div>
-          <p dir="ltr" className="text-center text-black/40 pt-auto ">
+          <p dir="ltr" className="hidden xl:block text-center text-black/40   ">
             @2023 Saeid_Mehmanparast: +989352310831. All rights reserved
           </p>
 

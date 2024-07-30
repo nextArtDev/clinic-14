@@ -15,13 +15,12 @@ function IllnessPage({ illness }: Props) {
 
   return (
     <div>
-      <div
-        key={illness.id}
-        className="grainy  px-4 py-10 pt-20 sm:px-6 lg:px-8  "
-      >
+      <div key={illness.id} className="px-4 py-10 pt-20 sm:px-6 lg:px-8  ">
         <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-8">
           {illnessImages.length > 0 ? (
-            <CarouselOrientation images={illnessImages} />
+            <div className="xl:max-w-xl xl:mx-auto">
+              <CarouselOrientation images={illnessImages} />
+            </div>
           ) : (
             <Image
               src={'/images/parallax/0000.webp'}
@@ -32,7 +31,7 @@ function IllnessPage({ illness }: Props) {
             />
           )}
           {/* <Gallery images={illnessImages} /> */}
-          <div className="mt-10 flex-col items-center justify-center  px-4 sm:mt-16 sm:px-0 lg:mt-0">
+          <div className="mt-10 flex-col text-justify xl:max-w-xl xl:mx-auto items-center justify-center  px-4 sm:mt-16 sm:px-0 lg:mt-0">
             <div className="font-semibold pb-4 lg:text-lg text-blue-950 ">
               {illness.name}{' '}
             </div>
