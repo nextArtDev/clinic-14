@@ -1,13 +1,11 @@
 'use client'
-import React, { useCallback, useEffect, useState } from 'react'
 import { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel'
 import useEmblaCarousel from 'embla-carousel-react'
+import React, { useCallback, useEffect, useState } from 'react'
 import style from '../Doctor/DoctorsCarousel.module.css'
-import { doctors, DoctorType, illness } from '@/constants'
 
 import AutoScroll from 'embla-carousel-auto-scroll'
 
-import IllnessCard from './IllnessCard'
 import IllnessShowCard from './IllnessShowCard'
 
 type PropType = {

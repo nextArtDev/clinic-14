@@ -14,8 +14,6 @@ import {
   getAllIllnesses,
   getAllSpecializations,
 } from '@/lib/queries/home'
-import DoctorReservationCard from '@/components/home/Doctor/DoctorReservationCard'
-import IllnessShowCard from '@/components/home/illness/IllnessShowCard'
 
 const HomePage = async () => {
   const specializations = await getAllSpecializations({})
@@ -41,9 +39,12 @@ const HomePage = async () => {
       )}
       {/* <DoctorCarousel slides={doctors} /> */}
       <IllnessCarousel slides={illnesses?.illnesses} />
-
       <Reviews />
-      <Footer />
+      <Footer
+        specializations={specializations?.specializations}
+        doctors={doctors?.doctors}
+        illnesses={illnesses?.illnesses}
+      />
     </div>
   )
 }
