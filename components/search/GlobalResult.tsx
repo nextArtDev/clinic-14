@@ -70,7 +70,7 @@ const GlobalResult: FC<GlobalResultProps> = ({ social }) => {
   return (
     <div
       dir="rtl"
-      className="absolute left-0 z-10 mt-3 w-full rounded-xl bg-muted/30  backdrop-blur-3xl py-5 shadow-sm"
+      className="absolute left-0 z-10 mt-3 w-full rounded-xl bg-muted/20  backdrop-blur-3xl py-5 shadow-sm"
     >
       <p className="px-5">
         <GlobalFilters filters={GlobalSearchFilters} />

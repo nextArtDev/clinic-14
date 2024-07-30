@@ -3,15 +3,15 @@ import { FC, useEffect, useRef, useState } from 'react'
 import SearchIcon from '@/public/icons/search.svg'
 import Image from 'next/image'
 import { Input } from '@/components/ui/input'
-import { formUrlQuery, removeKeysFromUrlQuery } from '@/lib/utils'
+import { cn, formUrlQuery, removeKeysFromUrlQuery } from '@/lib/utils'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import GlobalResult from './GlobalResult'
 
 interface GlobalSearchProps {
-  social?: boolean
+  className?: string
 }
 
-const GlobalSearch: FC<GlobalSearchProps> = ({ social }) => {
+const GlobalSearch: FC<GlobalSearchProps> = ({ className }) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -66,10 +66,10 @@ const GlobalSearch: FC<GlobalSearchProps> = ({ social }) => {
   return (
     <div
       ref={searchContainerRef}
-      className="relative w-full max-w-[500px]"
+      className={cn('relative w-full max-w-[500px]', className)}
       // className="relative w-full max-w-[500px] max-lg:hidden "
     >
-      <div className=" relative flex min-h-[50px] grow items-center gap-1 rounded-xl px-4 bg-muted/30 backdrop-blur-sm ">
+      <div className=" relative flex min-h-[50px] grow items-center gap-1 rounded-xl px-4 bg-muted-foreground/20 backdrop-blur-2xl ">
         <Image
           src={SearchIcon}
           alt="Search"
@@ -91,7 +91,7 @@ const GlobalSearch: FC<GlobalSearchProps> = ({ social }) => {
           className="ml-2 border-none outline-none "
         />
       </div>
-      {isOpen && <GlobalResult social={social} />}
+      {isOpen && <GlobalResult />}
     </div>
   )
 }

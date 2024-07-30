@@ -115,7 +115,7 @@ function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
                     </BoxReveal>
                   </div>
                 )}
-                {doctor?.open_time?.length ? (
+                {!!doctor?.open_time?.length ? (
                   <div className="grainy flex justify-around rounded-md bg-transparent backdrop-blur-sm px-3 py-2 text-sm font-semibold shadow-sm  ">
                     <ul
                       className={cn(
@@ -141,7 +141,7 @@ function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
               </div>
             </div>
           </div>
-          {doctor?.illnesses?.length && (
+          {!!doctor?.illnesses && (
             <div className="pt-8 w-full flex-auto">
               {/* <h2 className="text-xl font-bold tracking-tight  sm:text-2xl">
                 موارد معالجه{' '}

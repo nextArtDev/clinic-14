@@ -1,13 +1,10 @@
 'use client'
+import { special } from '@/constants'
 import Image from 'next/image'
-import { HoveredLink, Menu, MenuItem, ProductItem } from './NavMenu'
-import { doctors, special } from '@/constants'
 
 import sun from '@/public/icons/sun.png'
-import SearchImage from '@/public/v1/images/search.svg'
 // import BagImage from '@/public/v1/images/bag.svg'
 
-import Link from 'next/link'
 import {
   motion,
   useMotionTemplate,
@@ -15,15 +12,14 @@ import {
   useScroll,
   useTransform,
 } from 'framer-motion'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import StickyNav from './StickyNav'
-import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
 
-import { Search, User } from 'lucide-react'
+import GlobalSearch from '@/components/search/GlobalSearch'
+import { User } from 'lucide-react'
 import { DockDemo } from './Doc'
 import { NavigationMenuDemo } from './NavigationMenuDemo'
-import ExpandableSearch from '../search/ExpandableSearch'
 
 let clamp = (number: number, min: number, max: number) =>
   Math.min(Math.max(number, min), max)
@@ -47,14 +43,12 @@ function useBoundedScroll(bounds: number) {
 }
 
 const Navbar = () => {
-  const [active, setActive] = useState<string | null>(null)
   const [position, setPosition] = useState({
     left: 0,
     width: 0,
     opacity: 0,
   })
 
-  let [activeTab, setActiveTab] = useState(special[0].id)
   let { scrollYBoundedProgress } = useBoundedScroll(400)
   let scrollYBoundedProgressThrottled = useTransform(
     scrollYBoundedProgress,
@@ -62,43 +56,63 @@ const Navbar = () => {
     [0, 0, 1]
   )
   return (
-    <>
-      <motion.header
-        className="fixed inset-0 h-36 py-auto w-full z-30  sm:px-10 px-5 flex justify-between items-center  "
-        style={{
-          height: useTransform(
-            scrollYBoundedProgressThrottled,
-            [0, 1],
-            // [max , min] height
-            [75, 50]
-          ),
-          backgroundColor: useMotionTemplate`rgb(255 255 255 / ${useTransform(
-            scrollYBoundedProgressThrottled,
-            [0, 1],
-            [0.05, 0.3]
-          )})`,
-        }}
-      >
-        <nav className="flex flex-col justify-center w-full   md:mt-4 pt-2 screen-max-width">
-          <section className="flex justify-between items-center ">
-            <div className="flex justify-between items-center ">
-              <Link href={'/'}>
-                <motion.figure
-                  style={{
-                    scale: useTransform(
-                      scrollYBoundedProgressThrottled,
-                      [0, 1],
-                      // [max , min] height
-                      [1, 0.6]
-                    ),
-                  }}
-                >
-                  <Image src={sun} alt="Sun" width={48} height={48} />
-                </motion.figure>
-              </Link>
-            </div>
+    <section className=" mx-auto flex w-full max-w-3xl flex-1 overflow-hidden">
+      <div className="z-50 flex-1 overflow-y-scroll">
+        <motion.header
+          className="fixed inset-x-0 grid grid-rows-2 h-32 py-auto w-full "
+          style={{
+            height: useTransform(
+              scrollYBoundedProgressThrottled,
+              [0, 1],
+              // [max , min] height
+              [128, 50]
+            ),
+            background: useMotionTemplate`
+              linear-gradient(
+                to top,
+                rgba(255, 182, 193, ${useTransform(
+                  scrollYBoundedProgressThrottled,
+                  [0, 0.85, 1],
+                  [0.1, 0.3, 1]
+                )}) 0%,
 
-            {/* <Menu
+                rgba(173, 216, 230, ${useTransform(
+                  scrollYBoundedProgressThrottled,
+                  [0, 0.85, 1],
+                  [0.1, 0.3, 1]
+                )}) 50%,
+
+                rgba(255, 248, 220, ${useTransform(
+                  scrollYBoundedProgressThrottled,
+                  [0, 0.85, 1],
+                  [0.1, 0.3, 1]
+                )}) 100%
+
+              )
+
+            `,
+          }}
+        >
+          <nav className="flex flex-col justify-center w-full pt-4  md:mt-4 screen-max-width">
+            <section className="flex justify-between items-center ">
+              <div className="flex justify-between items-center ">
+                <Link href={'/'}>
+                  <motion.figure
+                    style={{
+                      scale: useTransform(
+                        scrollYBoundedProgressThrottled,
+                        [0, 1],
+                        // [max , min] height
+                        [1, 0.6]
+                      ),
+                    }}
+                  >
+                    <Image src={sun} alt="Sun" width={48} height={48} />
+                  </motion.figure>
+                </Link>
+              </div>
+
+              {/* <Menu
               setActive={setActive}
               className={'flex flex-1   justify-center  max-sm:hidden '}
             >
@@ -138,86 +152,66 @@ const Navbar = () => {
                 </div>
               </MenuItem>
             </Menu> */}
-            <NavigationMenuDemo />
+              <NavigationMenuDemo />
 
-            <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
-              <motion.div
-                style={{
-                  scale: useTransform(
-                    scrollYBoundedProgressThrottled,
-                    [0, 1],
-                    // [max , min] height
-                    [1, 1.1]
-                  ),
-                }}
-              >
-                {/* <Search size={'sm'} className="w-4" /> */}
-                <ExpandableSearch />
-                {/* <Image src={SearchImage} alt="search" width={18} height={18} /> */}
-              </motion.div>
-
-              <motion.figure
-                style={{
-                  scale: useTransform(
-                    scrollYBoundedProgressThrottled,
-                    [0, 1],
-                    // [max , min] height
-                    [1, 1.3]
-                  ),
-                }}
-              >
-                {/* <Image src={BagImage} alt="bag" width={18} height={18} /> */}
-                <User size={'sm'} className="w-4" />
-              </motion.figure>
-            </div>
-          </section>
-          <motion.ul
-            onMouseLeave={() => {
-              setPosition((pv) => ({
-                ...pv,
-                opacity: 0,
-              }))
-            }}
-            className=" flex flex-1 space-x-4 pb-2.5 justify-center  max-sm:hidden "
-          >
-            {special.map((nav) => (
-              <motion.li
-                key={nav.id}
-                className=" px-5 text-sm cursor-pointer text-gray hover:text-white transition-all"
-                style={{
-                  // eslint-disable-next-line react-hooks/rules-of-hooks
-                  opacity: useTransform(
-                    scrollYBoundedProgressThrottled,
-                    [0, 1],
-                    [1, 0]
-                  ),
-                  // eslint-disable-next-line react-hooks/rules-of-hooks
-                  height: useTransform(
-                    scrollYBoundedProgressThrottled,
-                    [0, 1],
-                    // [max , min] height
-                    [40, 5]
-                  ),
-                }}
-              >
-                <Link
-                  href={'/'}
-                  className={cn(
-                    // buttonVariants({ variant: 'ghost' }),
-                    'backdrop-blur-2xl hover:backdrop-blur-sm hover:bg-transparent rounded-full -mt-0.5'
-                  )}
+              <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
+                <motion.div
+                  style={{
+                    scale: useTransform(
+                      scrollYBoundedProgressThrottled,
+                      [0, 1],
+                      // [max , min] height
+                      [1, 1.1]
+                    ),
+                  }}
                 >
-                  {nav.title}
-                </Link>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </nav>
-      </motion.header>
-      <div className="flex space-x-1">
-        <div className=" ">
-          <StickyNav>
-            {/* {special.map((tab) => (
+                  {/* <Search size={'sm'} className="w-4" /> */}
+
+                  {/* <Image src={SearchImage} alt="search" width={18} height={18} /> */}
+                </motion.div>
+
+                <motion.figure
+                  style={{
+                    scale: useTransform(
+                      scrollYBoundedProgressThrottled,
+                      [0, 1],
+                      // [max , min] height
+                      [1, 1.3]
+                    ),
+                  }}
+                >
+                  {/* <Image src={BagImage} alt="bag" width={18} height={18} /> */}
+                  <User size={'sm'} className="w-4" />
+                </motion.figure>
+              </div>
+            </section>
+            <motion.ul
+              onMouseLeave={() => {
+                setPosition((pv) => ({
+                  ...pv,
+                  opacity: 0,
+                }))
+              }}
+              className=" flex flex-1 space-x-4 pb-2.5 justify-center  max-sm:hidden "
+            ></motion.ul>
+          </nav>
+          <motion.div
+            style={{
+              scale: useTransform(
+                scrollYBoundedProgressThrottled,
+                [0, 1],
+                [1, 0]
+              ),
+            }}
+            className="relative mx-auto self-center w-[325px]"
+          >
+            <GlobalSearch />
+          </motion.div>
+        </motion.header>
+        <div className="flex space-x-1">
+          <div className=" ">
+            <StickyNav>
+              {/* {special.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -240,11 +234,12 @@ const Navbar = () => {
                 {tab.name}
               </button>
             ))} */}
-            <DockDemo />
-          </StickyNav>
+              <DockDemo />
+            </StickyNav>
+          </div>
         </div>
       </div>
-    </>
+    </section>
   )
 }
 
