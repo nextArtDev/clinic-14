@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { StarRating } from './StarRating'
 import { Dot, Heart } from 'lucide-react'
 import { formatTimeToNow } from '@/lib/utils/date-utils'
+import SvgShadow from './SvgShadow'
 
 const testimonials = [
   {
@@ -66,8 +67,9 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
   }
 
   return (
-    <section className="py-12 md:py-24">
-      <div className="w-full max-w-2xl">
+    <section className=" py-12 md:py-24 max-w-2xl">
+      <article className="relative overflow-hidden  bg-secondary/10 gradient-base-r shadow-2xl backdrop-blur-md rounded-2xl px-8 py-10  w-[90vw] max-w-[90vh]  ">
+        <SvgShadow />
         <AnimatePresence mode="popLayout">
           <motion.div
             key={currentTestimonial}
@@ -75,7 +77,7 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
             animate="animate"
             exit="exit"
             variants={variants}
-            className="flex w-full flex-col items-center justify-center"
+            className=" flex w-full flex-col items-center justify-center"
             transition={{
               type: 'spring',
               stiffness: 200,
@@ -118,7 +120,7 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
             ))}
           </div>
         </AnimatePresence>
-      </div>
+      </article>
     </section>
   )
 }

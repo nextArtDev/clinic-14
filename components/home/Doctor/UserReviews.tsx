@@ -4,11 +4,11 @@ import { FC } from 'react'
 import { ReviewsWithUserAndImage } from '@/lib/queries/home'
 
 import TestimonialCarousel from '../Testemonial'
-interface DoctorReviewsProps {
+interface UserReviewsProps {
   reviews: ReviewsWithUserAndImage[] | null
 }
 
-const DoctorReviews: FC<DoctorReviewsProps> = ({ reviews }) => {
+const UserReviews: FC<UserReviewsProps> = ({ reviews }) => {
   const testimonials = reviews?.map((review) => {
     return {
       text: review.comment,
@@ -30,4 +30,4 @@ const DoctorReviews: FC<DoctorReviewsProps> = ({ reviews }) => {
   )
 }
 
-export default DoctorReviews
+export default UserReviews

@@ -37,7 +37,7 @@ async function page({
           />
         </div>
         <div className=" mx-auto w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 place-items-center gap-4">
-          {doctors.doctors.map((doctor) => (
+          {doctors.doctorsWithRatings.map((doctor) => (
             // <DoctorCard key={doctor.id} doctor={doctor} />
             <Link
               href={`/doctors/${doctor.id}`}

@@ -108,92 +108,78 @@ export async function createReview(
   revalidatePath(path)
   redirect(path)
 }
-// export async function createContributorReview(
-//   formData: FormData,
-//   path: string,
-//   userId: string,
-//   doctorId: string
-// ): Promise<CreateReviewFormState> {
-//   const result = createReviewActionSchema.safeParse({
-//     comment: formData.get('comment'),
-//     rating: formData.get('rating'),
-//   })
-//   if (!result.success) {
-//     console.log(result.error.flatten().fieldErrors)
-//     return {
-//       errors: result.error.flatten().fieldErrors,
-//     }
-//   }
-//   const session = await auth()
-//   if (!session || !session.user) {
-//     return {
-//       errors: {
-//         _form: ['شما عضو نیستید!'],
-//       },
-//     }
-//   }
-//   if (!doctorId) {
-//     return {
-//       errors: {
-//         _form: ['لطفا بعدا امتحان کنید!'],
-//       },
-//     }
-//   }
 
-//   const doctor = await prisma.doctor.findFirst({
-//     where: {
-//       id: doctorId,
-//
-//     },
-//   })
-//   if (!doctor) {
-//     return {
-//       errors: {
-//         _form: ['صفحه حذف شده است!'],
-//       },
-//     }
-//   }
+interface CreateClinicReviewFormState {
+  errors: {
+    comment?: string[]
+    rating?: string[]
+    _form?: string[]
+  }
+}
 
-//   const alreadyRated = await prisma.review.findFirst({
-//     where: {
-//       doctorId,
-//
-//       userId,
-//     },
-//   })
-//   if (alreadyRated) {
-//     return {
-//       errors: {
-//         _form: ['شما قبلا نظر خود را ثبت کرده‌اید!'],
-//       },
-//     }
-//   }
+export async function createClinicReview(
+  formData: FormData,
+  path: string,
+  userId: string
+): Promise<CreateClinicReviewFormState> {
+  const result = createReviewActionSchema.safeParse({
+    comment: formData.get('comment'),
+    rating: formData.get('rating'),
+  })
+  if (!result.success) {
+    console.log(result.error.flatten().fieldErrors)
+    return {
+      errors: result.error.flatten().fieldErrors,
+    }
+  }
+  const session = await auth()
+  if (!session || !session.user) {
+    redirect('/login')
+    // return {
+    //   errors: {
+    //     _form: ['برای نظر دهی ابتدا باید عضو شوید.']
+    //   },
+    // }
+  }
 
-//   try {
-//     const review = await prisma.review.create({
-//       data: {
-//         comment: result.data.comment,
-//         rating: +result.data.rating,
-//         userId: session.user.id,
-//         doctorId,
-//
-//       },
-//     })
-//   } catch (err: unknown) {
-//     if (err instanceof Error) {
-//       return {
-//         errors: {
-//           _form: [err.message],
-//         },
-//       }
-//     } else {
-//       return {
-//         errors: {
-//           _form: ['مشکلی پیش آمده، لطفا دوباره امتحان کنید!'],
-//         },
-//       }
-//     }
-//   }
-//   revalidatePath(path)
-//   redirect(path)
-// }
+  try {
+    const alreadyRated = await prisma.review.findFirst({
+      where: {
+        isFaq: true,
+        userId,
+      },
+    })
+    if (alreadyRated) {
+      return {
+        errors: {
+          _form: ['شما قبلا نظر خود را ثبت کرده‌اید!'],
+        },
+      }
+    }
+
+    await prisma.review.create({
+      data: {
+        comment: result.data.comment,
+        rating: +result.data.rating,
+        userId: session.user.id,
+        isFaq: true,
+      },
+    })
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return {
+        errors: {
+          _form: [err.message],
+        },
+      }
+    } else {
+      return {
+        errors: {
+          _form: ['مشکلی پیش آمده، لطفا دوباره امتحان کنید!'],
+        },
+      }
+    }
+  }
+  revalidatePath(path)
+  redirect(path)
+}

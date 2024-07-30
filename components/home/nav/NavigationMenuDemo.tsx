@@ -58,6 +58,15 @@ export function NavigationMenuDemo() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
+          <Link href="/faq" legacyBehavior passHref>
+            <NavigationMenuLink
+              className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}
+            >
+              سوالات متداول
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <NavigationMenuTrigger className="bg-transparent">
             دکترها
           </NavigationMenuTrigger>
@@ -109,15 +118,6 @@ export function NavigationMenuDemo() {
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}
-            >
-              کلینیک
-            </NavigationMenuLink>
-          </Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

@@ -1,19 +1,17 @@
 'use client'
-import Link from 'next/link'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
-import { FC, startTransition, useEffect, useRef, useState } from 'react'
-import TextareaAutosize from 'react-textarea-autosize'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC, startTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import TextareaAutosize from 'react-textarea-autosize'
+import * as z from 'zod'
 
 import { Button } from '@/components/ui/button'
 
@@ -23,30 +21,21 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 
-// import { useMutation } from '@tanstack/react-query'
-// import axios, { AxiosError } from 'axios'
-import { useRouter } from 'next/navigation'
-import { usePathname } from 'next/navigation'
-import { useCustomToasts } from '@/hooks/use-custom-toasts'
-import { StarRating } from '../StarRating'
-import { Heart } from 'lucide-react'
+import { createClinicReview } from '@/lib/actions/home/rating'
 import { createReviewSchema } from '@/lib/schemas/rating'
-import { Doctor, Review, User } from '@prisma/client'
-import { createReview } from '@/lib/actions/home/rating'
+import { User } from '@prisma/client'
+import { usePathname } from 'next/navigation'
 import { toast } from 'sonner'
+import { StarRating } from '../StarRating'
 
-interface DoctorCommentProps {
-  doctor: Doctor & { reviews: Review[] | null }
-
-  user: (User & { image: { url: string } | null }) | null
+interface FaqProps {
+  user: User | null
 }
-const DoctorComment: FC<DoctorCommentProps> = ({ doctor, user }) => {
+const FaqComment: FC<FaqProps> = ({ user }) => {
   const path = usePathname()
-  const { loginToast } = useCustomToasts()
 
   const form = useForm<z.infer<typeof createReviewSchema>>({
     //enforcing post validator client side
@@ -64,7 +53,7 @@ const DoctorComment: FC<DoctorCommentProps> = ({ doctor, user }) => {
     formData.append('rating', String(data.rating))
     try {
       startTransition(() => {
-        createReview(formData, path, user?.id as string, doctor.id as string)
+        createClinicReview(formData, path, user?.id as string)
           .then((res) => {
             if (res?.errors?.comment) {
               form.setError('comment', {
@@ -104,7 +93,7 @@ const DoctorComment: FC<DoctorCommentProps> = ({ doctor, user }) => {
           <DialogHeader className="flex items-center justify-center space-y-4">
             <DialogTitle className=" ">ثبت نظر </DialogTitle>
             <DialogDescription className="text-black/50">
-              نظر یا پیشنهاد خود راجع به دکتر {doctor.name} را بنویسد.
+              نظر یا پیشنهاد خود راجع به کلینیک را بنویسد.
             </DialogDescription>
           </DialogHeader>
 
@@ -150,7 +139,7 @@ const DoctorComment: FC<DoctorCommentProps> = ({ doctor, user }) => {
                       />
                     </FormControl>
                     <DialogDescription className="text-black/50">
-                      به دکتر {doctor.name} از یک تا پنج ستاره بدهید.
+                      به کلینیک از یک تا پنج ستاره بدهید.
                     </DialogDescription>
                     <FormMessage />
                   </FormItem>
@@ -173,4 +162,4 @@ const DoctorComment: FC<DoctorCommentProps> = ({ doctor, user }) => {
   )
 }
 
-export default DoctorComment
+export default FaqComment
