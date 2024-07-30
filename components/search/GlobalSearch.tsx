@@ -80,7 +80,7 @@ const GlobalSearch: FC<GlobalSearchProps> = ({ className }) => {
         <Input
           dir="rtl"
           type="text"
-          placeholder="جست‌وجو"
+          placeholder="جست‌ و جو"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value)
@@ -88,7 +88,7 @@ const GlobalSearch: FC<GlobalSearchProps> = ({ className }) => {
             if (!isOpen) setIsOpen(true)
             if (e.target.value === '' && isOpen) setIsOpen(false)
           }}
-          className="ml-2 border-none outline-none "
+          className="ml-2 border-none outline-none placeholder:text-secondary-foreground "
         />
       </div>
       {isOpen && <GlobalResult />}

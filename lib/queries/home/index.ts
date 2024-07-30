@@ -261,7 +261,7 @@ export async function globalHomeSearch(params: SearchParams) {
 
         results.push(
           ...queryResults.map((item: any) => ({
-            title: type === 'doctor' ? `${query}` : item[searchField],
+            title: item[searchField],
             type,
 
             id: item.id,

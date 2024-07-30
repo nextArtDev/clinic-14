@@ -50,7 +50,7 @@ function Hero({}: Props) {
       )
       .to('.text-reveal', {
         clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
-        y: -150,
+        y: -80,
         duration: 0.2,
         delay: 0.25,
       })
@@ -85,7 +85,7 @@ function Hero({}: Props) {
     <section className="relative w-full h-[calc(h-screen-5rem)]">
       <div className="container absolute top-10 inset-0 grid place-items-center  ">
         <div className="content text-center z-10 ">
-          <div className="flex justify-center items-center">
+          {/* <div className="flex justify-center items-center">
             <Image
               src={sun}
               width={28}
@@ -94,7 +94,7 @@ function Hero({}: Props) {
               className="svgLogo block w-24 h-24"
               alt="logo"
             />
-          </div>
+          </div> */}
           <div className="content-inner space-y-4">
             <h1 className="bg-gradient-to-r via-[#dbd821] from-[#c75c42] to-[#e96f18] bg-clip-text text-transparent text-reveal text-center text-3xl font-bold   mb-0 py-1 ">
               درمانگاه آئین شفق
@@ -140,7 +140,7 @@ function Hero({}: Props) {
               />
             </div>
           </div> */}
-          <GlobalSearch />
+          {/* <GlobalSearch /> */}
         </div>
       </div>
 
