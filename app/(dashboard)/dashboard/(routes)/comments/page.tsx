@@ -1,4 +1,4 @@
-import ReviewCard from '@/components/ReviewCard'
+import ReviewCard from '@/components/dashboard/ReviewCard'
 import { prisma } from '@/lib/prisma'
 import { FC } from 'react'
 
