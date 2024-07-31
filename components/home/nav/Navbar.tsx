@@ -17,11 +17,12 @@ import { useEffect, useState } from 'react'
 import StickyNav from './StickyNav'
 
 import GlobalSearch from '@/components/search/GlobalSearch'
-import { User } from 'lucide-react'
+import { HomeIcon, User } from 'lucide-react'
 import { DockDemo } from './Doc'
 import { NavigationMenuDemo } from './NavigationMenuDemo'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
+import MobileNav from './MobileNav'
 
 let clamp = (number: number, min: number, max: number) =>
   Math.min(Math.max(number, min), max)
@@ -60,8 +61,20 @@ const Navbar = () => {
     [0, 0, 1]
   )
   return (
-    <section className=" mx-auto flex w-full max-w-3xl flex-1 overflow-hidden">
-      <div className="z-50 flex-1 overflow-y-scroll">
+    <section className="relative mx-auto flex w-full max-w-3xl flex-1 overflow-hidden">
+      <article className="z-50 fixed top-0 lg:top-0   max-w-full px-4 py-8 font-semibold  dark:text-light w-full h-12 bg-transparent grid place-content-center grid-cols-6 md:hidden ">
+        <div className="col-span-1">
+          <MobileNav />
+        </div>
+        <div className="col-span-4">
+          <GlobalSearch />
+        </div>
+        <Link href={'/'} className="m-auto col-span-1">
+          <HomeIcon />
+        </Link>
+      </article>
+
+      <div className="hidden md:flex z-50 flex-1 overflow-y-scroll">
         <motion.header
           className="fixed inset-x-0 grid grid-rows-2 h-32 py-auto w-full "
           style={{
@@ -69,7 +82,7 @@ const Navbar = () => {
               scrollYBoundedProgressThrottled,
               [0, 1],
               // [max , min] height
-              isMainNav ? [128, 50] : [50, 50]
+              isMainNav ? [120, 50] : [50, 50]
             ),
             background: useMotionTemplate`
               linear-gradient(
