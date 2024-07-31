@@ -59,7 +59,7 @@ const DoctorCarousel: React.FC<PropType> = (props) => {
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>
 
-        <h2 className="text-2xl text-center font-bold text-pretty text-primary">
+        <h2 className="text-2xl text-center font-bold text-pretty title-color mix-blend-multiply ">
           {' '}
           کادر درمان
         </h2>

@@ -64,10 +64,10 @@ const IllnessCarousel: React.FC<PropType> = (props) => {
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div> */}
-        <h2 className="text-2xl text-center font-bold text-pretty text-primary">
+        <h1 className="text-2xl title-color text-center font-bold text-pretty mix-blend-multiply ">
           {' '}
           بیماری‌ها
-        </h2>
+        </h1>
         <div className={`${style.embla__progress} grainy mb-6 `}>
           <div
             className={`${style.embla__progress__bar} !gradient-base `}

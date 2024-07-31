@@ -24,10 +24,10 @@ async function page({
       </p>
     )
   return (
-    <div className="grainy">
+    <div className="grainy min-h-screen">
       <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
         <h2 className="sr-only">دکترها</h2>
-        <div className="my-8 pt-20 flex flex-col gap-6 max-w-lg mx-auto">
+        <div className="my-8 pt-24 flex flex-col gap-6 max-w-lg mx-auto">
           <LocalSearchbar
             route="/doctors"
             iconPosition="left"

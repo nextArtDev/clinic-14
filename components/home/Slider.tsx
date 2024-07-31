@@ -199,7 +199,7 @@ const Slider = ({ specializations }: SliderProps) => {
       style={{ position: 'relative' }}
     >
       <div className="progress z-30 sticky top-8 left-0  py-8 text-center text-primary text-xl font-semibold ">
-        <h1 className="text-2xl">کلینیک‌ها</h1>
+        <h1 className="text-2xl title-color mix-blend-multiply ">کلینیک‌ها</h1>
         <motion.div
           style={{ scaleX }}
           className="progressBar mt-3 rounded-full gradient-base-r h-2.5   "

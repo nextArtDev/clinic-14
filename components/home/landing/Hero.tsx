@@ -96,7 +96,7 @@ function Hero({}: Props) {
             />
           </div> */}
           <div className="content-inner space-y-4">
-            <h1 className="bg-gradient-to-r via-[#dbd821] from-[#c75c42] to-[#e96f18] bg-clip-text text-transparent text-reveal text-center text-3xl font-bold   mb-0 py-1 ">
+            <h1 className="title-color text-reveal text-center text-3xl font-bold   mb-0 py-1 ">
               درمانگاه آئین شفق
             </h1>
             <p className="text-reveal flex flex-col justify-center items-center gap-4 text-center text-xl   font-semibold bg-gradient-to-r from-primary  via-white/60 to-primary  bg-clip-text text-transparent">

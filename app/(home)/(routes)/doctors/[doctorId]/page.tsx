@@ -24,7 +24,7 @@ const DoctorPage = async ({ params }: { params: { doctorId: string } }) => {
   })
 
   return (
-    <div className="grainy min-h-screen">
+    <div className="grainy min-h-screen ">
       <DoctorPersonalPage
         doctor={doctor.doctor}
         rate={doctor.rate}

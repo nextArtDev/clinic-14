@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import Link from 'next/link'
 
@@ -14,6 +12,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
+import { getAllSpecializations } from '@/lib/queries/home'
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -54,6 +53,8 @@ const components: { title: string; href: string; description: string }[] = [
 ]
 
 export function NavigationMenuDemo() {
+  // const specials = await getAllSpecializations({})
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -107,15 +108,15 @@ export function NavigationMenuDemo() {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
+              {/* {specials?.specializations?.map((special) => (
                 <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
+                  key={special.id}
+                  title={special.name}
+                  href={`/specialities/${special.id}`}
                 >
-                  {component.description}
+                  {special.description}
                 </ListItem>
-              ))}
+              ))} */}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

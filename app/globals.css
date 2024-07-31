@@ -106,6 +106,9 @@ html {
   .gradient-base {
     @apply bg-gradient-to-t from-[#FFB6C1] via-[#ADD8E6] to-[#FFF8DC];
   }
+  .title-color {
+    @apply font-bold bg-gradient-to-r via-[#dbd821] from-[#c75c42] to-[#e96f18] bg-clip-text text-transparent;
+  }
   .gradient-base-r {
     @apply bg-gradient-to-t from-[#FFF8DC] via-[#ADD8E6] to-[#FFB6C1];
   }

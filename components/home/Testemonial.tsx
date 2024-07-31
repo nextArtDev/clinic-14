@@ -62,14 +62,14 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
     exit: { opacity: 0, y: '100%', scale: 0.1 },
   }
   const dotVariants = {
-    active: { scale: 1.2, backgroundColor: '#3f3f46' },
+    active: { scale: 1.2, backgroundColor: '#45f88a' },
     inactive: { scale: 1, backgroundColor: '#D1D5DB' },
   }
 
   return (
     <section className=" py-12 md:py-24 max-w-2xl">
       <article className="relative overflow-hidden  bg-secondary/10 gradient-base-r shadow-2xl backdrop-blur-md rounded-2xl px-8 py-10  w-[90vw] max-w-[90vh]  ">
-        <SvgShadow />
+        <SvgShadow className="!opacity-75" />
         <AnimatePresence mode="popLayout">
           <motion.div
             key={currentTestimonial}

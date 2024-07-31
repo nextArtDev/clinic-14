@@ -20,6 +20,8 @@ import GlobalSearch from '@/components/search/GlobalSearch'
 import { User } from 'lucide-react'
 import { DockDemo } from './Doc'
 import { NavigationMenuDemo } from './NavigationMenuDemo'
+import { cn } from '@/lib/utils'
+import { usePathname } from 'next/navigation'
 
 let clamp = (number: number, min: number, max: number) =>
   Math.min(Math.max(number, min), max)
@@ -48,7 +50,9 @@ const Navbar = () => {
     width: 0,
     opacity: 0,
   })
-
+  const path = usePathname()
+  let isMainNav
+  path === '/' ? (isMainNav = true) : false
   let { scrollYBoundedProgress } = useBoundedScroll(400)
   let scrollYBoundedProgressThrottled = useTransform(
     scrollYBoundedProgress,
@@ -65,7 +69,7 @@ const Navbar = () => {
               scrollYBoundedProgressThrottled,
               [0, 1],
               // [max , min] height
-              [128, 50]
+              isMainNav ? [128, 50] : [50, 50]
             ),
             background: useMotionTemplate`
               linear-gradient(
@@ -181,11 +185,11 @@ const Navbar = () => {
                   }}
                 >
                   {/* <Image src={BagImage} alt="bag" width={18} height={18} /> */}
-                  <User size={'sm'} className="w-4" />
+                  <User size={'sm'} className="ml-4 w-6" />
                 </motion.figure>
               </div>
             </section>
-            <motion.ul
+            {/* <motion.ul
               onMouseLeave={() => {
                 setPosition((pv) => ({
                   ...pv,
@@ -193,8 +197,9 @@ const Navbar = () => {
                 }))
               }}
               className=" flex flex-1 space-x-4 pb-2.5 justify-center  max-sm:hidden "
-            ></motion.ul>
+            ></motion.ul> */}
           </nav>
+
           <motion.div
             style={{
               scale: useTransform(
@@ -203,7 +208,10 @@ const Navbar = () => {
                 [1, 0]
               ),
             }}
-            className="relative mx-auto self-center w-[325px]"
+            className={cn(
+              isMainNav ? '' : '!hidden',
+              'relative mx-auto self-center w-[325px]'
+            )}
           >
             <GlobalSearch />
           </motion.div>

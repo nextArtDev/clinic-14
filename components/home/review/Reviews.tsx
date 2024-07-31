@@ -10,10 +10,10 @@ function Reviews({}: Props) {
       dir="ltr"
       className="mt-10 relative flex h-[400px]  w-full flex-col items-center justify-center overflow-hidden rounded-lg  md:shadow-xl"
     >
-      <h2 className="text-2xl text-center font-bold text-pretty text-primary">
+      <h1 className="text-2xl text-center font-bold text-pretty title-color mix-blend-multiply">
         {' '}
         نظرات
-      </h2>
+      </h1>
       <Marquee reverse pauseOnHover className="[--duration:20s]">
         {marquees.map((marquee) => (
           <MarqueeCard key={marquee.id} {...marquee} />

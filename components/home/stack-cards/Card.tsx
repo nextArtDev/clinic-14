@@ -36,7 +36,7 @@ const Card = ({
     offset: ['start end', 'start start'],
   })
 
-  const imageScale = useTransform(scrollYProgress, [0, 1], [2, 1])
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
   //   const imageRotate = useTransform(scrollYProgress, [0, 1], [360, 0])
   const scale = useTransform(progress, range, [1, targetScale])
 
@@ -91,7 +91,7 @@ const Card = ({
         </div> */}
         <SvgShadow />
         {/* <h2 className="text-primary text-xl md:text-2xl  "></h2> */}
-        <h2 className="text-2xl text-center font-bold text-pretty text-primary pb-2 ">
+        <h2 className="text-2xl pb-3 text-center font-bold text-pretty title-color mix-blend-exclusion">
           {' '}
           {title}
         </h2>
