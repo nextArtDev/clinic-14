@@ -54,6 +54,9 @@ export const getSpecializationWithId = async ({ id }: { id: string }) => {
       include: {
         images: { select: { url: true } },
         doctors: {
+          include: { images: { select: { url: true } }, open_time: true },
+        },
+        illness: {
           include: { images: { select: { url: true } } },
         },
       },

@@ -11,7 +11,7 @@ import SvgShadow from '../SvgShadow'
 type Props = {
   doctor: Doctor & { images: { url: string | null }[] } & {
     open_time: DateTag[] | null
-    averageRating: number | null
+    averageRating?: number | null
   }
   dir?: string
   isVertical?: boolean
