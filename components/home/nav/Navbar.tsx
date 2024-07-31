@@ -209,17 +209,16 @@ const Navbar = () => {
               ),
             }}
             className={cn(
-              isMainNav ? '' : '!hidden',
+              isMainNav ? '' : '!hidden !w-0',
               'relative mx-auto self-center w-[325px]'
             )}
           >
             <GlobalSearch />
           </motion.div>
         </motion.header>
-        <div className="flex space-x-1">
-          <div className=" ">
-            <StickyNav>
-              {/* {special.map((tab) => (
+        <div className="mx-auto ">
+          <StickyNav>
+            {/* {special.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -242,9 +241,8 @@ const Navbar = () => {
                 {tab.name}
               </button>
             ))} */}
-              <DockDemo />
-            </StickyNav>
-          </div>
+            <DockDemo />
+          </StickyNav>
         </div>
       </div>
     </section>

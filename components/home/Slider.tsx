@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import Image from 'next/image'
 import { Doctor, Specialization } from '@prisma/client'
 import { Badge } from '../ui/badge'
+import Link from 'next/link'
 
 const items = [
   {
@@ -62,7 +63,10 @@ const Single = ({ item }: SingleProps) => {
   return (
     <section>
       <div className="container flex items-center justify-center w-full h-full overflow-hidden">
-        <div className="wrapper relative max-w-[1366px] m-auto flex items-center justify-center gap-12 ">
+        <Link
+          href={`/specialities/${item.id}`}
+          className="wrapper relative max-w-[1366px] m-auto flex items-center justify-center gap-12 "
+        >
           <motion.div
             className="imageContainer  p-4  flex-1 m h-full  shrink-0"
             ref={ref}
@@ -137,29 +141,29 @@ const Single = ({ item }: SingleProps) => {
           >
             <motion.article className="flex   gap-4 ">
               {item?.doctors?.map((doctor) => {
-                const firstImage = doctor?.images?.[0]
                 return (
-                  <div
+                  <Link
+                    href={`/doctors/${doctor.id}`}
                     key={doctor.id}
                     className="flex flex-col items-center justify-center gap-0.5 "
                   >
                     <Avatar className={'h-32 w-32 border-4 border-white '}>
                       <AvatarImage
                         className="object-cover rounded-full "
-                        src={firstImage?.url || DoctorImage.src}
+                        src={doctor?.images?.[0]?.url || DoctorImage.src}
                         alt={doctor.name}
                       />
-                      <AvatarFallback>Doctor</AvatarFallback>
+                      <AvatarFallback>{doctor.name}</AvatarFallback>
                     </Avatar>
                     <Badge className="gradient-base ring-2 ring-white rounded-full text-sm text-center flex items-center justify-center">
                       دکتر {doctor.name}
                     </Badge>
-                  </div>
+                  </Link>
                 )
               })}
             </motion.article>
           </motion.div>
-        </div>
+        </Link>
       </div>
     </section>
   )
