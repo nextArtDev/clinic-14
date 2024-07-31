@@ -62,6 +62,12 @@ const Navbar = () => {
   )
   return (
     <section className="relative mx-auto flex w-full max-w-3xl flex-1 overflow-hidden">
+      <Link
+        className="fixed border animate-pulse  z-50 bg-gradient-base bottom-8 left-1 w-fit h-auto px-2 py-1 rounded-md "
+        href={'/dashboard'}
+      >
+        دشبورد
+      </Link>
       <article className="z-50 fixed top-0 lg:top-0   max-w-full px-4 py-8 font-semibold  dark:text-light w-full h-12 bg-transparent grid place-content-center grid-cols-6 md:hidden ">
         <div className="col-span-1">
           <MobileNav />
@@ -229,9 +235,9 @@ const Navbar = () => {
             <GlobalSearch />
           </motion.div>
         </motion.header>
-        <div className="mx-auto ">
-          <StickyNav>
-            {/* {special.map((tab) => (
+        {/* <div className="mx-auto ">
+          <StickyNav> */}
+        {/* {special.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -254,9 +260,9 @@ const Navbar = () => {
                 {tab.name}
               </button>
             ))} */}
-            <DockDemo />
+        {/* <DockDemo />
           </StickyNav>
-        </div>
+        </div> */}
       </div>
     </section>
   )

@@ -21,7 +21,7 @@ const HomePage = async () => {
   const illnesses = await getAllIllnesses({})
 
   return (
-    <div className="gradient-base">
+    <div className="relative gradient-base">
       <Hero />
       <Deal />
       {/* <Carousel slides={slider} /> */}

@@ -77,11 +77,11 @@ export function MainNav({
     //   label: 'سفارشات',
     //   active: pathname === `/dashboard/orders`,
     // },
-    {
-      href: `/dashboard/settings`,
-      label: 'تنظیمات',
-      active: pathname === `/dashboard/settings`,
-    },
+    // {
+    //   href: `/dashboard/settings`,
+    //   label: 'تنظیمات',
+    //   active: pathname === `/dashboard/settings`,
+    // },
   ]
 
   return (

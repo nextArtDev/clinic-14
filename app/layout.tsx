@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/providers/theme-provider'
 import { Toaster } from 'sonner'
 import Navbar from '@/components/home/nav/Navbar'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import Link from 'next/link'
 
 export const metadata = {
   title: 'درمانگاه آئین شفق',
