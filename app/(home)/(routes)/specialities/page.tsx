@@ -35,24 +35,7 @@ async function page({
             otherClasses="flex-1 max-w-md mx-auto "
           />
         </div>
-        {/* <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-          {specializations.specializations.map((special) => (
-            // <DoctorCard key={doctor.id} doctor={doctor} />
-            <div
-              key={special.id}
-              className="flex flex-col p-4 items-center justify-center w-64 h-32 rounded-xl grainy"
-            >
-              <div>{special.name}</div>
-              <div>{special.description}</div>
-            </div>
-          ))}
-          <div className="mt-10">
-            <Pagination
-              pageNumber={searchParams?.page ? +searchParams.page : 1}
-              isNext={specializations.isNext}
-            />
-          </div>
-        </div> */}
+
         <div className="max-w-5xl mx-auto px-8">
           <HoverEffect
             items={specializations.specializations.map((special) => {

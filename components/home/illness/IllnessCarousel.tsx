@@ -16,7 +16,7 @@ type PropType = {
 const IllnessCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    AutoScroll({}),
+    AutoScroll({}) as any,
   ])
   const [scrollProgress, setScrollProgress] = useState(0)
 
@@ -36,12 +36,13 @@ const IllnessCarousel: React.FC<PropType> = (props) => {
     (callback: () => void) => {
       const autoScroll = emblaApi?.plugins()?.autoScroll
       if (!autoScroll) return
-
       const resetOrStop =
+        // @ts-ignore
         autoScroll.options.stopOnInteraction === false
           ? autoScroll.reset
           : autoScroll.stop
 
+      // @ts-ignore
       resetOrStop()
       callback()
     },
@@ -50,11 +51,11 @@ const IllnessCarousel: React.FC<PropType> = (props) => {
   useEffect(() => {
     if (!emblaApi) return
 
-    onScroll(emblaApi)
+    onScroll(emblaApi as any)
     emblaApi
-      .on('reInit', onScroll)
-      .on('scroll', onScroll)
-      .on('slideFocus', onScroll)
+      .on('reInit', onScroll as any)
+      .on('scroll', onScroll as any)
+      .on('slideFocus', onScroll as any)
   }, [emblaApi, onScroll])
 
   return (

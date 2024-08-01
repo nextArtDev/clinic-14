@@ -42,7 +42,7 @@ function Hero({}: Props) {
         '.text-reveal',
         {
           clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-          y: 0,
+          y: 30,
           stagger: 0.3,
           duration: 0.5,
         },
@@ -50,7 +50,7 @@ function Hero({}: Props) {
       )
       .to('.text-reveal', {
         clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
-        y: -80,
+        y: -60,
         duration: 0.2,
         delay: 0.25,
       })
@@ -99,7 +99,7 @@ function Hero({}: Props) {
             <h1 className="title-color text-reveal text-center text-3xl font-bold   mb-0 py-1 ">
               درمانگاه آئین شفق
             </h1>
-            <p className="text-reveal flex flex-col justify-center items-center gap-4 text-center text-xl   font-semibold bg-gradient-to-r from-primary  via-white/60 to-primary  bg-clip-text text-transparent">
+            <p className="text-reveal flex flex-col justify-center items-center gap-4 text-center text-xl   font-semibold bg-gradient-to-r from-primary  via-black/80 to-primary  bg-clip-text text-transparent">
               پذیرش بیماران درمانگاهی توسط پزشکان عمومی
             </p>
           </div>
@@ -107,8 +107,8 @@ function Hero({}: Props) {
             <a href="tel:03137888561" className="flex  gap-1">
               {/* <span className=" text-lg underline underline-offset-2 decoration-red-600 decoration-1 "> */}
               <Button
-                variant={'outline'}
-                className={cn('text-lg  flex gap-x-2 shadow-2xl ')}
+                variant={'ghost'}
+                className={cn('text-lg bg-primary  flex gap-x-2 shadow-2xl ')}
               >
                 تماس
                 <Phone />

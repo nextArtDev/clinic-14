@@ -10,7 +10,7 @@ export type DoctorColumn = {
   phone: string | null
   // price: number
   description: string | null
-  main_image: string | null
+  // main_image: string | null
   // open_time: string | null
   // close_time: string | null
 }

@@ -56,13 +56,22 @@ export function NavigationMenuDemo() {
 
   return (
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className="w-full flex items-baseline justify-evenly">
         <NavigationMenuItem>
           <Link href="/faq" legacyBehavior passHref>
             <NavigationMenuLink
               className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}
             >
               سوالات متداول
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/specialities" legacyBehavior passHref>
+            <NavigationMenuLink
+              className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}
+            >
+              تخصص‌ها
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
@@ -76,11 +85,11 @@ export function NavigationMenuDemo() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/specialities" legacyBehavior passHref>
+          <Link href="/illnesses" legacyBehavior passHref>
             <NavigationMenuLink
               className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}
             >
-              تخصص‌ها
+              بیماری‌ها
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

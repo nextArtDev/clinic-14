@@ -9,6 +9,7 @@ import { DateTag, Doctor, Specialization } from '@prisma/client'
 import { deleteFileFromS3, uploadFileToS3 } from '../s3Upload'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import sharp from 'sharp'
 
 interface CreateDoctorFormState {
   // success?: string
@@ -81,8 +82,8 @@ export async function createDoctor(
     let imageIds: string[] = []
     for (let img of result.data?.images || []) {
       const buffer = Buffer.from(await img.arrayBuffer())
-      const res = await uploadFileToS3(buffer, img.name)
-
+      const convertedBuffer = await sharp(buffer).webp({ effort: 6 }).toBuffer()
+      const res = await uploadFileToS3(convertedBuffer, img.name)
       if (res?.imageId && typeof res.imageId === 'string') {
         imageIds.push(res.imageId)
       }
@@ -432,8 +433,16 @@ export async function deleteDoctor(
   }
 
   try {
+    // @ts-ignore
     const isExisting:
-      | (Specialization & { images: { id: string; key: string }[] | null })
+      | (Specialization & {
+          images:
+            | {
+                id: string
+                key: string
+              }[]
+            | null
+        })
       | null = await prisma.doctor.findFirst({
       where: { id: doctorId },
       include: {

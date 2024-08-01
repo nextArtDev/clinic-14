@@ -34,6 +34,8 @@ model User {
   bio      String?
   website  String?
   gender   String?
+
+  @@index([imageId])
 }
 
 enum Role {
@@ -51,7 +53,6 @@ model Image {
 
   user User[]
 
-  categoryId       String?
   Doctor           Doctor?         @relation(fields: [doctorId], references: [id])
   doctorId         String?
   Specialization   Specialization? @relation(fields: [specializationId], references: [id])
@@ -60,10 +61,12 @@ model Image {
   illnessId        String?
   Gallery          Gallery?        @relation(fields: [galleryId], references: [id])
   galleryId        String?
+  // specializationIcon Specialization[] @relation("iconImage")
 
-  @@index([specializationId])
-  @@index([illnessId])
-  @@index([doctorId])
+  // @@index([illnessId])
+  // @@index([specializationId])
+  // @@index([doctorId])
+  // @@index([galleryId])
 }
 
 model Doctor {
@@ -71,7 +74,7 @@ model Doctor {
   name        String
   phone       String?
   website     String?
-  main_image  String?
+  // main_image  String?
   description String?   @db.Text
   open_time   DateTag[]
   // slug              String?         @unique
@@ -93,6 +96,8 @@ model DateTag {
   updated_at DateTime @updatedAt
   doctor     Doctor?  @relation(fields: [doctorId], references: [id])
   doctorId   String?
+
+  @@index([doctorId])
 }
 
 model Specialization {
@@ -102,9 +107,10 @@ model Specialization {
   doctors     Doctor[]
   illness     Illness[]
   images      Image[]
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  // icon        Image?    @relation("iconImage", fields: [imageId], references: [id])
+  imageId     String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 }
 
 model Illness {
@@ -134,6 +140,9 @@ model Review {
 
   user   User?   @relation(fields: [userId], references: [id])
   userId String?
+
+  @@index([doctorId])
+  @@index([userId])
 }
 
 model Gallery {

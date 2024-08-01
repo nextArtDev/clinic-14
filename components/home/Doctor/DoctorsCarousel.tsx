@@ -25,7 +25,7 @@ type PropType = {
 const DoctorCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    AutoScroll({}),
+    AutoScroll({}) as any,
   ])
   const [scrollProgress, setScrollProgress] = useState(0)
 
@@ -39,16 +39,16 @@ const DoctorCarousel: React.FC<PropType> = (props) => {
     nextBtnDisabled,
     onPrevButtonClick,
     onNextButtonClick,
-  } = usePrevNextButtons(emblaApi)
+  } = usePrevNextButtons(emblaApi as any)
 
   useEffect(() => {
     if (!emblaApi) return
 
-    onScroll(emblaApi)
+    onScroll(emblaApi as any)
     emblaApi
-      .on('reInit', onScroll)
-      .on('scroll', onScroll)
-      .on('slideFocus', onScroll)
+      .on('reInit', onScroll as any)
+      .on('scroll', onScroll as any)
+      .on('slideFocus', onScroll as any)
   }, [emblaApi, onScroll])
 
   return (

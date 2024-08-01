@@ -6,7 +6,7 @@ import { Specialization } from '@prisma/client'
 import { deleteFileFromS3, uploadFileToS3 } from '../s3Upload'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-
+import sharp from 'sharp'
 interface CreateSpecializationFormState {
   // success?: string
   errors: {
@@ -66,7 +66,8 @@ export async function createSpecialization(
     let imageIds: string[] = []
     for (let img of result.data?.images || []) {
       const buffer = Buffer.from(await img.arrayBuffer())
-      const res = await uploadFileToS3(buffer, img.name)
+      const convertedBuffer = await sharp(buffer).webp({ effort: 6 }).toBuffer()
+      const res = await uploadFileToS3(convertedBuffer, img.name)
 
       if (res?.imageId && typeof res.imageId === 'string') {
         imageIds.push(res.imageId)
@@ -81,6 +82,7 @@ export async function createSpecialization(
             id: id,
           })),
         },
+        imageId: imageIds.length > 0 ? imageIds[0] : '',
       },
     })
     // console.log(res?.imageUrl)

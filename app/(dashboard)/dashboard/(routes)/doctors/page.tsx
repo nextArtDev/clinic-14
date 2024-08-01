@@ -25,7 +25,7 @@ const ProductsPage = async () => {
     name: item.name,
     phone: item?.phone,
     website: item?.website,
-    main_image: item?.main_image,
+    // main_image: item?.main_image,
     // open_time: item?.open_time,
     // close_time: item?.close_time,
     description: item?.description,

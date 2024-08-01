@@ -68,6 +68,7 @@ const Carousel = forwardRef<
     ref
   ) => {
     const [emblaMainRef, emblaMainApi] = useEmblaCarousel(
+      //  @ts-ignore
       {
         ...carouselOptions,
         axis: orientation === 'vertical' ? 'y' : 'x',
@@ -77,6 +78,7 @@ const Carousel = forwardRef<
     )
 
     const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel(
+      //  @ts-ignore
       {
         ...carouselOptions,
         axis: orientation === 'vertical' ? 'y' : 'x',

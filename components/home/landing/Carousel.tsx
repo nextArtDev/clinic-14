@@ -16,6 +16,7 @@ const DELAY = 3
 const Carousel: React.FC<PropType> = (props) => {
   const { slides, options } = props
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, axis: 'y' }, [
+    //@ts-ignore
     Autoplay({
       delay: DELAY * 1000,
       // stopOnInteraction: false,

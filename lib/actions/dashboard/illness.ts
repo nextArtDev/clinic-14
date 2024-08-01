@@ -1,16 +1,12 @@
 'use server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
-import {
-  createDoctorSchema,
-  createIllnessSchema,
-  createSpecializationSchema,
-} from '@/lib/schemas/dashboard'
-import { DateTag, Doctor, Illness, Specialization } from '@prisma/client'
-import { deleteFileFromS3, uploadFileToS3 } from '../s3Upload'
+import { createIllnessSchema } from '@/lib/schemas/dashboard'
+import { Doctor, Illness, Specialization } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-
+import { deleteFileFromS3, uploadFileToS3 } from '../s3Upload'
+import sharp from 'sharp'
 interface CreateIllnessFormState {
   // success?: string
   errors: {
@@ -73,7 +69,8 @@ export async function createIllness(
     let imageIds: string[] = []
     for (let img of result.data?.images || []) {
       const buffer = Buffer.from(await img.arrayBuffer())
-      const res = await uploadFileToS3(buffer, img.name)
+      const convertedBuffer = await sharp(buffer).webp({ effort: 6 }).toBuffer()
+      const res = await uploadFileToS3(convertedBuffer, img.name)
 
       if (res?.imageId && typeof res.imageId === 'string') {
         imageIds.push(res.imageId)

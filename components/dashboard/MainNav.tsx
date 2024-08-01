@@ -29,9 +29,6 @@ export function MainNav({
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
   const pathname = usePathname()
-  const params = useParams()
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState('')
 
   // we can use `/${params.storeId}` because we use it inside <Navbar> component which is inside dynamic routes!
   const routes = [
@@ -48,14 +45,14 @@ export function MainNav({
       active: pathname === `/dashboard`,
     },
     {
-      href: `/dashboard/doctors`,
-      label: 'دکترها',
-      active: pathname === `/dashboard/doctors`,
-    },
-    {
       href: `/dashboard/specialization`,
       label: 'تخصص‌ها',
       active: pathname === `/dashboard/specialization`,
+    },
+    {
+      href: `/dashboard/doctors`,
+      label: 'دکترها',
+      active: pathname === `/dashboard/doctors`,
     },
     {
       href: `/dashboard/illness`,

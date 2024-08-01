@@ -1,11 +1,5 @@
-import { redirect } from 'next/navigation'
-
-import { prisma } from '@/lib/prisma'
 import { MainNav } from './MainNav'
-import StoreSwitcher from './StoreSwitcher'
 // import { ThemeToggle } from '../ui/theme-toggle'
-import { auth } from '@/auth'
-import { UserButton } from '../auth/user-button'
 import { ScrollArea, ScrollBar } from '../ui/scroll-area'
 // import { ModeToggle } from '../theme-toggle'
 

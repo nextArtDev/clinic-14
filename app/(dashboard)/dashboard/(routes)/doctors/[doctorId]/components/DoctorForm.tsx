@@ -81,7 +81,7 @@ const DoctorForm: FC<DoctorFormProps> = ({ initialData, specialization }) => {
         website: initialData.website || '',
         open_time:
           initialData.open_time.map((w: { time: string }) => w.time) || [],
-        main_image: initialData.main_image || '',
+        // main_image: initialData.main_image || '',
         description: initialData.description || '',
         specializationId:
           initialData.specialization.map((w: { id: string }) => w.id) || [],
