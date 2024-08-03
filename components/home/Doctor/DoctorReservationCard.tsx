@@ -31,7 +31,7 @@ function DoctorReservationCard({
       }}
       className={cn(
         ` relative  rounded-xl overflow-hidden  `,
-        isVertical ? 'max-w-sm w-[96vw] h-[50vh]' : 'w-[400px] h-48'
+        isVertical ? 'max-w-sm w-[94vw] h-[50vh]' : 'w-[400px] h-48'
       )}
     >
       {/* <div className={`absolute w-full h-12 bottom-0 left-0 ${style.svgs}`}>

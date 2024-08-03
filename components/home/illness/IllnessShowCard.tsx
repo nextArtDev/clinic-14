@@ -23,7 +23,7 @@ function IllnessShowCard({ illness, dir = 'rtl', isVertical = false }: Props) {
             'linear-gradient(to bottom, #fff8dc 0%, #add8e6 60%, #ffb6c1 100%)',
         }}
         className={cn(
-          ` relative  rounded-xl overflow-hidden max-w-sm w-[96vw] h-[50vh] `
+          ` relative  rounded-xl overflow-hidden max-w-sm w-[94vw] h-[50vh] `
         )}
       >
         {/* <div

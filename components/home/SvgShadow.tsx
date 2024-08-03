@@ -8,7 +8,10 @@ type Props = {
 function SvgShadow({ className }: Props) {
   return (
     <div
-      className={cn(`absolute w-full h-12 bottom-0 left-0 z-[0] `, className)}
+      className={cn(
+        `absolute w-full h-12 -bottom-[1px] left-0 z-[0] `,
+        className
+      )}
     >
       <svg
         id="wave"
