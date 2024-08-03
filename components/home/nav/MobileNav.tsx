@@ -137,6 +137,11 @@ function MobileNav() {
               title="بیماری‌ها"
               toggle={handleClick}
             />
+            <CustomMobileLink
+              href="/login"
+              title="ورود/عضویت"
+              toggle={handleClick}
+            />
             {/* <CustomMobileLink
               href="/inography"
               title="اینوگرافی بیماریها"

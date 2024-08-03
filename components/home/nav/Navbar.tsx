@@ -63,7 +63,7 @@ const Navbar = () => {
   return (
     <section className="relative mx-auto flex w-full max-w-3xl flex-1 overflow-hidden">
       <Link
-        className="fixed border animate-pulse  z-50 bg-gradient-base bottom-8 left-1 w-fit h-auto px-2 py-1 rounded-md "
+        className="fixed border animate-pulse  z-50 bg-primary bottom-8 left-2 w-fit h-auto px-2 py-1 rounded-md "
         href={'/dashboard'}
       >
         دشبورد
@@ -96,19 +96,19 @@ const Navbar = () => {
                 rgba(255, 182, 193, ${useTransform(
                   scrollYBoundedProgressThrottled,
                   [0, 0.85, 1],
-                  [0.1, 0.3, 1]
+                  [0.1, 0.2, 1]
                 )}) 0%,
 
                 rgba(173, 216, 230, ${useTransform(
                   scrollYBoundedProgressThrottled,
                   [0, 0.85, 1],
-                  [0.1, 0.3, 1]
+                  [0.1, 0.2, 1]
                 )}) 50%,
 
                 rgba(255, 248, 220, ${useTransform(
                   scrollYBoundedProgressThrottled,
                   [0, 0.85, 1],
-                  [0.1, 0.3, 1]
+                  [0.1, 0.2, 1]
                 )}) 100%
 
               )
@@ -175,7 +175,9 @@ const Navbar = () => {
                 </div>
               </MenuItem>
             </Menu> */}
-              <NavigationMenuDemo />
+              <div className=" flex-1 px-6">
+                <NavigationMenuDemo />
+              </div>
 
               <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
                 <motion.div
@@ -204,7 +206,9 @@ const Navbar = () => {
                   }}
                 >
                   {/* <Image src={BagImage} alt="bag" width={18} height={18} /> */}
-                  <User size={'sm'} className="ml-4 w-6" />
+                  <Link href={'/login'}>
+                    <User size={'sm'} className="ml-4 w-6" />
+                  </Link>
                 </motion.figure>
               </div>
             </section>
