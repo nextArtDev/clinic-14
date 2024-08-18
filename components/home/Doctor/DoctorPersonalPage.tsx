@@ -34,7 +34,7 @@ function DoctorPersonalPage({ doctor, user, beforeRated, rate }: pageProps) {
     target: ref,
     offset: ['start start', 'end end'],
   })
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.3])
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.1])
   // const scrollYProgressSpring = useSpring(scrollYProgress, {
   //   stiffness: 300,
   //   damping: 40,
