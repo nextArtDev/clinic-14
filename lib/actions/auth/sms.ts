@@ -1,11 +1,13 @@
 'use server'
 
-import TrezSMSClient from 'trez-sms-client'
+// import TrezSMSClient from 'trez-sms-client'
 import { z } from 'zod'
 import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
 import { PhoneSchema } from '@/lib/schemas/auth'
 import { getUserById } from '@/lib/queries/auth/user'
+// import MelipayamakApi from 'melipayamak-api-ts'
+import MelipayamakApi from 'melipayamak'
 
 export const sendSms = async (values: z.infer<typeof PhoneSchema>) => {
   const verificationCode = crypto.randomInt(100123, 999879)
@@ -17,27 +19,36 @@ export const sendSms = async (values: z.infer<typeof PhoneSchema>) => {
   }
 
   const { phone } = validatedFields.data
-
-  const client = new TrezSMSClient(
-    process.env.SMS_USERNAME!,
-    process.env.SMS_PASSWORD!
-  )
-
   try {
-    // console.log({ phone, verificationCode })
-    const messageId = await client.manualSendCode(
-      phone,
-      `کد تایید شما: ${
-        verificationCode as number
-      } \n مدت اعتبار این کد ۲ دقیقه می‌باشد`
-    )
+    // const client = new TrezSMSClient(
+    //   process.env.SMS_USERNAME!,
+    //   process.env.SMS_PASSWORD!
+    // )
+    // console.log('client', client.soap)
+    // // console.log({ phone, verificationCode })
+    // const messageId = await client.manualSendCode(
+    //   phone,
+    //   `کد تایید شما: ${
+    //     verificationCode as number
+    //   } \n مدت اعتبار این کد ۲ دقیقه می‌باشد`
+    // )
 
-    if (messageId <= 2000) {
-      return {
-        error: 'ارسال کد تایید با خطا مواجه شد لطفا دوباره تلاش نمایید',
-        // verificationCode: null,
-      }
-    }
+    // if (messageId <= 2000) {
+    //   return {
+    //     error: 'ارسال کد تایید با خطا مواجه شد لطفا دوباره تلاش نمایید',
+    //     // verificationCode: null,
+    //   }
+    // }
+    const api = new MelipayamakApi('9336756401', 'Y2CMB')
+    const sms = api.sms()
+    const meli = await sms.send('09336756401', '09336756401', 'test text', true)
+    // .then((res) => {
+    //   //RecId or Error Number
+    // })
+    // .catch((err) => {
+    //   //
+    // })
+    console.log(meli)
     return { success: 'کد تایید به شماره شما ارسال شد.', verificationCode }
   } catch (error) {
     console.log(error)

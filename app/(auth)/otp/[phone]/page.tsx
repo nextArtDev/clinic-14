@@ -38,7 +38,7 @@ export default function OtpForm({ params }: { params: { phone: string } }) {
           setError(res?.error)
           setSuccess(res?.success)
           if (res?.success) {
-            toast(
+            toast.success(
               'ثبت نام شما با موفقیت انجام شد، لطفا وارد حساب کاربری خود شوید.'
             )
             router.push('/login')
