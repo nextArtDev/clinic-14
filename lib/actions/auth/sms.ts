@@ -1,6 +1,6 @@
 'use server'
 
-// import TrezSMSClient from 'trez-sms-client'
+import TrezSMSClient from 'trez-sms-client'
 import { z } from 'zod'
 import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
@@ -20,6 +20,10 @@ export const sendSms = async (values: z.infer<typeof PhoneSchema>) => {
 
   const { phone } = validatedFields.data
   try {
+    const api = new MelipayamakApi(
+      process.env.SMS_USERNAME!,
+      process.env.SMS_PASSWORD!
+    )
     // const client = new TrezSMSClient(
     //   process.env.SMS_USERNAME!,
     //   process.env.SMS_PASSWORD!
@@ -39,16 +43,27 @@ export const sendSms = async (values: z.infer<typeof PhoneSchema>) => {
     //     // verificationCode: null,
     //   }
     // }
-    const api = new MelipayamakApi('9336756401', 'Y2CMB')
     const sms = api.sms()
-    const meli = await sms.send('09336756401', '09336756401', 'test text', true)
+    const meli = await sms.send(
+      phone,
+      '50002710056401',
+      `کد تایید شما: ${
+        verificationCode as number
+      } \n مدت اعتبار این کد ۲ دقیقه می‌باشد`
+    )
     // .then((res) => {
     //   //RecId or Error Number
+    //   console.log(res)
     // })
     // .catch((err) => {
     //   //
     // })
     console.log(meli)
+    // if (meli.Value > 0) {
+    //   console.log(meli.Value)
+    // } else {
+    //   throw new Error('not Valid')
+    // }
     return { success: 'کد تایید به شماره شما ارسال شد.', verificationCode }
   } catch (error) {
     console.log(error)
